@@ -23,17 +23,17 @@
       <Button layoutX="100.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" text="Button" />
       <ImageView fitHeight="155.0" fitWidth="173.0" layoutX="54.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Images/ucLogo.png" />
+            <Image url="@../../../../../../../../../Downloads/images-removebg-preview.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Images/staffViewIcon.png" />
+            <Image url="@../../../../../../../../../Downloads/icons8-view-90.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../Images/staffManageIcon.png" />
+            <Image url="@../../../../../../../../../Downloads/icons8-admin-settings-male-96.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="158.0" layoutX="290.0" layoutY="43.0" stroke="#d9d9d9" strokeType="INSIDE" width="955.0" />
