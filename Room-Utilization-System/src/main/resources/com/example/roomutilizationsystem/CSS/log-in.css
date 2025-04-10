@@ -1,0 +1,141 @@
+/* Room Utilization System - Login Stylesheet */
+
+/* Root styles and color variables */
+.root {
+    -fx-font-family: "Bell MT";
+    -fx-background-color: #ffffff;
+}
+
+/* Main container styling */
+AnchorPane {
+    -fx-background-color: #ffffff;
+}
+
+/* Right side rectangle */
+Rectangle {
+    -fx-fill: #9AA6B2;
+    -fx-stroke: #9AA6B2;
+}
+
+/* Curved connecting rectangle */
+Rectangle.curved {
+    -fx-arc-width: 100;
+    -fx-arc-height: 100;
+}
+
+/* Login container */
+.login-container {
+    -fx-fill: #d9d9d9;
+    -fx-opacity: 0.39;
+    -fx-arc-width: 100;
+    -fx-arc-height: 100;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Logo image styling */
+ImageView {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+}
+
+/* Title styling for room utilization system */
+#roomLabel, #utilizationLabel, #systemLabel {
+    -fx-font-family: "Bell MT Bold";
+    -fx-font-size: 64px;
+    -fx-text-fill: #323F4C;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 1, 1, 1);
+}
+
+/* Sign in header */
+.sign-in {
+    -fx-font-family: "Bell MT Bold";
+    -fx-font-size: 34px;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 1, 1, 1);
+}
+
+/* Form field labels */
+.field-label {
+    -fx-font-family: "Bell MT";
+    -fx-font-size: 27px;
+    -fx-text-fill: white;
+}
+
+/* Text fields */
+TextField {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-font-size: 16px;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+TextField:focused {
+    -fx-border-color: #323F4C;
+    -fx-background-color: #f8f9fa;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+/* Login button */
+#loginButton {
+    -fx-background-color: #323F4C;
+    -fx-text-fill: white;
+    -fx-font-family: "Bell MT Bold";
+    -fx-font-size: 16px;
+    -fx-background-radius: 100;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+#loginButton:hover {
+    -fx-background-color: #3e4c5c;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 6, 0, 0, 3);
+}
+
+#loginButton:pressed {
+    -fx-background-color: #293440;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* Hyperlink styling */
+Hyperlink {
+    -fx-text-fill: white;
+    -fx-font-family: "Bell MT";
+    -fx-font-size: 14px;
+    -fx-underline: true;
+    -fx-border-color: transparent;
+}
+
+Hyperlink:hover {
+    -fx-text-fill: #e6e6e6;
+}
+
+Hyperlink:visited {
+    -fx-text-fill: white;
+    -fx-underline: true;
+}
+
+/* Animation for button hover */
+#loginButton {
+    -fx-transition-duration: 0.3s;
+}
+
+/* Error styling for input validation */
+.error {
+    -fx-border-color: #ff6b6b;
+}
+
+.error-text {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1366px) {
+    .login-container {
+        -fx-scale-x: 0.9;
+        -fx-scale-y: 0.9;
+    }
+}
