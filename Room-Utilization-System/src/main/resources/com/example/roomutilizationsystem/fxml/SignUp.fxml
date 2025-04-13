@@ -20,17 +20,17 @@
         </ImageView>
         <Label layoutX="1029.0" layoutY="28.0" prefHeight="78.0" prefWidth="176.0" text="Room">
             <font>
-                <Font name="Bell MT Bold" size="64.0" />
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
             </font>
         </Label>
-        <Label layoutX="891.0" layoutY="90.0" prefHeight="90.0" prefWidth="308.0" text="Utilization">
+        <Label layoutX="914.0" layoutY="91.0" prefHeight="90.0" prefWidth="261.0" text="Utilization">
             <font>
-                <Font name="Bell MT Bold" size="64.0" />
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
             </font>
         </Label>
-        <Label layoutX="999.0" layoutY="161.0" prefHeight="85.0" prefWidth="203.0" text="System">
+        <Label layoutX="992.0" layoutY="161.0" prefHeight="85.0" prefWidth="210.0" text="System">
             <font>
-                <Font name="Bell MT Bold" size="64.0" />
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
             </font>
         </Label>
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="131.0" layoutY="91.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" width="378.0" />
@@ -51,12 +51,11 @@
                 <Font name="Bell MT" size="27.0" />
             </font>
         </Label>
-        <Label layoutX="198.0" layoutY="506.0" prefHeight="44.0" prefWidth="264.0" text="Already have an account? " textFill="WHITE">
+        <Label layoutX="233.0" layoutY="509.0" prefHeight="44.0" prefWidth="203.0" text="Already have an account? " textFill="WHITE">
             <font>
                 <Font name="Bell MT" size="17.0" />
             </font>
         </Label>
         <Button layoutX="172.0" layoutY="451.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-radius: 100; -fx-background-color: 323F4C;" text="Sign In" />
-      <Button layoutX="385.0" layoutY="516.0" mnemonicParsing="false" text="Log In" />
     </children>
 </AnchorPane>

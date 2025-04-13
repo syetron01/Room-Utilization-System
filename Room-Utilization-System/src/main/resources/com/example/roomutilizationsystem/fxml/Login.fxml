@@ -24,7 +24,7 @@
       </ImageView>
       <Label id="roomLabel" layoutX="48.0" layoutY="27.0" prefHeight="78.0" prefWidth="282.0" text="Room">
          <font>
-            <Font name="Bell MT Bold" size="64.0" />
+            <Font name="Franklin Gothic Demi Cond" size="66.0" />
          </font>
       </Label>
       <Label id="utilizationLabel" layoutX="50.0" layoutY="89.0" prefHeight="89.0" prefWidth="360.0" text="Utilization">
@@ -39,32 +39,32 @@
       </Label>
 
       <!-- Login form container - adjusted position -->
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="820.0" layoutY="90.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" styleClass="login-container" width="378.0" />
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="781.0" layoutY="92.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" styleClass="login-container" width="378.0" />
 
       <!-- Login form elements - adjusted positions -->
-      <Label alignment="CENTER" layoutX="942.0" layoutY="115.0" prefHeight="94.0" prefWidth="140.0" styleClass="sign-in" text="Sign In" textFill="#fffbfb">
+      <Label alignment="CENTER" layoutX="890.0" layoutY="131.0" prefHeight="94.0" prefWidth="140.0" styleClass="sign-in" text="Sign In" textFill="#fffbfb">
          <font>
             <Font name="Bell MT Bold" size="34.0" />
          </font>
       </Label>
 
-      <Label layoutX="858.0" layoutY="203.0" prefHeight="45.0" prefWidth="146.0" styleClass="field-label" text="Username:" textFill="WHITE">
+      <Label layoutX="819.0" layoutY="204.0" prefHeight="59.0" prefWidth="146.0" styleClass="field-label" text="Username:" textFill="WHITE">
          <font>
             <Font name="Bell MT" size="27.0" />
          </font>
       </Label>
-      <TextField id="usernameField" layoutX="860.0" layoutY="246.0" prefHeight="45.0" prefWidth="298.0" />
+      <TextField id="usernameField" layoutX="825.0" layoutY="263.0" prefHeight="45.0" prefWidth="298.0" />
 
-      <Label layoutX="862.0" layoutY="309.0" prefHeight="43.0" prefWidth="166.0" styleClass="field-label" text="Password:" textFill="WHITE">
+      <Label layoutX="821.0" layoutY="323.0" prefHeight="43.0" prefWidth="166.0" styleClass="field-label" text="Password:" textFill="WHITE">
          <font>
             <Font name="Bell MT" size="27.0" />
          </font>
       </Label>
-      <TextField id="passwordField" layoutX="863.0" layoutY="349.0" prefHeight="45.0" prefWidth="298.0" />
+      <TextField id="passwordField" layoutX="823.0" layoutY="371.0" prefHeight="45.0" prefWidth="298.0" />
 
-      <Button id="loginButton" layoutX="863.0" layoutY="432.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-radius: 100; -fx-background-color: 323F4C;" text="Log In" />
+      <Button id="loginButton" layoutX="822.0" layoutY="456.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-radius: 100; -fx-background-color: 323F4C;" text="Log In" />
 
-      <Hyperlink layoutX="933.0" layoutY="511.0" text="Dont have an account yet?">
+      <Hyperlink layoutX="888.0" layoutY="538.0" text="Dont have an account yet?">
          <font>
             <Font name="Bell MT" size="14.0" />
          </font>

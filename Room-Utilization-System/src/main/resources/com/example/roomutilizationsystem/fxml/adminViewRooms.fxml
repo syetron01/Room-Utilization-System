@@ -20,22 +20,22 @@
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
         <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" text="Home">
+                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" style="-fx-background-radius: 100;" text="Home">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" text="Add Rooms">
+                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" style="-fx-background-radius: 100;" text="Add Rooms">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" text="View Rooms">
+                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" style="-fx-background-radius: 100; -fx-background-color: #596572;" text="View Rooms" textFill="WHITE">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Manage Bookings">
+                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" style="-fx-background-radius: 100;" text="Manage Bookings">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
@@ -85,7 +85,7 @@
                 <Font name="Bell MT Bold" size="35.0" />
             </font>
         </Label>
-        <Button layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" text="Log Out" />
+        <Button layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out" />
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../Images/logOutIcon.png" />
@@ -97,7 +97,7 @@
                   <Font name="Bell MT Bold" size="18.0" />
               </font>
           </Label>
-      <TextField layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" />
+      <TextField layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" style="-fx-background-radius: 100;" />
       <TableView layoutX="87.0" layoutY="107.0" prefHeight="426.0" prefWidth="744.0">
         <columns>
           <TableColumn prefWidth="76.33332824707031" text="Edit" />

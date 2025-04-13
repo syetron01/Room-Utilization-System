@@ -16,9 +16,9 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/log-in.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="687.0" layoutX="20.0" layoutY="17.0" stroke="#9aa6b2" strokeType="INSIDE" width="241.0" />
-      <Button layoutX="100.0" layoutY="643.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" text="Log Out" />
-      <Button layoutX="100.0" layoutY="339.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" text="Manage Bookings" />
-      <Button layoutX="100.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" text="View Available Rooms" />
+      <Button layoutX="99.0" layoutY="630.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="137.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Log Out" />
+      <Button layoutX="92.0" layoutY="339.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #596572; -fx-background-radius: 100;" text="Manage Bookings" textFill="WHITE" />
+      <Button layoutX="92.0" layoutY="259.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="154.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="View Available Rooms" />
       <ImageView fitHeight="155.0" fitWidth="173.0" layoutX="54.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../Images/ucLogo.png" />
@@ -56,19 +56,19 @@
          </font>
       </Label>
       <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#d9d9d9" height="60.0" layoutX="302.0" layoutY="266.0" stroke="#d9d9d9" strokeType="INSIDE" width="930.0" />
-      <HBox layoutX="328.0" layoutY="282.0" prefHeight="27.0" prefWidth="895.0">
+      <HBox layoutX="328.0" layoutY="278.0" prefHeight="51.0" prefWidth="895.0">
          <children>
-            <Label prefHeight="50.0" prefWidth="139.0" text="Room Number: ">
+            <Label prefHeight="33.0" prefWidth="137.0" text="Room Number: ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ComboBox prefHeight="43.0" prefWidth="88.0" style="-fx-background-color: FFFFFF;">
+            <ComboBox prefHeight="28.0" prefWidth="81.0" style="-fx-background-color: FFFFFF;">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </ComboBox>
-            <Label prefHeight="32.0" prefWidth="107.0" text="Room Type: ">
+            <Label prefHeight="32.0" prefWidth="106.0" text="Room Type: ">
                <font>
                   <Font size="18.0" />
                </font>
@@ -94,7 +94,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </ComboBox>
-            <Label prefHeight="50.0" prefWidth="58.0" text="Day: ">
+            <Label prefHeight="30.0" prefWidth="56.0" text="Day: ">
                <font>
                   <Font size="18.0" />
                </font>
@@ -104,7 +104,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="93.0" style="-fx-background-color: 9AA6B2;" text="Search">
+            <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -113,15 +113,15 @@
       </HBox>
       <TableView layoutX="305.0" layoutY="341.0" prefHeight="338.0" prefWidth="920.0" stylesheets="@../CSS/log-in.css">
          <columns>
-            <TableColumn prefWidth="144.33334350585938" text="Room Number" />
-            <TableColumn prefWidth="148.66665649414062" text="Room Type" />
+            <TableColumn prefWidth="143.66668701171875" text="Room Number" />
+            <TableColumn prefWidth="150.33331298828125" text="Room Type" />
             <TableColumn prefWidth="177.66668701171875" text="Time Schedule" />
             <TableColumn prefWidth="166.33331298828125" text="AM/PM" />
             <TableColumn minWidth="9.0" prefWidth="135.6666259765625" text="Day" />
             <TableColumn minWidth="9.0" prefWidth="144.0" text="Book" />
          </columns>
       </TableView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="638.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="40.0" fitWidth="55.0" layoutX="49.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../Images/logOutIcon.png" />
          </image>

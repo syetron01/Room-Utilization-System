@@ -39,15 +39,15 @@ ImageView {
 
 /* Title styling for room utilization system */
 #roomLabel, #utilizationLabel, #systemLabel {
-    -fx-font-family: "Bell MT Bold";
-    -fx-font-size: 64px;
+    -fx-font-family: "Franklin Gothic Demi Cond Bold";
+    -fx-font-size: 66px;
     -fx-text-fill: #323F4C;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 1, 1, 1);
 }
 
 /* Sign in header */
 .sign-in {
-    -fx-font-family: "Bell MT Bold";
+    -fx-font-family: "Bell MT ";
     -fx-font-size: 34px;
     -fx-text-fill: #ffffff;
     -fx-alignment: center;
