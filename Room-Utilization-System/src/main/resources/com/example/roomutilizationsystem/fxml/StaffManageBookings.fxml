@@ -19,23 +19,23 @@
         <Button layoutX="100.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" text="View Available Rooms" />
         <ImageView fitHeight="155.0" fitWidth="173.0" layoutX="54.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/ucLogo.png" />
+                <Image url="@../../../../Images/ucLogo.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/staffViewIcon.png" />
+                <Image url="@../../../../Images/staffViewIcon.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/staffManageIcon.png" />
+                <Image url="@../../../../Images/staffManageIcon.png" />
             </image>
         </ImageView>
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="158.0" layoutX="290.0" layoutY="43.0" stroke="#d9d9d9" strokeType="INSIDE" width="955.0" />
         <ImageView fitHeight="180.0" fitWidth="160.0" layoutX="1060.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/P1.png" />
+                <Image url="@../../../../Images/P1.png" />
             </image>
         </ImageView>
         <Label layoutX="335.0" layoutY="72.0" prefHeight="45.0" prefWidth="469.0" text="Manage Bookings" textOverrun="CLIP">
@@ -65,7 +65,7 @@
         </TableView>
         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="638.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/logOutIcon.png" />
+                <Image url="@../../../../Images/logOutIcon.png" />
             </image>
         </ImageView>
       <TableView layoutX="309.0" layoutY="484.0" prefHeight="205.0" prefWidth="935.0">

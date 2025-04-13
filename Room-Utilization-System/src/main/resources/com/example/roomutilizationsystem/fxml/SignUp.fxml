@@ -9,13 +9,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.HelloController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.DataModel">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b2" height="723.0" layoutY="-2.0" stroke="#9aa6b2" strokeType="INSIDE" width="650.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="723.0" layoutX="592.0" layoutY="-3.0" stroke="#9aa6b2" strokeType="INSIDE" width="105.0" />
         <ImageView fitHeight="563.0" fitWidth="616.0" layoutX="529.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../Images/signUpImage.png" />
+                <Image url="@../../../../Images/signUpImage.png" />
             </image>
         </ImageView>
         <Label layoutX="1029.0" layoutY="28.0" prefHeight="78.0" prefWidth="176.0" text="Room">
