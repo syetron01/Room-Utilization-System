@@ -11,11 +11,11 @@ public abstract class StaffBaseController {
 
     // --- Navigation Methods ---
     protected void navigateToViewAvailable(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/StaffViewAvailableRooms.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/StaffViewAvailableRooms.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     protected void navigateToManageBookings(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/StaffManageBookings.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/StaffManageBookings.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     // --- Logout ---
@@ -23,7 +23,7 @@ public abstract class StaffBaseController {
     protected void handleLogoutAction(ActionEvent event) {
         DataStore.logout(); // Clear the logged-in user
         try {
-            SceneNavigator.navigateTo(event, "/fxml/Login.fxml"); // Go back to login
+            SceneNavigator.navigateTo(event, "fxml/Login.fxml"); // Go back to login
         } catch (IOException e) {
             handleNavError(e);
         }

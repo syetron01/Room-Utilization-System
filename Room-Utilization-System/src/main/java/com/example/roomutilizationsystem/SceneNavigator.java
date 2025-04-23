@@ -11,32 +11,66 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
-
 public class SceneNavigator {
 
-    // Updated navigation method
+    /**
+     * Navigates to a new scene defined by an FXML file.
+     *
+     * @param event           The ActionEvent that triggered the navigation (used to find the stage).
+     * @param fxmlResourcePath The absolute path to the FXML file within the resources folder (e.g., "/com/example/roomutilizationsystem/fxml/Login.fxml").
+     * @throws IOException If the FXML file cannot be loaded.
+     */
     public static void navigateTo(javafx.event.ActionEvent event, String fxmlResourcePath) throws IOException {
-        // Ensure path starts with "/" to indicate root of resources
-        if (!fxmlResourcePath.startsWith("/")) {
-            fxmlResourcePath = "/" + fxmlResourcePath;
-        }
-        // Use getResource to find the FXML file in the classpath
-        URL fxmlUrl = SceneNavigator.class.getResource(fxmlResourcePath);
-        if (fxmlUrl == null) {
-            throw new IOException("Cannot find FXML resource: " + fxmlResourcePath);
-        }
+        Objects.requireNonNull(event, "Event cannot be null");
+        Objects.requireNonNull(fxmlResourcePath, "FXML resource path cannot be null");
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(fxmlUrl));
+        // Use getResourceAsStream for better error checking, then FXMLLoader.load(InputStream)
+        // Or ensure the path is absolute from the classpath root.
+        URL fxmlUrl = SceneNavigator.class.getResource(fxmlResourcePath);
+
+        if (fxmlUrl == null) {
+            // Try adding a leading slash if missing
+            if (!fxmlResourcePath.startsWith("/")) {
+                fxmlUrl = SceneNavigator.class.getResource("/" + fxmlResourcePath);
+            }
+            if (fxmlUrl == null) {
+                System.err.println("Cannot find FXML resource: " + fxmlResourcePath + " or /" + fxmlResourcePath);
+                throw new IOException("Cannot find FXML resource: " + fxmlResourcePath);
+            }
+        }
+        System.out.println("Navigating to: " + fxmlUrl); // Debugging
+
+        Parent root = FXMLLoader.load(fxmlUrl); // Objects.requireNonNull handled by FXMLLoader if URL is valid
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.setScene(new Scene(root)); // Re-use existing stage dimensions or set explicitly
+
+        if (stage == null) {
+            throw new IllegalStateException("Could not find Stage from the event source.");
+        }
+
+        // Optional: Preserve window size or set explicitly
+        double currentWidth = stage.getScene().getWidth();
+        double currentHeight = stage.getScene().getHeight();
+        stage.setScene(new Scene(root, currentWidth, currentHeight)); // Use current dimensions
+
+        // Alternatively, use dimensions from the loaded root if preferred:
+        // stage.setScene(new Scene(root));
+        // stage.sizeToScene(); // Adjust stage size to the new scene
+
         stage.show();
     }
 
+    /**
+     * Shows a standard JavaFX Alert dialog.
+     *
+     * @param type    The type of alert (e.g., INFORMATION, WARNING, ERROR).
+     * @param title   The title of the alert window.
+     * @param message The main message content of the alert.
+     */
     public static void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
-        alert.setHeaderText(null); // Keep it simple
+        alert.setHeaderText(null); // Keep header simple
         alert.setContentText(message);
         alert.showAndWait();
     }

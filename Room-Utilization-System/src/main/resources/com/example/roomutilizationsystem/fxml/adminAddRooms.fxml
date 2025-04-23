@@ -8,41 +8,47 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminAddRoomsController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" layoutX="-4.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" style="visibility: 50;" width="1280.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="720.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
+
+        <!-- Sidebar Buttons VBox -->
         <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" style="-fx-background-radius: 100;" text="Home">
+                <!-- REMOVED onAction -->
+                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" style="-fx-background-radius: 100;" text="Home">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" style="-fx-background-radius: 100; -fx-background-color: #596572;" text="Add Rooms" textFill="WHITE">
+                <!-- REMOVED onAction -->
+                <Button fx:id="addRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" style="-fx-background-radius: 100; -fx-background-color: #596572;" text="Add Rooms" textFill="WHITE">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" style="-fx-background-radius: 100;" text="View Rooms">
+                <!-- REMOVED onAction -->
+                <Button fx:id="viewRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" style="-fx-background-radius: 100;" text="View Rooms">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" style="-fx-background-radius: 100;" text="Manage Bookings">
+                <!-- REMOVED onAction -->
+                <Button fx:id="manageBookingsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" style="-fx-background-radius: 100;" text="Manage Bookings">
                     <VBox.margin>
                         <Insets bottom="60.0" />
                     </VBox.margin>
                 </Button>
             </children>
         </VBox>
+
+        <!-- Sidebar Icons VBox -->
         <VBox layoutX="965.0" layoutY="198.0" prefHeight="387.0" prefWidth="59.0">
             <children>
                 <ImageView fitHeight="65.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -76,6 +82,8 @@
                 </ImageView>
             </children>
         </VBox>
+
+        <!-- Header Labels -->
         <Label layoutX="1057.0" layoutY="42.0" prefHeight="63.0" prefWidth="103.0" text="Room">
             <font>
                 <Font name="Bell MT Bold" size="35.0" />
@@ -86,79 +94,67 @@
                 <Font name="Bell MT Bold" size="35.0" />
             </font>
         </Label>
-        <Button layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out" />
+
+        <!-- Logout Button -->
+        <!-- REMOVED onAction -->
+        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out" />
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../Images/logOutIcon.png" />
             </image>
         </ImageView>
+
+        <!-- Main Content Area -->
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="400.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
-      <VBox layoutX="89.0" layoutY="67.0" prefHeight="230.0" prefWidth="150.0">
-         <children>
-              <Label prefHeight="47.0" prefWidth="136.0" text="Room Number:">
-                  <font>
-                      <Font name="Bell MT Bold" size="18.0" />
-                  </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-              </Label>
-            <Label prefHeight="47.0" prefWidth="136.0" text="Room Type:">
-               <font>
-                  <Font name="Bell MT Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <Label prefHeight="47.0" prefWidth="136.0" text="Time Schedule:">
-               <font>
-                  <Font name="Bell MT Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
-            <Label prefHeight="47.0" prefWidth="136.0" text="Day:">
-               <font>
-                  <Font name="Bell MT Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <ComboBox layoutX="246.0" layoutY="127.0" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: #FFFF;" />
-      <TextField layoutX="246.0" layoutY="180.0" prefHeight="33.0" prefWidth="150.0" style="-fx-border-radius: 10000;" />
-      <ComboBox layoutX="246.0" layoutY="258.0" prefHeight="33.0" prefWidth="150.0" style="-fx-background-radius: 0; -fx-background-color: #FFFF;" />
-      <HBox layoutX="447.0" layoutY="180.0" prefHeight="44.0" prefWidth="292.0">
-         <children>
-            <TextField prefHeight="33.0" prefWidth="145.0">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-            </TextField>
-            <ComboBox prefHeight="33.0" prefWidth="50.0" style="-fx-background-color: #FFFF;" />
-         </children>
-         <padding>
-            <Insets right="20.0" />
-         </padding>
-      </HBox>
-      <Line endX="-77.0" layoutX="510.0" layoutY="198.0" startX="-100.0" />
-      <Label layoutX="300.0" layoutY="218.0" prefHeight="24.0" prefWidth="43.0" text="Start">
-         <font>
-            <Font name="Bell MT Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="497.0" layoutY="218.0" prefHeight="24.0" prefWidth="43.0" text="End">
-         <font>
-            <Font name="Bell MT Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="607.0" layoutY="218.0" prefHeight="24.0" prefWidth="72.0" text="AM/PM">
-         <font>
-            <Font name="Bell MT Bold" size="16.0" />
-         </font>
-      </Label>
-      <Button layoutX="668.0" layoutY="352.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE" />
-      <TextField layoutX="246.0" layoutY="73.0" prefHeight="33.0" prefWidth="150.0" />
+
+        <!-- Form Labels VBox -->
+        <VBox layoutX="89.0" layoutY="67.0" prefHeight="230.0" prefWidth="150.0">
+            <children>
+                <Label prefHeight="47.0" prefWidth="136.0" text="Room Number:">
+                    <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Label prefHeight="47.0" prefWidth="136.0" text="Room Type:">
+                    <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Label>
+                <Label prefHeight="47.0" prefWidth="136.0" text="Time Schedule:">
+                    <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="30.0" /> <!-- Adjusted bottom margin -->
+                    </VBox.margin>
+                </Label>
+                <Label prefHeight="47.0" prefWidth="136.0" text="Day:">
+                    <font>
+                        <Font name="Bell MT Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+
+        <!-- Form Input Fields -->
+        <TextField fx:id="roomNumberField" layoutX="246.0" layoutY="73.0" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No"/>
+        <ComboBox fx:id="roomTypeComboBox" layoutX="246.0" layoutY="127.0" prefHeight="33.0" prefWidth="150.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
+        <TextField fx:id="startTimeField" layoutX="246.0" layoutY="180.0" prefHeight="33.0" prefWidth="100.0" promptText="HH:mm (Start)" />
+        <Label layoutX="355.0" layoutY="184.0" text="-">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="endTimeField" layoutX="375.0" layoutY="180.0" prefHeight="33.0" prefWidth="100.0" promptText="HH:mm (End)" />
+        <ComboBox fx:id="dayComboBox" layoutX="246.0" layoutY="238.0" prefHeight="33.0" prefWidth="150.0" promptText="Select Day" style="-fx-background-color: #FFFF;" />
+        <!-- KEEP onAction here as handleAddRoomButtonAction IS defined in AdminAddRoomsController -->
+        <Button fx:id="addRoomButton" layoutX="668.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE" />
+
     </children>
 </AnchorPane>

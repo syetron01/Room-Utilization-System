@@ -43,7 +43,7 @@ public class SignUpController {
             SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Sign Up Successful", "Account created successfully! Please log in.");
             try {
                 // Navigate back to Login screen
-                SceneNavigator.navigateTo(event, "/fxml/Login.fxml"); // Adjust path
+                SceneNavigator.navigateTo(event, "fxml/Login.fxml"); // Adjust path
             } catch (IOException e) {
                 e.printStackTrace();
                 SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the login screen.");
@@ -56,7 +56,7 @@ public class SignUpController {
     @FXML
     private void handleLoginLinkAction(ActionEvent event) {
         try {
-            SceneNavigator.navigateTo(event, "/fxml/Login.fxml"); // Adjust path
+            SceneNavigator.navigateTo(event, "fxml/Login.fxml"); // Adjust path
         } catch (IOException e) {
             e.printStackTrace();
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the login screen.");

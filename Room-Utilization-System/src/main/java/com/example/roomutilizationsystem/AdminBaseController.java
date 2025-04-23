@@ -12,19 +12,19 @@ public abstract class AdminBaseController {
 
     // --- Navigation Methods ---
     protected void navigateToHome(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/adminHomePage.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/adminHome.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     protected void navigateToAddRooms(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/adminAddRooms.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/adminAddRooms.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     protected void navigateToViewRooms(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/adminViewRooms.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/adminViewRooms.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     protected void navigateToManageBookings(ActionEvent event) {
-        try { SceneNavigator.navigateTo(event, "/fxml/adminManageBookings.fxml"); } catch (IOException e) { handleNavError(e); }
+        try { SceneNavigator.navigateTo(event, "fxml/adminManageBookings.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
     // --- Logout ---
@@ -32,7 +32,7 @@ public abstract class AdminBaseController {
     protected void handleLogoutAction(ActionEvent event) {
         DataStore.logout(); // Clear the logged-in user
         try {
-            SceneNavigator.navigateTo(event, "/fxml/Login.fxml"); // Go back to login
+            SceneNavigator.navigateTo(event, "fxml/Login.fxml"); // Go back to login
         } catch (IOException e) {
             handleNavError(e);
         }
