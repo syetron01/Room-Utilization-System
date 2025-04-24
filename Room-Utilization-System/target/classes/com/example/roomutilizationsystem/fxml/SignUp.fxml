@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.SignUpController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b2" height="723.0" layoutY="-2.0" stroke="#9aa6b2" strokeType="INSIDE" width="650.0" />
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="723.0" layoutX="592.0" layoutY="-3.0" stroke="#9aa6b2" strokeType="INSIDE" width="105.0" />
+        <ImageView fitHeight="563.0" fitWidth="616.0" layoutX="529.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../Images/signUpImage.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="1029.0" layoutY="28.0" prefHeight="78.0" prefWidth="176.0" text="Room">
+            <font>
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
+            </font>
+        </Label>
+        <Label layoutX="914.0" layoutY="91.0" prefHeight="90.0" prefWidth="261.0" text="Utilization">
+            <font>
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
+            </font>
+        </Label>
+        <Label layoutX="992.0" layoutY="161.0" prefHeight="85.0" prefWidth="210.0" text="System">
+            <font>
+                <Font name="Franklin Gothic Demi Cond" size="66.0" />
+            </font>
+        </Label>
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="131.0" layoutY="91.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" width="378.0" />
+        <Label layoutX="255.0" layoutY="123.0" prefHeight="94.0" prefWidth="125.0" text="Sign Up" textFill="#fffbfb">
+            <font>
+                <Font name="Bell MT Bold" size="34.0" />
+            </font>
+        </Label>
+        <TextField layoutX="174.0" layoutY="265.0" prefHeight="45.0" prefWidth="294.0" />
+        <TextField layoutX="173.0" layoutY="365.0" prefHeight="45.0" prefWidth="296.0" />
+        <Label layoutX="173.0" layoutY="212.0" prefHeight="45.0" prefWidth="152.0" text="Username:" textFill="WHITE">
+            <font>
+                <Font name="Bell MT" size="27.0" />
+            </font>
+        </Label>
+        <Label layoutX="172.0" layoutY="314.0" prefHeight="59.0" prefWidth="176.0" text="Password:" textFill="WHITE">
+            <font>
+                <Font name="Bell MT" size="27.0" />
+            </font>
+        </Label>
+        <Hyperlink layoutX="216.0" layoutY="521.0" onAction="#handleLoginLinkAction" prefHeight="44.0" prefWidth="203.0" text="Already have an account? " textFill="WHITE">
+            <font>
+                <Font name="Bell MT" size="17.0" />
+            </font>
+        </Hyperlink>
+        <Button layoutX="172.0" layoutY="451.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-radius: 100; -fx-background-color: 323F4C;" text="Sign In" />
+    </children>
+</AnchorPane>

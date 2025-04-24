@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<!-- Added fx:controller -->
+
+<AnchorPane prefHeight="709.0" prefWidth="1269.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminManageBookingsController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="724.0" layoutX="-14.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="727.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="289.0" />
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="721.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
+
+        <!-- Sidebar Buttons VBox -->
+        <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
+            <children>
+                <!-- Added fx:id, Removed onAction -->
+                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" style="-fx-background-radius: 100;" text="Home">
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </Button>
+                <!-- Added fx:id, Removed onAction -->
+                <Button fx:id="addRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" style="-fx-background-radius: 100;" text="Add Rooms">
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </Button>
+                <!-- Added fx:id, Removed onAction -->
+                <Button fx:id="viewRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" style="-fx-background-radius: 100;" text="View Rooms">
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </Button>
+                <!-- Added fx:id (Fixes the error), Removed onAction -->
+                <Button fx:id="manageBookingsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" style="-fx-background-radius: 100; -fx-background-color: #596572;" text="Manage Bookings" textFill="WHITE">
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+
+        <!-- Sidebar Icons VBox -->
+        <VBox layoutX="965.0" layoutY="198.0" prefHeight="387.0" prefWidth="59.0">
+            <children>
+                <ImageView fitHeight="65.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../Images/homeAdmin.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </ImageView>
+                <ImageView fitHeight="50.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../Images/addAdmin.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </ImageView>
+                <ImageView fitHeight="50.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../Images/searchAdmin.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets bottom="60.0" />
+                    </VBox.margin>
+                </ImageView>
+                <ImageView fitHeight="65.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../Images/manageAdmin.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+
+        <!-- Logout Button -->
+        <!-- Added fx:id, Removed onAction -->
+        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+        <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../Images/logOutIcon.png" />
+            </image>
+        </ImageView>
+
+        <!-- Main Content Area -->
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="541.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
+        <Label layoutX="90.0" layoutY="50.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
+            <font>
+                <Font name="Bell MT Bold" size="18.0" />
+            </font>
+        </Label>
+        <!-- Added fx:id -->
+        <TextField fx:id="searchField" layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
+
+        <!-- Added fx:id -->
+        <TableView fx:id="bookingsTableView" layoutX="87.0" layoutY="107.0" prefHeight="426.0" prefWidth="744.0">
+            <columns>
+                <!-- Added fx:id for each column -->
+                <TableColumn fx:id="userCol" prefWidth="76.33332824707031" text="User" />
+                <TableColumn fx:id="roleCol" prefWidth="75.0" text="Role" />
+                <TableColumn fx:id="roomNoCol" prefWidth="77.0" text="Room No." />
+                <TableColumn fx:id="roomTypeCol" prefWidth="89.0" text="Room Type" />
+                <TableColumn fx:id="timeCol" prefWidth="167.0" text="Time Schedule" />
+                <TableColumn fx:id="dayCol" prefWidth="92.0" text="Day" />
+                <!-- Changed text to match controller -->
+                <TableColumn fx:id="actionCol" prefWidth="168.0" text="Action / Status" />
+            </columns>
+        </TableView>
+      <Label layoutX="1015.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
+         <font>
+            <Font name="Impact" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="1061.0" layoutY="50.0" prefHeight="66.0" prefWidth="98.0" text="Room" textFill="#596572">
+         <font>
+            <Font name="Impact" size="42.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
