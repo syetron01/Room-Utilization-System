@@ -43,7 +43,7 @@ public class LoginController {
                     // fxmlPath = "/com/example/roomutilizationsystem/fxml/adminHome.fxml";
                 } else if (user.getRole() == UserRole.FACULTY) {
                     // --- FIX: Use full absolute path from classpath root ---
-                    fxmlPath = "/com/example/roomutilizationsystem/fxml/StaffViewAvailableRooms.fxml"; // <-- Correct path
+                    fxmlPath = "/com/example/roomutilizationsystem/fxml/StaffViewAvailableRooms.fxml";// <-- Correct path
                 } else {
                     SceneNavigator.showAlert(Alert.AlertType.ERROR, "Login Error", "Unknown user role.");
                     return;

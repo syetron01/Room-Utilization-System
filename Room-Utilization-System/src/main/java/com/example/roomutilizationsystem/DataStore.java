@@ -264,7 +264,7 @@ public class DataStore { // Changed visibility to public
 
         // Add default faculty users (matching UI examples)
         User faculty1 = new User("Roche", "pass", UserRole.FACULTY);
-        User faculty2 = new User("Poro", "pass", UserRole.FACULTY);
+        User faculty2 = new User("test", "pass", UserRole.FACULTY);
         User faculty3 = new User("Han", "pass", UserRole.FACULTY);
         users.put(faculty1.getUsername(), faculty1);
         users.put(faculty2.getUsername(), faculty2);

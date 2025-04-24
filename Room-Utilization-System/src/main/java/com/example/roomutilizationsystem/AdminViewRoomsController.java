@@ -1,35 +1,33 @@
 package com.example.roomutilizationsystem;
 
+import javafx.beans.property.SimpleStringProperty; // Required for lambda usage
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.cell.PropertyValueFactory; // Still potentially used for other columns if added later
 import javafx.util.Callback;
 
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-// Import DataStore, RoomSchedule, SceneNavigator, AdminBaseController etc.
-
 public class AdminViewRoomsController extends AdminBaseController {
 
     @FXML private TextField searchField;
-    @FXML private TableView<RoomSchedule> roomsTableView; // Use RoomSchedule
+    @FXML private TableView<RoomSchedule> roomsTableView;
 
-    // Inject Table Columns (Set fx:id in FXML)
+    // Inject Table Columns (Ensure fx:id is set in FXML for ALL columns)
+    @FXML private TableColumn<RoomSchedule, Void> editCol;
     @FXML private TableColumn<RoomSchedule, String> roomNoCol;
     @FXML private TableColumn<RoomSchedule, String> roomTypeCol;
     @FXML private TableColumn<RoomSchedule, String> timeCol;
     @FXML private TableColumn<RoomSchedule, String> dayCol;
-    @FXML private TableColumn<RoomSchedule, Void> editCol;   // For Edit button
-    @FXML private TableColumn<RoomSchedule, Void> removeCol; // For Remove button
+    @FXML private TableColumn<RoomSchedule, Void> removeCol;
 
-    // Inject Sidebar Buttons
+    // Inject Sidebar Buttons (Ensure fx:id is set in FXML)
     @FXML private Button homeButton;
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
@@ -38,60 +36,105 @@ public class AdminViewRoomsController extends AdminBaseController {
 
     private ObservableList<RoomSchedule> masterScheduleList;
     private FilteredList<RoomSchedule> filteredScheduleList;
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
-
 
     @FXML
     public void initialize() {
+        // Setup sidebar buttons
         setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
-        viewRoomsButton.setDisable(true); // Disable current page button
+        // Disable the button for the current page
+        if (viewRoomsButton != null) {
+            viewRoomsButton.setDisable(true);
+            viewRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572;");
+            viewRoomsButton.setTextFill(javafx.scene.paint.Color.WHITE);
+        }
 
         // --- Configure Table ---
-        roomNoCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
-        roomTypeCol.setCellValueFactory(new PropertyValueFactory<>("roomType"));
-        // Format time range
-        timeCol.setCellValueFactory(cellData -> {
-            RoomSchedule schedule = cellData.getValue();
-            String timeRange = schedule.getStartTime().format(timeFormatter) + " - " + schedule.getEndTime().format(timeFormatter);
-            return new javafx.beans.property.SimpleStringProperty(timeRange);
-        });
-        dayCol.setCellValueFactory(cellData -> {
-            DayOfWeek day = cellData.getValue().getDayOfWeek();
-            String dayStr = day.toString();
-            // Capitalize properly
-            dayStr = dayStr.substring(0, 1).toUpperCase() + dayStr.substring(1).toLowerCase();
-            return new javafx.beans.property.SimpleStringProperty(dayStr);
-        });
+        if (roomNoCol != null) {
+            // Use Lambda instead of PropertyValueFactory
+            roomNoCol.setCellValueFactory(cellData -> {
+                RoomSchedule schedule = cellData.getValue();
+                return new SimpleStringProperty(schedule != null ? schedule.getRoomNumber() : "");
+            });
+        } else {
+            System.err.println("AdminViewRoomsController: roomNoCol is null. Check FXML fx:id.");
+        }
 
+        if (roomTypeCol != null) {
+            // Use Lambda instead of PropertyValueFactory
+            roomTypeCol.setCellValueFactory(cellData -> {
+                RoomSchedule schedule = cellData.getValue();
+                return new SimpleStringProperty(schedule != null ? schedule.getRoomType() : "");
+            });
+        } else {
+            System.err.println("AdminViewRoomsController: roomTypeCol is null. Check FXML fx:id.");
+        }
+
+        // Format time range using the method from RoomSchedule
+        if (timeCol != null) {
+            timeCol.setCellValueFactory(cellData -> {
+                RoomSchedule schedule = cellData.getValue();
+                return new SimpleStringProperty(schedule != null ? schedule.getTimeRangeString() : "");
+            });
+        } else {
+            System.err.println("AdminViewRoomsController: timeCol is null. Check FXML fx:id.");
+        }
+
+        // Format day using the method from RoomSchedule
+        if (dayCol != null) {
+            dayCol.setCellValueFactory(cellData -> {
+                RoomSchedule schedule = cellData.getValue();
+                return new SimpleStringProperty(schedule != null ? schedule.getDayColDisplay() : "");
+            });
+        } else {
+            System.err.println("AdminViewRoomsController: dayCol is null. Check FXML fx:id.");
+        }
 
         // Add Edit Button Column
-        setupActionColumn(editCol, "Edit", this::handleEditAction);
+        if(editCol != null) setupActionColumn(editCol, "Edit", this::handleEditAction);
+        else System.err.println("AdminViewRoomsController: editCol is null. Check FXML fx:id.");
 
         // Add Remove Button Column
-        setupActionColumn(removeCol, "Remove", this::handleRemoveAction);
-
+        if(removeCol != null) setupActionColumn(removeCol, "Remove", this::handleRemoveAction);
+        else System.err.println("AdminViewRoomsController: removeCol is null. Check FXML fx:id.");
 
         // --- Load Data and Setup Filtering ---
-        masterScheduleList = FXCollections.observableArrayList(DataStore.getAllRoomSchedules());
-        filteredScheduleList = new FilteredList<>(masterScheduleList, p -> true); // Show all initially
+        try {
+            masterScheduleList = FXCollections.observableArrayList(DataStore.getAllRoomSchedules());
 
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredScheduleList.setPredicate(schedule -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-                if (schedule.getRoomNumber().toLowerCase().contains(lowerCaseFilter)) return true;
-                if (schedule.getRoomType().toLowerCase().contains(lowerCaseFilter)) return true;
-                if (schedule.getTimeRangeString().toLowerCase().contains(lowerCaseFilter)) return true; // Check formatted time
-                if (schedule.getDayOfWeek().toString().toLowerCase().contains(lowerCaseFilter)) return true;
+            // Debug print (kept for verification)
+            System.out.println("\n--- AdminViewRoomsController Loaded Schedules ---");
+            if (masterScheduleList == null || masterScheduleList.isEmpty()) { System.out.println("No schedules loaded from DataStore."); }
+            else { masterScheduleList.forEach(schedule -> { if (schedule == null) { System.out.println("  Loaded a null schedule object."); } else { System.out.println("  ID: " + schedule.getScheduleId() + ", Room: [" + schedule.getRoomNumber() + "]" + ", Type: [" + schedule.getRoomType() + "]" + ", Day: " + schedule.getDayOfWeek() + ", Time: " + schedule.getTimeRangeString()); } }); }
+            System.out.println("-----------------------------------------------");
 
-                return false;
-            });
-        });
+            filteredScheduleList = new FilteredList<>(masterScheduleList, p -> true);
 
-        roomsTableView.setItems(filteredScheduleList);
-        roomsTableView.setPlaceholder(new Label("No room schedules found."));
+            if (searchField != null) {
+                searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filteredScheduleList.setPredicate(schedule -> {
+                        if (newValue == null || newValue.isEmpty()) return true;
+                        if (schedule == null) return false;
+                        String lowerCaseFilter = newValue.toLowerCase();
+                        if (schedule.getRoomNumber() != null && schedule.getRoomNumber().toLowerCase().contains(lowerCaseFilter)) return true;
+                        if (schedule.getRoomType() != null && schedule.getRoomType().toLowerCase().contains(lowerCaseFilter)) return true;
+                        if (schedule.getTimeRangeString() != null && schedule.getTimeRangeString().toLowerCase().contains(lowerCaseFilter)) return true;
+                        if (schedule.getDayOfWeek() != null && schedule.getDayOfWeek().toString().toLowerCase().contains(lowerCaseFilter)) return true;
+                        return false;
+                    });
+                });
+            } else { System.err.println("AdminViewRoomsController: searchField is null. Check FXML fx:id."); }
+
+            if (roomsTableView != null) {
+                roomsTableView.setItems(filteredScheduleList);
+                roomsTableView.setPlaceholder(new Label("No room schedules found. Add schedules using the 'Add Rooms' page."));
+            } else { System.err.println("AdminViewRoomsController: roomsTableView is null. Check FXML fx:id."); }
+
+        } catch (Exception e) {
+            System.err.println("Error during AdminViewRoomsController initialization: " + e.getMessage());
+            e.printStackTrace();
+            SceneNavigator.showAlert(Alert.AlertType.ERROR, "Initialization Error", "Failed to load room schedule data.");
+            if (roomsTableView != null) { roomsTableView.setPlaceholder(new Label("Error loading data.")); }
+        }
     }
 
     // Generic method to setup columns with a single button
@@ -101,29 +144,21 @@ public class AdminViewRoomsController extends AdminBaseController {
             public TableCell<RoomSchedule, Void> call(final TableColumn<RoomSchedule, Void> param) {
                 final TableCell<RoomSchedule, Void> cell = new TableCell<>() {
                     private final Button btn = new Button(buttonText);
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            RoomSchedule schedule = getTableView().getItems().get(getIndex());
-                            actionHandler.accept(schedule);
+                            if (!isEmpty() && getIndex() >= 0 && getIndex() < getTableView().getItems().size()) {
+                                RoomSchedule schedule = getTableView().getItems().get(getIndex());
+                                if (schedule != null) actionHandler.accept(schedule);
+                            }
                         });
-                        // Optional: Add styling based on button text
-                        if ("Remove".equalsIgnoreCase(buttonText)) {
-                            btn.setStyle("-fx-background-color: #f08080; -fx-text-fill: white;");
-                        } else {
-                            btn.setStyle("-fx-background-color: #add8e6;"); // Light blue for Edit
-                        }
-                        btn.setMinWidth(70); // Ensure buttons have reasonable width
+                        if ("Remove".equalsIgnoreCase(buttonText)) btn.setStyle("-fx-background-color: #f08080; -fx-text-fill: white;");
+                        else if ("Edit".equalsIgnoreCase(buttonText)) btn.setStyle("-fx-background-color: #add8e6;");
+                        btn.setMinWidth(70);
                     }
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
+                        setGraphic(empty || getIndex() < 0 ? null : btn);
                     }
                 };
                 return cell;
@@ -133,39 +168,33 @@ public class AdminViewRoomsController extends AdminBaseController {
     }
 
     private void handleEditAction(RoomSchedule schedule) {
-        // **Implementation Note:** Editing is complex.
-        // Option 1: Open a new Dialog/Window pre-filled with schedule data.
-        // Option 2: Allow inline editing in the table (more complex).
-        // Option 3: For simplicity here, just show info and remind user to delete and re-add.
         SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Edit Schedule",
                 "Editing schedule ID: " + schedule.getScheduleId() + "\n" +
                         "Room: " + schedule.getRoomNumber() + " (" + schedule.getRoomType() + ")\n" +
                         "Time: " + schedule.getTimeRangeString() + "\n" +
-                        "Day: " + schedule.getDayOfWeek() + "\n\n" +
-                        "(Functionality to modify directly is not implemented in this demo. Please Remove and Add again if changes are needed.)");
-
-        // To implement fully, you'd load a form/dialog here.
+                        "Day: " + schedule.getDayColDisplay() + "\n\n" +
+                        "(To modify, please Remove this schedule and Add a new one with the desired changes.)");
     }
 
     private void handleRemoveAction(RoomSchedule schedule) {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle("Confirm Deletion");
         confirmation.setHeaderText("Delete Room Schedule?");
-        confirmation.setContentText("Are you sure you want to delete this schedule?\n" + schedule +
-                "\n\nNote: This will NOT delete existing bookings for this schedule, but will prevent future bookings.");
+        confirmation.setContentText("Are you sure you want to delete this schedule?\n" +
+                "Room: " + schedule.getRoomNumber() + ", Day: " + schedule.getDayColDisplay() +
+                ", Time: " + schedule.getTimeRangeString() +
+                "\n\nNote: This prevents future bookings for this exact schedule slot but does NOT automatically cancel existing bookings.");
         confirmation.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
-
 
         Optional<ButtonType> result = confirmation.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             boolean removed = DataStore.removeRoomSchedule(schedule.getScheduleId());
             if (removed) {
-                masterScheduleList.remove(schedule); // Remove from the underlying list for the table
-                // No need to call setItems again, the FilteredList updates automatically.
+                masterScheduleList.remove(schedule);
                 SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Success", "Schedule removed successfully.");
             } else {
-                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Error", "Could not remove the schedule.");
+                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Error", "Could not remove the schedule (it might have already been removed).");
             }
         }
     }
