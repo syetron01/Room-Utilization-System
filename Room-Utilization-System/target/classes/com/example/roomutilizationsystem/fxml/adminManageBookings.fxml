@@ -99,17 +99,17 @@
         </ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="541.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
-        <Label layoutX="90.0" layoutY="50.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="524.0" layoutX="53.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
+        <Label layoutX="88.0" layoutY="93.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
             <font>
                 <Font name="Bell MT Bold" size="18.0" />
             </font>
         </Label>
         <!-- Added fx:id -->
-        <TextField fx:id="searchField" layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
+        <TextField fx:id="searchField" layoutX="216.0" layoutY="98.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
 
         <!-- Added fx:id -->
-        <TableView fx:id="bookingsTableView" layoutX="87.0" layoutY="107.0" prefHeight="426.0" prefWidth="744.0">
+        <TableView fx:id="bookingsTableView" layoutX="88.0" layoutY="148.0" prefHeight="426.0" prefWidth="744.0">
             <columns>
                 <!-- Added fx:id for each column -->
                 <TableColumn fx:id="userCol" prefWidth="76.33332824707031" text="User" />
@@ -130,6 +130,11 @@
       <Label layoutX="1061.0" layoutY="50.0" prefHeight="66.0" prefWidth="98.0" text="Room" textFill="#596572">
          <font>
             <Font name="Impact" size="42.0" />
+         </font>
+      </Label>
+      <Label layoutX="53.0" layoutY="14.0" prefHeight="61.0" prefWidth="313.0" text="Manage Bookings" textFill="WHITE">
+         <font>
+            <Font name="Impact" size="40.0" />
          </font>
       </Label>
     </children>

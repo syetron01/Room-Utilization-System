@@ -72,10 +72,7 @@
             <DropShadow offsetX="10.0" />
          </effect>
       </Label>
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="224.0" layoutX="47.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="813.0">
-         <effect>
-            <DropShadow />
-         </effect></Rectangle>
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="224.0" layoutX="47.0" layoutY="106.0" stroke="#596572" strokeType="INSIDE" width="813.0" />
       <ImageView fitHeight="322.0" fitWidth="335.0" layoutX="509.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image><Image url="@../../../../Images/adminImage.png" /></image>
       </ImageView>
@@ -101,8 +98,8 @@
          </children>
          <padding><Insets left="100.0" /></padding>
       </HBox>
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="83.0" layoutX="259.0" layoutY="361.0" stroke="BLACK" strokeType="INSIDE" width="172.0" />
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="83.0" layoutX="526.0" layoutY="361.0" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="83.0" layoutX="259.0" layoutY="361.0" stroke="#596572" strokeType="INSIDE" width="172.0" />
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="83.0" layoutX="526.0" layoutY="361.0" stroke="#596572" strokeType="INSIDE" width="166.0" />
       <TextArea fx:id="labRoomsTextArea" blendMode="MULTIPLY" layoutX="311.0" layoutY="359.0" prefHeight="75.0" prefWidth="96.0" style="-fx-font-size: 36px; -fx-text-alignment: center; -fx-background-color: none;" /> <!-- Added fx:id and styling -->
       <TextArea fx:id="lectureRoomsTextArea" blendMode="MULTIPLY" layoutX="575.0" layoutY="359.0" prefHeight="85.0" prefWidth="96.0" style="-fx-font-size: 36px; -fx-text-alignment: center; -fx-background-color: none;" />
       <Label layoutX="1065.0" layoutY="53.0" text="Room" textFill="#596572">

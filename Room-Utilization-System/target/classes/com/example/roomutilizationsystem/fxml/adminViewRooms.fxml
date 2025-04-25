@@ -99,17 +99,17 @@
         </ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="541.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
-        <Label layoutX="90.0" layoutY="50.0" prefHeight="47.0" prefWidth="136.0" text="Search Room:">
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="532.0" layoutX="53.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
+        <Label layoutX="89.0" layoutY="94.0" prefHeight="47.0" prefWidth="136.0" text="Search Room:">
             <font>
                 <Font name="Bell MT Bold" size="18.0" />
             </font>
         </Label>
         <!-- Added fx:id -->
-        <TextField fx:id="searchField" layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" style="-fx-background-radius: 100;" />
+        <TextField fx:id="searchField" layoutX="225.0" layoutY="99.0" prefHeight="37.0" prefWidth="161.0" style="-fx-background-radius: 100;" />
 
         <!-- Added fx:id -->
-        <TableView fx:id="roomsTableView" layoutX="87.0" layoutY="107.0" prefHeight="426.0" prefWidth="744.0">
+        <TableView fx:id="roomsTableView" layoutX="88.0" layoutY="147.0" prefHeight="436.0" prefWidth="744.0">
             <columns>
                 <!-- Added fx:id for each column -->
                 <!-- Note: The UI image shows Edit before Room No., adjust if needed -->
@@ -129,6 +129,11 @@
       <Label layoutX="1060.0" layoutY="46.0" prefHeight="76.0" prefWidth="98.0" text="Room" textFill="#596572">
          <font>
             <Font name="Impact" size="42.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="16.0" prefHeight="61.0" prefWidth="209.0" text="View Rooms" textFill="WHITE">
+         <font>
+            <Font name="Impact" size="40.0" />
          </font>
       </Label>
     </children>

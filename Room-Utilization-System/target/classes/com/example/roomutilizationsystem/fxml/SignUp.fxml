@@ -14,12 +14,12 @@
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b2" height="727.0" layoutX="-4.0" layoutY="-2.0" stroke="#9aa6b2" strokeType="INSIDE" width="654.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="727.0" layoutX="592.0" layoutY="-3.0" stroke="#9aa6b2" strokeType="INSIDE" width="92.0" />
-        <ImageView fitHeight="540.0" fitWidth="605.0" layoutX="519.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="624.0" fitWidth="642.0" layoutX="528.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../../../src/main/resources/Images/signUpImage.png" />
             </image>
         </ImageView>
-        <Label layoutX="938.0" layoutY="82.0" prefHeight="97.0" prefWidth="278.0" text="Utilization">
+        <Label layoutX="969.0" layoutY="83.0" prefHeight="97.0" prefWidth="278.0" text="Utilization" textFill="#323f4c">
             <font>
                 <Font name="Impact" size="66.0" />
             </font>
@@ -46,17 +46,17 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label layoutX="1052.0" layoutY="20.0" prefHeight="90.0" prefWidth="164.0" text="Room">
+      <Label layoutX="1083.0" layoutY="20.0" prefHeight="90.0" prefWidth="164.0" text="Room" textFill="#323f4c">
          <font>
             <Font name="Impact" size="66.0" />
          </font>
       </Label>
-      <Label layoutX="1013.0" layoutY="155.0" prefHeight="90.0" prefWidth="203.0" text="System">
+      <Label layoutX="1041.0" layoutY="154.0" prefHeight="90.0" prefWidth="203.0" text="System" textFill="#323f4c">
          <font>
             <Font name="Impact" size="66.0" />
          </font>
       </Label>
-      <Label layoutX="262.0" layoutY="154.0" prefHeight="51.0" prefWidth="116.0" text="Sign Up" textFill="WHITE">
+      <Label layoutX="262.0" layoutY="155.0" prefHeight="62.0" prefWidth="116.0" text="Sign Up" textFill="#323f4c">
          <font>
             <Font name="Impact" size="35.0" />
          </font>

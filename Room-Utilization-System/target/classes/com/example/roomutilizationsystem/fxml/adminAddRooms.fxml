@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,7 +19,7 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminAddRoomsController">
     <children>
         <!-- Background and Sidebar (Keep as before) -->
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" layoutX="-4.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="720.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
         <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
@@ -48,9 +47,9 @@
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/logOutIcon.png" /></image></ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#EAEAEA" height="400.0" layoutX="54.0" layoutY="94.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#EAEAEA" height="400.0" layoutX="58.0" layoutY="81.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
           <!-- Row 1: Room Number -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="139.0" spacing="10.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="114.0" spacing="10.0">
               <children>
                   <Label minWidth="130.0" text="Room Number:">
                <font>
@@ -60,15 +59,15 @@
                   <TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
               </children>
           </HBox>
-            <ComboBox fx:id="roomTypeComboBox" layoutX="228.0" layoutY="186.0" prefHeight="33.0" prefWidth="150.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
-            <Label layoutX="89.0" layoutY="189.0" minWidth="130.0" text="Room Type:">
+            <ComboBox fx:id="roomTypeComboBox" layoutX="231.0" layoutY="170.0" prefHeight="33.0" prefWidth="150.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
+            <Label layoutX="89.0" layoutY="173.0" minWidth="130.0" text="Room Type:">
          <font>
             <Font name="Bell MT Bold" size="18.0" />
          </font>
       </Label>
 
           <!-- Row 3: Time Schedule -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="237.0" spacing="8.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="226.0" spacing="8.0">
               <children>
                   <Label minWidth="130.0" text="Time Schedule:">
                <font>
@@ -96,13 +95,13 @@
           </HBox>
 
         <!-- Add Room Button -->
-        <Button fx:id="addRoomButton" layoutX="693.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
+        <Button fx:id="addRoomButton" layoutX="684.0" layoutY="412.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
 
           <!-- Row 4: Day -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="333.0" prefHeight="27.0" prefWidth="555.0" spacing="10.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="330.0" prefHeight="27.0" prefWidth="555.0" spacing="10.0">
               <children>
                   <Label minWidth="130.0" text="Day(s):"> <!-- Changed Label Text -->
                       <font>
@@ -123,7 +122,7 @@
                   </HBox>
               </children>
           </HBox>
-      <HBox layoutX="225.0" layoutY="285.0" prefHeight="41.0" prefWidth="516.0">
+      <HBox layoutX="225.0" layoutY="273.0" prefHeight="41.0" prefWidth="516.0">
          <children>
                   <Label text="End:">
                <font>
@@ -160,13 +159,10 @@
             <Font name="Impact" size="40.0" />
          </font>
       </Label>
-      <Label layoutX="58.0" layoutY="31.0" prefHeight="61.0" prefWidth="192.0" text="Add Rooms" textFill="WHITE">
+      <Label layoutX="58.0" layoutY="13.0" prefHeight="61.0" prefWidth="192.0" text="Add Rooms" textFill="WHITE">
          <font>
             <Font name="Impact" size="40.0" />
          </font>
-         <effect>
-            <DropShadow />
-         </effect>
       </Label>
 
     </children>

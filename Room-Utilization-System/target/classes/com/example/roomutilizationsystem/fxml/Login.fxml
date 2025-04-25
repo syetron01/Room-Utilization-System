@@ -15,17 +15,17 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/log-in.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.LoginController">
    <children>
       <!-- Background elements -->
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c6772" height="720.0" layoutX="634.0" stroke="#5c6772" strokeType="INSIDE" width="646.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6c7680" height="720.0" layoutX="634.0" stroke="#5c6772" strokeType="INSIDE" width="646.0" />
       <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#5c6772" height="720.0" layoutX="603.0" stroke="#5c6772" strokeType="INSIDE" width="83.0" />
 
       <!-- Left side image and title -->
-      <ImageView fitHeight="562.0" fitWidth="627.0" layoutX="149.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="628.0" fitWidth="637.0" layoutX="136.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../src/main/resources/Images/logInImage.png" />
          </image>
       </ImageView>
 
-      <Label layoutX="48.0" layoutY="22.0" prefHeight="78.0" prefWidth="282.0" text="Room">
+      <Label layoutX="27.0" layoutY="22.0" prefHeight="78.0" prefWidth="282.0" text="Room" textFill="#323f4c">
          <font>
             <Font name="Impact" size="64.0" />
          </font>
@@ -50,17 +50,17 @@
             <Font name="Bell MT" size="14.0" />
          </font>
       </Hyperlink>
-      <Label layoutX="48.0" layoutY="81.0" prefHeight="104.0" prefWidth="282.0" text="Utilization">
+      <Label layoutX="27.0" layoutY="81.0" prefHeight="104.0" prefWidth="282.0" text="Utilization" textFill="#323f4c">
          <font>
             <Font name="Impact" size="64.0" />
          </font>
       </Label>
-      <Label layoutX="48.0" layoutY="159.0" prefHeight="78.0" prefWidth="282.0" text="System">
+      <Label layoutX="27.0" layoutY="159.0" prefHeight="78.0" prefWidth="282.0" text="System" textFill="#323f4c">
          <font>
             <Font name="Impact" size="64.0" />
          </font>
       </Label>
-      <Label layoutX="915.0" layoutY="159.0" prefHeight="51.0" prefWidth="116.0" text="Sign Up" textFill="WHITE">
+      <Label layoutX="915.0" layoutY="159.0" prefHeight="62.0" prefWidth="128.0" text="Sign Up" textFill="#323f4c">
          <font>
             <Font name="Impact" size="35.0" />
          </font>
