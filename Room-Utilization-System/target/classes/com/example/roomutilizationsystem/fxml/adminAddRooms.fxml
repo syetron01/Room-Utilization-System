@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -47,9 +48,9 @@
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/logOutIcon.png" /></image></ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#EAEAEA" height="400.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#EAEAEA" height="400.0" layoutX="54.0" layoutY="94.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
           <!-- Row 1: Room Number -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="80.0" spacing="10.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="139.0" spacing="10.0">
               <children>
                   <Label minWidth="130.0" text="Room Number:">
                <font>
@@ -59,15 +60,15 @@
                   <TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
               </children>
           </HBox>
-            <ComboBox fx:id="roomTypeComboBox" layoutX="234.0" layoutY="138.0" prefHeight="33.0" prefWidth="144.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
-            <Label layoutX="89.0" layoutY="141.0" minWidth="130.0" text="Room Type:">
+            <ComboBox fx:id="roomTypeComboBox" layoutX="228.0" layoutY="186.0" prefHeight="33.0" prefWidth="150.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
+            <Label layoutX="89.0" layoutY="189.0" minWidth="130.0" text="Room Type:">
          <font>
             <Font name="Bell MT Bold" size="18.0" />
          </font>
       </Label>
 
           <!-- Row 3: Time Schedule -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="197.0" spacing="8.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="237.0" spacing="8.0">
               <children>
                   <Label minWidth="130.0" text="Time Schedule:">
                <font>
@@ -95,13 +96,13 @@
           </HBox>
 
         <!-- Add Room Button -->
-        <Button fx:id="addRoomButton" layoutX="668.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
+        <Button fx:id="addRoomButton" layoutX="693.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="47.0" prefWidth="144.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
 
           <!-- Row 4: Day -->
-          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="311.0" prefHeight="27.0" prefWidth="555.0" spacing="10.0">
+          <HBox alignment="CENTER_LEFT" layoutX="89.0" layoutY="333.0" prefHeight="27.0" prefWidth="555.0" spacing="10.0">
               <children>
                   <Label minWidth="130.0" text="Day(s):"> <!-- Changed Label Text -->
                       <font>
@@ -122,7 +123,7 @@
                   </HBox>
               </children>
           </HBox>
-      <HBox layoutX="227.0" layoutY="253.0" prefHeight="41.0" prefWidth="522.0">
+      <HBox layoutX="225.0" layoutY="285.0" prefHeight="41.0" prefWidth="516.0">
          <children>
                   <Label text="End:">
                <font>
@@ -158,6 +159,14 @@
          <font>
             <Font name="Impact" size="40.0" />
          </font>
+      </Label>
+      <Label layoutX="58.0" layoutY="31.0" prefHeight="61.0" prefWidth="192.0" text="Add Rooms" textFill="WHITE">
+         <font>
+            <Font name="Impact" size="40.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Label>
 
     </children>
