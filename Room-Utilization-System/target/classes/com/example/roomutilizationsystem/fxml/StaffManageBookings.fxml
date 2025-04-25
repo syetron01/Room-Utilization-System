@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Ensure fx:controller is correct -->
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.StaffManageBookingsController">
     <children>
         <!-- Sidebar Background -->
@@ -69,7 +70,7 @@
         </TableView>
 
         <!-- Approved/Other Bookings Section -->
-        <Label layoutX="308.0" layoutY="452.0" prefHeight="26.0" prefWidth="200.0" text="Approved &amp; Past Bookings"> <!-- Changed text -->
+        <Label layoutX="308.0" layoutY="452.0" prefHeight="30.0" prefWidth="241.0" text="Approved &amp; Past Bookings"> <!-- Changed text -->
             <font><Font name="Bell MT Bold" size="20.0" /></font>
         </Label>
         <!-- Added fx:id -->
