@@ -14,7 +14,6 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Added fx:controller -->
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminViewRoomsController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" layoutX="-4.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
@@ -86,12 +85,21 @@
             </children>
         </VBox>
 
+        <!-- Header Labels -->
+        <Label layoutX="1057.0" layoutY="42.0" prefHeight="63.0" prefWidth="103.0" text="Room">
+            <font>
+                <Font name="Bell MT Bold" size="35.0" />
+            </font>
+        </Label>
+        <Label layoutX="1024.0" layoutY="89.0" prefHeight="65.0" prefWidth="167.0" text="Utilization">
+            <font>
+                <Font name="Bell MT Bold" size="35.0" />
+            </font>
+        </Label>
+
         <!-- Logout Button -->
         <!-- Added fx:id, Removed onAction -->
-        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font></Button>
+        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out" />
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../Images/logOutIcon.png" />
@@ -121,15 +129,5 @@
                 <TableColumn fx:id="removeCol" prefWidth="153.0" text="Remove" />
             </columns>
         </TableView>
-      <Label layoutX="1014.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
-         <font>
-            <Font name="Impact" size="40.0" />
-         </font>
-      </Label>
-      <Label layoutX="1060.0" layoutY="46.0" prefHeight="76.0" prefWidth="98.0" text="Room" textFill="#596572">
-         <font>
-            <Font name="Impact" size="42.0" />
-         </font>
-      </Label>
     </children>
 </AnchorPane>

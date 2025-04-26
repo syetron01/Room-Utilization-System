@@ -8,10 +8,12 @@ import javafx.scene.control.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.Duration; // Import Duration
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.Objects; // Import Objects for requireNonNull
 
 public class AdminAddRoomsController extends AdminBaseController {
 
@@ -25,8 +27,7 @@ public class AdminAddRoomsController extends AdminBaseController {
     @FXML private ComboBox<String> endMinuteComboBox;
     @FXML private ComboBox<String> amPmEndComboBox;
 
-    // Day ComboBox replaced with CheckBoxes
-    // @FXML private ComboBox<DayOfWeek> dayComboBox; // Removed
+    // Day CheckBoxes
     @FXML private CheckBox mondayCheckBox;
     @FXML private CheckBox tuesdayCheckBox;
     @FXML private CheckBox wednesdayCheckBox;
@@ -48,13 +49,14 @@ public class AdminAddRoomsController extends AdminBaseController {
 
     @FXML
     public void initialize() {
+        // Call superclass method to set up navigation
         setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
-        addRoomsButton.setDisable(true);
+        addRoomsButton.setDisable(true); // Disable button for the current page
 
         // Populate Room Types
         roomTypeComboBox.setItems(FXCollections.observableArrayList("Laboratory", "Lecture", "Meeting Room"));
 
-        // Populate Time ComboBoxes (as before)
+        // Populate Time ComboBoxes
         ObservableList<Integer> hours = FXCollections.observableArrayList(
                 IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList())
         );
@@ -105,11 +107,7 @@ public class AdminAddRoomsController extends AdminBaseController {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Input Error", "Please select at least one day.");
             return;
         }
-        if (selectedDays.size() > 3) {
-            SceneNavigator.showAlert(Alert.AlertType.WARNING, "Input Error", "Please select a maximum of 3 days.");
-            return;
-        }
-
+        // Removed the > 3 days limit as it's unusual for availability
 
         LocalTime startTime;
         LocalTime endTime;
@@ -119,14 +117,22 @@ public class AdminAddRoomsController extends AdminBaseController {
             startTime = combineTimeComponents(startHour, startMinute, startAmPm, "Start");
             endTime = combineTimeComponents(endHour, endMinute, endAmPm, "End");
 
-            if (endTime.isBefore(startTime) || endTime.equals(startTime)) {
-                if(startAmPm.equals("PM") && endAmPm.equals("AM")) {
-                    SceneNavigator.showAlert(Alert.AlertType.ERROR, "Input Error", "End time cannot be on the next day.");
+            if (!endTime.isAfter(startTime)) { // Use isAfter for strict check
+                // Check if the user intended next day (e.g. 10 PM to 2 AM) - the current time parser doesn't handle this
+                if(startAmPm.equalsIgnoreCase("PM") && endAmPm.equalsIgnoreCase("AM")) {
+                    SceneNavigator.showAlert(Alert.AlertType.ERROR, "Input Error", "Schedules cannot span across midnight/to the next day.");
                 } else {
                     SceneNavigator.showAlert(Alert.AlertType.ERROR, "Input Error", "End time must be after start time.");
                 }
                 return;
             }
+
+            // Basic check: schedule duration >= 15 mins
+            if (Duration.between(startTime, endTime).toMinutes() < 15) {
+                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Input Error", "Schedule duration must be at least 15 minutes.");
+                return;
+            }
+
 
         } catch (NumberFormatException e){
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Input Error", "Invalid minute format selected.");
@@ -140,35 +146,61 @@ public class AdminAddRoomsController extends AdminBaseController {
             return;
         }
 
-        // --- Create and Add Schedule(s) ---
+        // --- Attempt to Create and Add Schedule(s) with Conflict Check ---
         int schedulesAdded = 0;
         List<String> addedDaysList = new ArrayList<>(); // For success message
-        try {
-            // Iterate through the selected days and add a schedule for each
-            for (DayOfWeek day : selectedDays) {
-                RoomSchedule newSchedule = new RoomSchedule(roomNumber, roomType, startTime, endTime, day);
-                DataStore.addRoomSchedule(newSchedule); // Add to data store
+        List<String> conflictDaysList = new ArrayList<>(); // For conflict message
+
+        for (DayOfWeek day : selectedDays) {
+            // Create a NEW schedule object for each day
+            RoomSchedule newSchedule = new RoomSchedule(roomNumber, roomType, startTime, endTime, day);
+            // Use the updated DataStore method that includes conflict checking
+            boolean success = DataStore.addRoomSchedule(newSchedule);
+
+            if (success) {
                 schedulesAdded++;
+                // Get display name of the day
                 addedDaysList.add(day.toString().substring(0, 1).toUpperCase() + day.toString().substring(1).toLowerCase());
-            }
-
-            if (schedulesAdded > 0) {
-                DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("h:mm a");
-                String daysString = String.join(", ", addedDaysList);
-                SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Success",
-                        schedulesAdded + " schedule(s) added successfully for: " + daysString + "\n" +
-                                "Room: " + roomNumber + " (" + roomType + ")\n" +
-                                "Time: " + startTime.format(displayFormatter) + " - " + endTime.format(displayFormatter)
-                );
-                clearFields();
             } else {
-                // Should not happen if validation passed, but good to have
-                SceneNavigator.showAlert(Alert.AlertType.WARNING, "No Schedule Added", "No schedules were added. Please check input.");
+                // Get display name of the day
+                conflictDaysList.add(day.toString().substring(0, 1).toUpperCase() + day.toString().substring(1).toLowerCase());
             }
+        }
 
-        } catch (Exception e) {
-            SceneNavigator.showAlert(Alert.AlertType.ERROR, "Save Error", "Could not save the schedule(s): " + e.getMessage());
-            e.printStackTrace();
+        // --- Show Results ---
+        if (schedulesAdded > 0) {
+            DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("h:mm a");
+            String daysString = String.join(", ", addedDaysList);
+            SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Success",
+                    schedulesAdded + " schedule(s) added successfully for: " + daysString + "\n" +
+                            "Room: " + roomNumber + " (" + roomType + ")\n" +
+                            "Time: " + startTime.format(displayFormatter) + " - " + endTime.format(displayFormatter)
+            );
+            clearFields(); // Clear fields only on overall success or partial success
+        }
+
+        if (!conflictDaysList.isEmpty()) {
+            String conflictDaysString = String.join(", ", conflictDaysList);
+            // If any schedules were added, show a warning alongside the success.
+            // If NO schedules were added but there were conflicts, show an error.
+            Alert.AlertType alertType = (schedulesAdded > 0) ? Alert.AlertType.WARNING : Alert.AlertType.ERROR;
+            String headerText = (schedulesAdded > 0) ? "Partial Success / Schedule Conflict" : "Schedule Conflict Error";
+            String message = "Could not add schedule for the following day(s) due to overlap with an existing schedule:\n" +
+                    conflictDaysString + "\n" +
+                    "Room: " + roomNumber + " (" + roomType + ")";
+
+            SceneNavigator.showAlert(alertType, headerText, message);
+            // Don't clear fields if there was a conflict, allows user to adjust and retry.
+            if (schedulesAdded == 0) { // If NO schedules added, don't clear
+                // Fields already not cleared in this path, so no action needed.
+            } else { // If SOME schedules added, fields were cleared above. Re-populate conflicted days if needed?
+                // For simplicity, we clear fields on any success. If conflicts happened, user needs to re-enter anyway.
+            }
+        }
+
+        // Fallback for unexpected cases (though validation should prevent this)
+        if (schedulesAdded == 0 && conflictDaysList.isEmpty() && !selectedDays.isEmpty()) {
+            SceneNavigator.showAlert(Alert.AlertType.ERROR, "Operation Failed", "An unexpected error occurred. No schedules were added or reported as conflicts.");
         }
     }
 
@@ -177,27 +209,40 @@ public class AdminAddRoomsController extends AdminBaseController {
      */
     private List<DayOfWeek> getSelectedDays() {
         List<DayOfWeek> selected = new ArrayList<>();
-        if (mondayCheckBox.isSelected()) selected.add(DayOfWeek.MONDAY);
-        if (tuesdayCheckBox.isSelected()) selected.add(DayOfWeek.TUESDAY);
-        if (wednesdayCheckBox.isSelected()) selected.add(DayOfWeek.WEDNESDAY);
-        if (thursdayCheckBox.isSelected()) selected.add(DayOfWeek.THURSDAY);
-        if (fridayCheckBox.isSelected()) selected.add(DayOfWeek.FRIDAY);
-        if (saturdayCheckBox.isSelected()) selected.add(DayOfWeek.SATURDAY);
-        if (sundayCheckBox.isSelected()) selected.add(DayOfWeek.SUNDAY);
+        // Add DayOfWeek enum values based on checkbox selection
+        if (mondayCheckBox != null && mondayCheckBox.isSelected()) selected.add(DayOfWeek.MONDAY);
+        if (tuesdayCheckBox != null && tuesdayCheckBox.isSelected()) selected.add(DayOfWeek.TUESDAY);
+        if (wednesdayCheckBox != null && wednesdayCheckBox.isSelected()) selected.add(DayOfWeek.WEDNESDAY);
+        if (thursdayCheckBox != null && thursdayCheckBox.isSelected()) selected.add(DayOfWeek.THURSDAY);
+        if (fridayCheckBox != null && fridayCheckBox.isSelected()) selected.add(DayOfWeek.FRIDAY);
+        if (saturdayCheckBox != null && saturdayCheckBox.isSelected()) selected.add(DayOfWeek.SATURDAY);
+        if (sundayCheckBox != null && sundayCheckBox.isSelected()) selected.add(DayOfWeek.SUNDAY);
         return selected;
     }
 
 
-    // combineTimeComponents method (Keep as before)
+    // combineTimeComponents method (Keep as before, improved error messages)
     private LocalTime combineTimeComponents(int hour12, int minute, String amPm, String fieldName) throws IllegalArgumentException {
-        if (hour12 < 1 || hour12 > 12) throw new IllegalArgumentException(fieldName + " hour selection is invalid.");
-        if (minute < 0 || minute > 59) throw new IllegalArgumentException(fieldName + " minute selection is invalid.");
+        Objects.requireNonNull(amPm, fieldName + " AM/PM selection is missing.");
+        if (hour12 < 1 || hour12 > 12) throw new IllegalArgumentException(fieldName + " hour selection is invalid: " + hour12);
+        if (minute < 0 || minute > 59) throw new IllegalArgumentException(fieldName + " minute selection is invalid: " + minute); // Should not happen with combo box
+
         int hour24 = hour12;
-        if ("AM".equalsIgnoreCase(amPm)) { if (hour24 == 12) hour24 = 0; }
-        else if ("PM".equalsIgnoreCase(amPm)) { if (hour24 != 12) hour24 += 12; }
-        else throw new IllegalArgumentException("Invalid AM/PM selection for " + fieldName + " time.");
-        try { return LocalTime.of(hour24, minute); }
-        catch (Exception e) { throw new IllegalArgumentException("Failed to create valid " + fieldName + " time from selections."); }
+        if ("AM".equalsIgnoreCase(amPm)) {
+            if (hour24 == 12) hour24 = 0; // 12 AM is 00:xx in 24hr
+        }
+        else if ("PM".equalsIgnoreCase(amPm)) {
+            if (hour24 != 12) hour24 += 12; // 1 PM is 13:xx, ..., 11 PM is 23:xx
+        }
+        else throw new IllegalArgumentException("Invalid AM/PM selection for " + fieldName + " time: " + amPm);
+
+        try {
+            // Check if the combined time is valid (e.g., LocalTime.of(24, 0) is invalid)
+            return LocalTime.of(hour24, minute);
+        }
+        catch (java.time.DateTimeException e) {
+            throw new IllegalArgumentException("Failed to create valid " + fieldName + " time from selections: " + hour12 + ":" + String.format("%02d", minute) + " " + amPm);
+        }
     }
 
 
@@ -206,15 +251,15 @@ public class AdminAddRoomsController extends AdminBaseController {
         roomTypeComboBox.getSelectionModel().clearSelection();
         startHourComboBox.getSelectionModel().clearSelection();
         startMinuteComboBox.getSelectionModel().clearSelection();
-        amPmStartComboBox.setValue("AM");
+        amPmStartComboBox.setValue("AM"); // Set default
         endHourComboBox.getSelectionModel().clearSelection();
         endMinuteComboBox.getSelectionModel().clearSelection();
-        amPmEndComboBox.setValue("AM");
+        amPmEndComboBox.setValue("AM"); // Set default
 
         // Uncheck all day checkboxes
-        if (dayCheckBoxes != null) { // Add null check for safety
+        if (dayCheckBoxes != null) {
             for (CheckBox cb : dayCheckBoxes) {
-                cb.setSelected(false);
+                if (cb != null) cb.setSelected(false);
             }
         }
 
