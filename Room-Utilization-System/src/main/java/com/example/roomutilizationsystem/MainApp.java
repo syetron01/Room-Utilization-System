@@ -17,7 +17,7 @@ public class MainApp extends Application {
         try {
             // Load the initial FXML file (Login screen)
             // Make sure the path is correct relative to the resources folder
-            URL fxmlUrl = getClass().getResource("fxml/adminHome.fxml");
+            URL fxmlUrl = getClass().getResource("fxml/Login.fxml");
             if (fxmlUrl == null) {
                 System.err.println("Cannot find FXML file: /fxml/Login.fxml");
                 return; // Or throw an exception

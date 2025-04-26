@@ -63,40 +63,54 @@
 
       <!-- Search Criteria Bar -->
       <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#d9d9d9" height="51.0" layoutX="302.0" layoutY="266.0" stroke="#d9d9d9" strokeType="INSIDE" width="930.0" />
-      <HBox alignment="CENTER_LEFT" layoutX="330.0" layoutY="266.0" prefHeight="51.0" prefWidth="895.0" spacing="5.0"> <!-- Adjusted spacing/alignment -->
+      <HBox alignment="CENTER_LEFT" layoutX="319.0" layoutY="266.0" prefHeight="51.0" prefWidth="913.0" spacing="5.0"> <!-- Adjusted spacing/alignment -->
          <children>
             <!-- Added DatePicker and fx:id -->
-            <Label text="Date: "><font><Font size="18.0" /></font></Label>
-            <DatePicker fx:id="datePicker" prefHeight="27.0" prefWidth="120.0" />
+            <Label text="Date: "><font><Font size="14.0" /></font></Label>
+            <DatePicker fx:id="datePicker" prefHeight="27.0" prefWidth="99.0" />
 
-            <Label text="Room Number: "><font><Font size="18.0" /></font>
+            <Label text="Room No: "><font><Font size="14.0" /></font>
                <HBox.margin><Insets left="10.0" /></HBox.margin> <!-- Add left margin -->
             </Label>
             <!-- Added fx:id -->
-            <ComboBox fx:id="roomNumberComboBox" prefHeight="28.0" prefWidth="81.0" style="-fx-background-color: FFFFFF;" />
+            <ComboBox fx:id="roomNumberComboBox" prefHeight="28.0" prefWidth="63.0" style="-fx-background-color: FFFFFF;" />
 
-            <Label text="Room Type: "><font><Font size="18.0" /></font>
+            <Label text="Room Type: "><font><Font size="14.0" /></font>
                <HBox.margin><Insets left="10.0" /></HBox.margin> <!-- Add left margin -->
             </Label>
             <!-- Added fx:id -->
-            <ComboBox fx:id="roomTypeComboBox" prefHeight="27.0" prefWidth="99.0" style="-fx-background-color: FFFFFF;" />
+            <ComboBox fx:id="roomTypeComboBox" prefHeight="27.0" prefWidth="65.0" style="-fx-background-color: FFFFFF;" />
 
-            <Label text="Hours: "><font><Font size="18.0" /></font>
+            <Label text="Hours: "><font><Font size="14.0" /></font>
                <HBox.margin><Insets left="10.0" /></HBox.margin> <!-- Add left margin -->
             </Label>
             <!-- Added fx:id -->
-            <ComboBox fx:id="hoursComboBox" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: FFFFFF;" />
-
+            <ComboBox fx:id="hoursComboBox" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: FFFFFF;">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></ComboBox>
+            <Label text="Booking Type: ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ComboBox prefHeight="28.0" prefWidth="94.0" style="-fx-background-color: #ffff;">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </ComboBox>
+      
             <!-- Removed Day ComboBox as DatePicker determines the day -->
             <!--
             <Label text="Day: "><font><Font size="18.0" /></font></Label>
-            <ComboBox prefHeight="27.0" prefWidth="94.0" style="-fx-background-color: FFFFFF;"> </ComboBox>
-            -->
-
+                  <ComboBox prefHeight="27.0" prefWidth="94.0" style="-fx-background-color: FFFFFF;"> </ComboBox>
+                  -->
+      
             <!-- Added fx:id and onAction -->
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE">
-               <HBox.margin><Insets left="20.0" /></HBox.margin> <!-- Add left margin -->
-            </Button>
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE" />
          </children>
       </HBox>
 
@@ -105,11 +119,13 @@
       <TableView fx:id="availableRoomsTable" layoutX="305.0" layoutY="341.0" prefHeight="338.0" prefWidth="920.0">
          <columns>
             <!-- Added fx:id for each column -->
-            <TableColumn fx:id="availRoomNoCol" prefWidth="143.66668701171875" text="Room Number" />
-            <TableColumn fx:id="availRoomTypeCol" prefWidth="150.33331298828125" text="Room Type" />
-            <TableColumn fx:id="availTimeCol" prefWidth="250.0" text="Available Start Time" /> <!-- Wider for clarity -->
-            <TableColumn fx:id="availDayCol" prefWidth="180.0" text="Day of Week" /> <!-- Wider for clarity, removed AM/PM -->
-            <TableColumn fx:id="availBookCol" minWidth="9.0" prefWidth="150.0" text="Action" /> <!-- Changed Text -->
+            <TableColumn fx:id="availRoomNoCol" prefWidth="110.0" text="Room No." />
+            <TableColumn fx:id="availRoomTypeCol" prefWidth="117.0" text="Room Type" />
+            <TableColumn fx:id="availTimeCol" prefWidth="205.0" text="Time Schedule" /> <!-- Wider for clarity -->
+            <TableColumn fx:id="availDayCol" prefWidth="88.0" text="Day" />
+            <TableColumn fx:id="availDayCol1" prefWidth="167.0" text="Date" />
+            <TableColumn fx:id="availDayCol11" prefWidth="114.0" text="Booking Type" /> <!-- Wider for clarity, removed AM/PM -->
+            <TableColumn fx:id="availBookCol" minWidth="9.0" prefWidth="117.0" text="Action" /> <!-- Changed Text -->
          </columns>
       </TableView>
 

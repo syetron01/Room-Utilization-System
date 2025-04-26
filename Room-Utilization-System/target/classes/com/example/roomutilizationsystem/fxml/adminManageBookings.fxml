@@ -99,27 +99,29 @@
         </ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="524.0" layoutX="53.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
-        <Label layoutX="88.0" layoutY="93.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="524.0" layoutX="32.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="852.0" />
+        <Label layoutX="68.0" layoutY="93.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
             <font>
                 <Font name="Bell MT Bold" size="18.0" />
             </font>
         </Label>
         <!-- Added fx:id -->
-        <TextField fx:id="searchField" layoutX="216.0" layoutY="98.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
+        <TextField fx:id="searchField" layoutX="178.0" layoutY="98.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
 
         <!-- Added fx:id -->
-        <TableView fx:id="bookingsTableView" layoutX="88.0" layoutY="148.0" prefHeight="426.0" prefWidth="744.0">
+        <TableView fx:id="bookingsTableView" layoutX="57.0" layoutY="148.0" prefHeight="426.0" prefWidth="800.0">
             <columns>
                 <!-- Added fx:id for each column -->
-                <TableColumn fx:id="userCol" prefWidth="76.33332824707031" text="User" />
-                <TableColumn fx:id="roleCol" prefWidth="75.0" text="Role" />
-                <TableColumn fx:id="roomNoCol" prefWidth="77.0" text="Room No." />
-                <TableColumn fx:id="roomTypeCol" prefWidth="89.0" text="Room Type" />
-                <TableColumn fx:id="timeCol" prefWidth="167.0" text="Time Schedule" />
-                <TableColumn fx:id="dayCol" prefWidth="92.0" text="Day" />
+                <TableColumn fx:id="userCol" prefWidth="78.0" text="User" />
+                <TableColumn fx:id="roleCol" prefWidth="64.0" text="Role" />
+                <TableColumn fx:id="roomNoCol" prefWidth="64.0" text="Room No." />
+                <TableColumn fx:id="roomTypeCol" text="Room Type" />
+                <TableColumn fx:id="timeCol" prefWidth="114.0" text="Time Schedule" />
+                <TableColumn fx:id="dayCol" prefWidth="64.0" text="Day" />
+            <TableColumn fx:id="actionCol11" prefWidth="102.0" text="Date" />
+            <TableColumn fx:id="actionCol1" prefWidth="89.0" text="Booking Type" />
                 <!-- Changed text to match controller -->
-                <TableColumn fx:id="actionCol" prefWidth="168.0" text="Action / Status" />
+                <TableColumn fx:id="actionCol" prefWidth="144.0" text="Action / Status" />
             </columns>
         </TableView>
       <Label layoutX="1015.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
@@ -132,7 +134,7 @@
             <Font name="Impact" size="42.0" />
          </font>
       </Label>
-      <Label layoutX="53.0" layoutY="14.0" prefHeight="61.0" prefWidth="313.0" text="Manage Bookings" textFill="WHITE">
+      <Label layoutX="32.0" layoutY="14.0" prefHeight="61.0" prefWidth="313.0" text="Manage Bookings" textFill="WHITE">
          <font>
             <Font name="Impact" size="40.0" />
          </font>

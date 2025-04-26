@@ -113,12 +113,14 @@
             <columns>
                 <!-- Added fx:id for each column -->
                 <!-- Note: The UI image shows Edit before Room No., adjust if needed -->
-                <TableColumn fx:id="editCol" prefWidth="76.33332824707031" text="Edit" />
-                <TableColumn fx:id="roomNoCol" prefWidth="96.66667175292969" text="Room No." />
-                <TableColumn fx:id="roomTypeCol" prefWidth="124.33331298828125" text="Room Type" />
-                <TableColumn fx:id="timeCol" prefWidth="157.0" text="Time Schedule" />
-                <TableColumn fx:id="dayCol" prefWidth="136.00003051757812" text="Day" />
-                <TableColumn fx:id="removeCol" prefWidth="153.0" text="Remove" />
+                <TableColumn fx:id="editCol" prefWidth="77.0" text="Edit" />
+                <TableColumn fx:id="roomNoCol" prefWidth="68.0" text="Room No." />
+                <TableColumn fx:id="roomTypeCol" prefWidth="70.0" text="Room Type" />
+                <TableColumn fx:id="timeCol" prefWidth="126.0" text="Time Schedule" />
+                <TableColumn fx:id="dayCol" prefWidth="75.0" text="Day" />
+            <TableColumn fx:id="dayCol1" prefWidth="124.0" text="Date" />
+            <TableColumn fx:id="dayCol2" prefWidth="124.0" text="Booking Type" />
+                <TableColumn fx:id="removeCol" prefWidth="78.0" text="Remove" />
             </columns>
         </TableView>
       <Label layoutX="1014.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
