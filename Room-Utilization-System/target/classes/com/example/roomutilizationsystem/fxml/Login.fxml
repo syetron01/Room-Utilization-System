@@ -5,75 +5,75 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/log-in.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.LoginController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/log-in.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.LoginController">
    <children>
       <!-- Background elements -->
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6c7680" height="720.0" layoutX="634.0" stroke="#5c6772" strokeType="INSIDE" width="646.0" />
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#5c6772" height="720.0" layoutX="603.0" stroke="#5c6772" strokeType="INSIDE" width="83.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b2" height="720.0" layoutX="634.0" stroke="#9aa6b2" strokeType="INSIDE" width="646.0" />
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="720.0" layoutX="581.0" stroke="#9aa6b2" strokeType="INSIDE" width="105.0" />
 
       <!-- Left side image and title -->
-      <ImageView fitHeight="628.0" fitWidth="637.0" layoutX="136.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="563.0" fitWidth="616.0" layoutX="128.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../src/main/resources/Images/logInImage.png" />
+            <Image url="@../../../../Images/logInImage.png" />
          </image>
       </ImageView>
 
-      <Label layoutX="27.0" layoutY="22.0" prefHeight="78.0" prefWidth="282.0" text="Room" textFill="#323f4c">
+      <Label layoutX="48.0" layoutY="27.0" prefHeight="78.0" prefWidth="282.0" text="Room">
          <font>
-            <Font name="Impact" size="64.0" />
+            <Font name="Franklin Gothic Demi" size="66.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="89.0" prefHeight="89.0" prefWidth="360.0" text="Utilization">
+         <font>
+            <Font name="Bell MT Bold" size="64.0" />
+         </font>
+      </Label>
+      <Label layoutX="56.0" layoutY="159.0" prefHeight="85.0" prefWidth="260.0" text="System">
+         <font>
+            <Font name="Bell MT Bold" size="64.0" />
          </font>
       </Label>
 
       <!-- Login form container -->
-      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="783.0" layoutY="101.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" styleClass="login-container" width="378.0">
-         <effect>
-            <DropShadow offsetX="10.0" />
-         </effect></Rectangle>
-      <TextField fx:id="usernameField" layoutX="820.0" layoutY="276.0" prefHeight="45.0" prefWidth="298.0" promptText="Enter username" style="-fx-background-radius: 100; -fx-border-color: none;" />
-      <PasswordField fx:id="passwordField" layoutX="820.0" layoutY="385.0" prefHeight="45.0" prefWidth="298.0" promptText="Enter password" style="-fx-background-radius: 100;" />
+      <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="540.0" layoutX="781.0" layoutY="92.0" opacity="0.39" stroke="#d9d9d9" strokeType="INSIDE" styleClass="login-container" width="378.0" />
 
-      <Button fx:id="loginButton" layoutX="822.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="45.0" prefWidth="298.0" style="-fx-background-radius: 100; -fx-background-color: #323F4C; -fx-text-fill: white;" text="Log In">
+      <!-- Login form elements -->
+      <Label alignment="CENTER" layoutX="890.0" layoutY="131.0" prefHeight="94.0" prefWidth="140.0" styleClass="sign-in" text="Sign In" textFill="#fffbfb">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="Bell MT Bold" size="34.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="819.0" layoutY="204.0" prefHeight="59.0" prefWidth="146.0" styleClass="field-label" text="Username:" textFill="WHITE">
+         <font>
+            <Font name="Bell MT" size="27.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameField" layoutX="825.0" layoutY="263.0" prefHeight="45.0" prefWidth="298.0" promptText="Enter username"/>
+
+      <Label layoutX="821.0" layoutY="323.0" prefHeight="43.0" prefWidth="166.0" styleClass="field-label" text="Password:" textFill="WHITE">
+         <font>
+            <Font name="Bell MT" size="27.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="823.0" layoutY="371.0" prefHeight="45.0" prefWidth="298.0" promptText="Enter password"/>
+
+      <Button fx:id="loginButton" layoutX="822.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="45.0" prefWidth="300.0" style="-fx-background-radius: 100; -fx-background-color: #323F4C; -fx-text-fill: white;" text="Log In">
+         <font>
+            <Font name="Bell MT Bold" size="18.0" />
          </font>
       </Button>
 
-      <Hyperlink fx:id="signUpLink" layoutX="865.0" layoutY="527.0" onAction="#handleSignUpLinkAction" prefHeight="35.0" prefWidth="208.0" text="Don't have an account? Sign Up" textFill="#323f4c">
+      <Hyperlink fx:id="signUpLink" layoutX="865.0" layoutY="520.0" onAction="#handleSignUpLinkAction" text="Don't have an account? Sign Up" textFill="#323f4c">
          <font>
             <Font name="Bell MT" size="14.0" />
          </font>
       </Hyperlink>
-      <Label layoutX="27.0" layoutY="81.0" prefHeight="104.0" prefWidth="282.0" text="Utilization" textFill="#323f4c">
-         <font>
-            <Font name="Impact" size="64.0" />
-         </font>
-      </Label>
-      <Label layoutX="27.0" layoutY="159.0" prefHeight="78.0" prefWidth="282.0" text="System" textFill="#323f4c">
-         <font>
-            <Font name="Impact" size="64.0" />
-         </font>
-      </Label>
-      <Label layoutX="915.0" layoutY="159.0" prefHeight="62.0" prefWidth="128.0" text="Sign Up" textFill="#323f4c">
-         <font>
-            <Font name="Impact" size="35.0" />
-         </font>
-      </Label>
-      <Label layoutX="824.0" layoutY="221.0" prefHeight="62.0" prefWidth="152.0" text="Username:" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="822.0" layoutY="329.0" prefHeight="62.0" prefWidth="176.0" text="Password:" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

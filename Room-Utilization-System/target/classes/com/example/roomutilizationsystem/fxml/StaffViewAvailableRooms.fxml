@@ -102,13 +102,13 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </ComboBox>
-      
+
             <!-- Removed Day ComboBox as DatePicker determines the day -->
             <!--
             <Label text="Day: "><font><Font size="18.0" /></font></Label>
                   <ComboBox prefHeight="27.0" prefWidth="94.0" style="-fx-background-color: FFFFFF;"> </ComboBox>
                   -->
-      
+
             <!-- Added fx:id and onAction -->
             <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="29.0" prefWidth="86.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE" />
          </children>

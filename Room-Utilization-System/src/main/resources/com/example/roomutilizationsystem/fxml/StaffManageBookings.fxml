@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Ensure fx:controller is correct -->
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.StaffManageBookingsController">
     <children>
         <!-- Sidebar Background -->
@@ -59,30 +60,33 @@
         <TableView fx:id="pendingBookingsTable" layoutX="307.0" layoutY="239.0" prefHeight="191.0" prefWidth="936.0">
             <columns>
                 <!-- Added fx:id for each column -->
-                <TableColumn fx:id="penRoomNoCol" prefWidth="144.33334350585938" text="Room Number" />
-                <TableColumn fx:id="penRoomTypeCol" prefWidth="148.66665649414062" text="Room Type" />
-                <TableColumn fx:id="penTimeCol" prefWidth="230.0" text="Time Schedule" />
+                <TableColumn fx:id="penRoomNoCol" prefWidth="124.0" text="Room No." />
+                <TableColumn fx:id="penRoomTypeCol" prefWidth="129.0" text="Room Type" />
+                <TableColumn fx:id="penTimeCol" prefWidth="258.0" text="Time Schedule" />
                 <!-- Removed AM/PM column as time includes it -->
-                <TableColumn fx:id="penDayCol" minWidth="9.0" prefWidth="240.0" text="Date (Day)" /> <!-- Combined Day/Date -->
-                <TableColumn fx:id="penActionCol" minWidth="9.0" prefWidth="145.6666259765625" text="Action" /> <!-- Renamed column -->
+                <TableColumn fx:id="penDayCol" minWidth="9.0" prefWidth="90.0" text="Day(s)" /> <!-- Combined Day/Date -->
+                <TableColumn fx:id="penActionCol" minWidth="9.0" prefWidth="202.0" text="Date" />
+                <TableColumn fx:id="penActionCol1" minWidth="9.0" prefWidth="132.0" text="Booking Type" /> <!-- Renamed column -->
             </columns>
         </TableView>
 
         <!-- Approved/Other Bookings Section -->
-        <Label layoutX="308.0" layoutY="452.0" prefHeight="26.0" prefWidth="200.0" text="Approved &amp; Past Bookings"> <!-- Changed text -->
+        <Label layoutX="308.0" layoutY="452.0" prefHeight="30.0" prefWidth="241.0" text="Approved &amp; Past Bookings"> <!-- Changed text -->
             <font><Font name="Bell MT Bold" size="20.0" /></font>
         </Label>
         <!-- Added fx:id -->
         <TableView fx:id="approvedBookingsTable" layoutX="309.0" layoutY="484.0" prefHeight="205.0" prefWidth="935.0">
             <columns>
                 <!-- Added fx:id for each column -->
-                <TableColumn fx:id="appRoomNoCol" prefWidth="144.33334350585938" text="Room Number" />
-                <TableColumn fx:id="appRoomTypeCol" prefWidth="148.66665649414062" text="Room Type" />
-                <TableColumn fx:id="appTimeCol" prefWidth="230.0" text="Time Schedule" />
+                <TableColumn fx:id="appRoomNoCol" prefWidth="98.0" text="Room Number" />
+                <TableColumn fx:id="appRoomTypeCol" prefWidth="101.0" text="Room Type" />
+                <TableColumn fx:id="appTimeCol" prefWidth="209.0" text="Time Schedule" />
                 <!-- Removed AM/PM column as time includes it -->
-                <TableColumn fx:id="appDayCol" minWidth="9.0" prefWidth="240.0" text="Date (Day)" /> <!-- Combined Day/Date -->
+                <TableColumn fx:id="appDayCol" minWidth="9.0" prefWidth="92.0" text="Day(s)" />
+                <TableColumn fx:id="appDayCol1" minWidth="9.0" prefWidth="179.0" text="Date" />
+                <TableColumn fx:id="appDayCol11" minWidth="9.0" prefWidth="118.0" text="Booking Type" /> <!-- Combined Day/Date -->
                 <!-- Removed "Book" column, Added Status Column -->
-                <TableColumn fx:id="appStatusCol" minWidth="9.0" prefWidth="149.0" text="Status" />
+                <TableColumn fx:id="appStatusCol" minWidth="9.0" prefWidth="137.0" text="Status" />
             </columns>
         </TableView>
     </children>

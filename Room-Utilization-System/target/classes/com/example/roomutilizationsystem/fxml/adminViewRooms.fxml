@@ -89,9 +89,9 @@
         <!-- Logout Button -->
         <!-- Added fx:id, Removed onAction -->
         <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font></Button>
+            <font>
+                <Font name="System Bold" size="15.0" />
+            </font></Button>
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../Images/logOutIcon.png" />
@@ -118,25 +118,25 @@
                 <TableColumn fx:id="roomTypeCol" prefWidth="70.0" text="Room Type" />
                 <TableColumn fx:id="timeCol" prefWidth="126.0" text="Time Schedule" />
                 <TableColumn fx:id="dayCol" prefWidth="75.0" text="Day" />
-            <TableColumn fx:id="dayCol1" prefWidth="124.0" text="Date" />
-            <TableColumn fx:id="dayCol2" prefWidth="124.0" text="Booking Type" />
+                <TableColumn fx:id="dayCol1" prefWidth="124.0" text="Date" />
+                <TableColumn fx:id="dayCol2" prefWidth="124.0" text="Booking Type" />
                 <TableColumn fx:id="removeCol" prefWidth="78.0" text="Remove" />
             </columns>
         </TableView>
-      <Label layoutX="1014.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
-         <font>
-            <Font name="Impact" size="40.0" />
-         </font>
-      </Label>
-      <Label layoutX="1060.0" layoutY="46.0" prefHeight="76.0" prefWidth="98.0" text="Room" textFill="#596572">
-         <font>
-            <Font name="Impact" size="42.0" />
-         </font>
-      </Label>
-      <Label layoutX="52.0" layoutY="16.0" prefHeight="61.0" prefWidth="209.0" text="View Rooms" textFill="WHITE">
-         <font>
-            <Font name="Impact" size="40.0" />
-         </font>
-      </Label>
+        <Label layoutX="1014.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
+            <font>
+                <Font name="Impact" size="40.0" />
+            </font>
+        </Label>
+        <Label layoutX="1060.0" layoutY="46.0" prefHeight="76.0" prefWidth="98.0" text="Room" textFill="#596572">
+            <font>
+                <Font name="Impact" size="42.0" />
+            </font>
+        </Label>
+        <Label layoutX="52.0" layoutY="16.0" prefHeight="61.0" prefWidth="209.0" text="View Rooms" textFill="WHITE">
+            <font>
+                <Font name="Impact" size="40.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

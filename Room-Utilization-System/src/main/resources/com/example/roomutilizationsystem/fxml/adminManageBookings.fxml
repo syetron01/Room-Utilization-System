@@ -14,11 +14,12 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Added fx:controller -->
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminManageBookingsController">
+
+<AnchorPane prefHeight="709.0" prefWidth="1269.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminManageBookingsController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" layoutX="-14.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="720.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="724.0" layoutX="-14.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="727.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="289.0" />
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="721.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
 
         <!-- Sidebar Buttons VBox -->
         <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
@@ -85,21 +86,12 @@
             </children>
         </VBox>
 
-        <!-- Header Labels -->
-        <Label layoutX="1057.0" layoutY="42.0" prefHeight="63.0" prefWidth="103.0" text="Room">
-            <font>
-                <Font name="Bell MT Bold" size="35.0" />
-            </font>
-        </Label>
-        <Label layoutX="1024.0" layoutY="89.0" prefHeight="65.0" prefWidth="167.0" text="Utilization">
-            <font>
-                <Font name="Bell MT Bold" size="35.0" />
-            </font>
-        </Label>
-
         <!-- Logout Button -->
         <!-- Added fx:id, Removed onAction -->
-        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out" />
+        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out">
+            <font>
+                <Font name="System Bold" size="15.0" />
+            </font></Button>
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../Images/logOutIcon.png" />
@@ -107,28 +99,45 @@
         </ImageView>
 
         <!-- Main Content Area -->
-        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="541.0" layoutX="54.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="813.0" />
-        <Label layoutX="90.0" layoutY="50.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
+        <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="524.0" layoutX="32.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="852.0" />
+        <Label layoutX="68.0" layoutY="93.0" prefHeight="47.0" prefWidth="136.0" text="Search User:"> <!-- Changed Text slightly -->
             <font>
                 <Font name="Bell MT Bold" size="18.0" />
             </font>
         </Label>
         <!-- Added fx:id -->
-        <TextField fx:id="searchField" layoutX="213.0" layoutY="52.0" prefHeight="37.0" prefWidth="161.0" style="-fx-background-radius: 100;" promptText="Enter user, room, etc."/>
+        <TextField fx:id="searchField" layoutX="178.0" layoutY="98.0" prefHeight="37.0" prefWidth="161.0" promptText="Enter user, room, etc." style="-fx-background-radius: 100;" />
 
         <!-- Added fx:id -->
-        <TableView fx:id="bookingsTableView" layoutX="87.0" layoutY="107.0" prefHeight="426.0" prefWidth="744.0">
+        <TableView fx:id="bookingsTableView" layoutX="57.0" layoutY="148.0" prefHeight="426.0" prefWidth="800.0">
             <columns>
                 <!-- Added fx:id for each column -->
-                <TableColumn fx:id="userCol" prefWidth="76.33332824707031" text="User" />
-                <TableColumn fx:id="roleCol" prefWidth="96.66667175292969" text="Role" />
-                <TableColumn fx:id="roomNoCol" prefWidth="101.0" text="Room No." />
-                <TableColumn fx:id="roomTypeCol" prefWidth="107.66665649414062" text="Room Type" />
-                <TableColumn fx:id="timeCol" prefWidth="136.33331298828125" text="Time Schedule" />
-                <TableColumn fx:id="dayCol" prefWidth="114.66668701171875" text="Day" />
+                <TableColumn fx:id="userCol" prefWidth="78.0" text="User" />
+                <TableColumn fx:id="roleCol" prefWidth="64.0" text="Role" />
+                <TableColumn fx:id="roomNoCol" prefWidth="64.0" text="Room No." />
+                <TableColumn fx:id="roomTypeCol" text="Room Type" />
+                <TableColumn fx:id="timeCol" prefWidth="114.0" text="Time Schedule" />
+                <TableColumn fx:id="dayCol" prefWidth="64.0" text="Day" />
+                <TableColumn fx:id="actionCol11" prefWidth="102.0" text="Date" />
+                <TableColumn fx:id="actionCol1" prefWidth="89.0" text="Booking Type" />
                 <!-- Changed text to match controller -->
-                <TableColumn fx:id="actionCol" prefWidth="110.0" text="Action / Status" />
+                <TableColumn fx:id="actionCol" prefWidth="144.0" text="Action / Status" />
             </columns>
         </TableView>
+        <Label layoutX="1015.0" layoutY="107.0" text="UTILIZATION" textFill="#596572">
+            <font>
+                <Font name="Impact" size="40.0" />
+            </font>
+        </Label>
+        <Label layoutX="1061.0" layoutY="50.0" prefHeight="66.0" prefWidth="98.0" text="Room" textFill="#596572">
+            <font>
+                <Font name="Impact" size="42.0" />
+            </font>
+        </Label>
+        <Label layoutX="32.0" layoutY="14.0" prefHeight="61.0" prefWidth="313.0" text="Manage Bookings" textFill="WHITE">
+            <font>
+                <Font name="Impact" size="40.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>
