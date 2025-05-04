@@ -17,17 +17,16 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<!-- Added CheckBox import -->
-
+<!-- Ensure the controller class path is correct -->
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminAddRoomsController">
     <children>
-        <!-- Background and Sidebar (Keep as before) -->
+        <!-- Background and Sidebar -->
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#596572" height="721.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="720.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
         <VBox layoutX="1034.0" layoutY="202.0" prefHeight="436.0" prefWidth="194.0">
-            <!-- Sidebar Buttons with fx:id -->
             <children>
+                <!-- Sidebar buttons with fx:id for navigation -->
                 <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="195.0" style="-fx-background-radius: 100;" text="Home"><VBox.margin><Insets bottom="60.0" /></VBox.margin></Button>
                 <Button fx:id="addRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="192.0" style="-fx-background-radius: 100; -fx-background-color: #596572;" text="Add Rooms" textFill="WHITE"><VBox.margin><Insets bottom="60.0" /></VBox.margin></Button>
                 <Button fx:id="viewRoomsButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="194.0" style="-fx-background-radius: 100;" text="View Rooms"><VBox.margin><Insets bottom="60.0" /></VBox.margin></Button>
@@ -43,238 +42,98 @@
                 <ImageView fitHeight="65.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/manageAdmin.png" /></image></ImageView>
             </children>
         </VBox>
-        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font></Button>
+        <!-- Logout Button -->
+        <Button fx:id="logoutButton" layoutX="110.0" layoutY="628.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 100;" text="Log Out"><font><Font name="System Bold" size="15.0" /></font></Button>
         <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="41.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/logOutIcon.png" /></image></ImageView>
-        <Label layoutX="1059.0" layoutY="43.0" prefHeight="75.0" prefWidth="98.0" text="Room" textFill="#596572">
-            <font>
-                <Font name="Impact" size="42.0" />
-            </font>
-        </Label>
-        <Label layoutX="1014.0" layoutY="105.0" text="UTILIZATION" textFill="#596572">
-            <font>
-                <Font name="Impact" size="40.0" />
-            </font>
-        </Label>
-        <Label layoutX="58.0" layoutY="13.0" prefHeight="61.0" prefWidth="192.0" text="Add Rooms" textFill="WHITE">
-            <font>
-                <Font name="Impact" size="40.0" />
-            </font>
-        </Label>
+        <!-- Header Labels -->
+        <Label layoutX="1059.0" layoutY="43.0" prefHeight="75.0" prefWidth="98.0" text="Room" textFill="#596572"><font><Font name="Impact" size="42.0" /></font></Label>
+        <Label layoutX="1014.0" layoutY="105.0" text="UTILIZATION" textFill="#596572"><font><Font name="Impact" size="40.0" /></font></Label>
+        <Label layoutX="58.0" layoutY="13.0" prefHeight="61.0" prefWidth="192.0" text="Add Rooms" textFill="WHITE"><font><Font name="Impact" size="40.0" /></font></Label>
+
+        <!-- Tab Pane -->
         <TabPane layoutX="58.0" layoutY="81.0" prefHeight="499.0" prefWidth="806.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
+                <!-- Recurring Booking Tab -->
                 <Tab text="Recurring Booking">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="691.0" style="-fx-background-color: #ffff;">
                             <children>
-
-                                <!-- Main Content Area -->
                                 <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#e8e8e8" height="416.0" layoutX="27.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" width="749.0" />
-                                <!-- Row 1: Room Number -->
+                                <!-- Recurring Tab Fields with fx:id -->
                                 <HBox alignment="CENTER_LEFT" layoutX="71.0" layoutY="57.0" spacing="10.0">
-                                    <children>
-                                        <Label minWidth="130.0" text="Room Number:">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
-                                    </children>
+                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label><TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" /></children>
                                 </HBox>
-                                <Label layoutX="71.0" layoutY="105.0" minWidth="130.0" text="Room Type:">
-                                    <font>
-                                        <Font name="Bell MT Bold" size="18.0" />
-                                    </font>
-                                </Label>
+                                <Label layoutX="71.0" layoutY="105.0" minWidth="130.0" text="Room Type:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                <!-- *** CORRECTED/VERIFIED fx:id for Room Type ComboBox *** -->
                                 <ComboBox fx:id="roomTypeComboBox" layoutX="211.0" layoutY="102.0" prefHeight="33.0" prefWidth="149.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
 
-                                <!-- Row 3: Time Schedule -->
                                 <HBox alignment="CENTER_LEFT" layoutX="71.0" layoutY="148.0" spacing="8.0">
                                     <children>
-                                        <Label minWidth="130.0" text="Time Schedule:">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Start:">
-                                            <font>
-                                                <Font name="Bell MT" size="16.0" />
-                                            </font>
-                                        </Label>
+                                        <Label minWidth="130.0" text="Time Schedule:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                        <Label text="Start:"><font><Font name="Bell MT" size="16.0" /></font></Label>
                                         <ComboBox fx:id="startHourComboBox" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" />
-                                        <Label text=":">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <ComboBox fx:id="startMinuteComboBox" prefHeight="33.0" prefWidth="70.0" promptText="Min" style="-fx-background-color: #FFFF;">
-                                            <HBox.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
+                                        <Label text=":"><font><Font name="Bell MT Bold" size="16.0" /></font></Label>
+                                        <ComboBox fx:id="startMinuteComboBox" prefHeight="33.0" prefWidth="70.0" promptText="Min" style="-fx-background-color: #FFFF;"><HBox.margin><Insets left="5.0" right="5.0" /></HBox.margin></ComboBox>
                                         <ComboBox fx:id="amPmStartComboBox" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;" />
                                     </children>
                                 </HBox>
                                 <HBox layoutX="208.0" layoutY="194.0" prefHeight="41.0" prefWidth="323.0">
                                     <children>
-                                        <Label text="End:">
-                                            <font>
-                                                <Font name="Bell MT" size="16.0" />
-                                            </font>
-                                            <padding>
-                                                <Insets right="17.0" />
-                                            </padding>
-                                        </Label>
+                                        <Label text="End:"><font><Font name="Bell MT" size="16.0" /></font><padding><Insets right="17.0" /></padding></Label>
                                         <ComboBox fx:id="endHourComboBox" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" />
-                                        <Label text=":">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="16.0" />
-                                            </font>
-                                            <padding>
-                                                <Insets left="10.0" right="10.0" />
-                                            </padding>
-                                        </Label>
+                                        <Label text=":"><font><Font name="Bell MT Bold" size="16.0" /></font><padding><Insets left="10.0" right="10.0" /></padding></Label>
                                         <ComboBox fx:id="endMinuteComboBox" prefHeight="33.0" prefWidth="69.0" promptText="Min" style="-fx-background-color: #FFFF;" />
-                                        <ComboBox fx:id="amPmEndComboBox" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;">
-                                            <HBox.margin>
-                                                <Insets left="15.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
+                                        <ComboBox fx:id="amPmEndComboBox" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;"><HBox.margin><Insets left="15.0" /></HBox.margin></ComboBox>
                                     </children>
                                 </HBox>
-
-                                <!-- Row 4: Day -->
                                 <HBox alignment="CENTER_LEFT" layoutX="71.0" layoutY="241.0" prefHeight="27.0" prefWidth="555.0" spacing="10.0">
                                     <children>
-                                        <Label minWidth="130.0" text="Day(s):"> <!-- Changed Label Text -->
-                                            <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <!-- CheckBoxes for Day Selection -->
+                                        <Label minWidth="130.0" text="Day(s):"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
                                         <HBox alignment="CENTER_LEFT" spacing="15.0">
-                                            <children>
-                                                <CheckBox fx:id="mondayCheckBox" text="Mon" />
-                                                <CheckBox fx:id="tuesdayCheckBox" text="Tue" />
-                                                <CheckBox fx:id="wednesdayCheckBox" text="Wed" />
-                                                <CheckBox fx:id="thursdayCheckBox" text="Thu" />
-                                                <CheckBox fx:id="fridayCheckBox" text="Fri" />
-                                                <CheckBox fx:id="saturdayCheckBox" text="Sat" />
-                                                <CheckBox fx:id="sundayCheckBox" text="Sun" />
-                                            </children>
+                                            <children><CheckBox fx:id="mondayCheckBox" text="Mon" /><CheckBox fx:id="tuesdayCheckBox" text="Tue" /><CheckBox fx:id="wednesdayCheckBox" text="Wed" /><CheckBox fx:id="thursdayCheckBox" text="Thu" /><CheckBox fx:id="fridayCheckBox" text="Fri" /><CheckBox fx:id="saturdayCheckBox" text="Sat" /><CheckBox fx:id="sundayCheckBox" text="Sun" /></children>
                                         </HBox>
                                     </children>
                                 </HBox>
-
-                                <!-- Add Room Button -->
-                                <Button fx:id="addRoomButton" layoutX="607.0" layoutY="380.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="41.0" prefWidth="129.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
+                                <DatePicker fx:id="recurringStartDatePicker" layoutX="208.0" layoutY="280.0" prefHeight="34.0" prefWidth="158.0" promptText="Select Start Date"/>
+                                <Label layoutX="71.0" layoutY="284.0" minWidth="130.0" text="Start Date:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                <DatePicker fx:id="recurringEndDatePicker" layoutX="208.0" layoutY="327.0" prefHeight="34.0" prefWidth="158.0" promptText="Select End Date"/>
+                                <Label layoutX="71.0" layoutY="331.0" minWidth="130.0" text="End Date:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                <!-- Add Definition Button for Recurring Tab (Corrected onAction) -->
+                                <Button fx:id="addRoomButton" layoutX="607.0" layoutY="380.0" mnemonicParsing="false" onAction="#handleAddRecurringDefinitionButtonAction" prefHeight="41.0" prefWidth="129.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Definition" textFill="WHITE">
+                                    <font><Font name="System Bold" size="15.0" /></font>
                                 </Button>
-                                <DatePicker layoutX="208.0" layoutY="280.0" prefHeight="34.0" prefWidth="158.0" />
-                                <Label layoutX="71.0" layoutY="284.0" minWidth="130.0" text="Start Date:">
-                                    <font>
-                                        <Font name="Bell MT Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <DatePicker layoutX="208.0" layoutY="327.0" prefHeight="34.0" prefWidth="158.0" />
-                                <Label layoutX="71.0" layoutY="331.0" minWidth="130.0" text="End Date:">
-                                    <font>
-                                        <Font name="Bell MT Bold" size="18.0" />
-                                    </font>
-                                </Label>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
+                <!-- One Time Booking Tab -->
                 <Tab text="One Time Booking">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffff;">
                             <children>
                                 <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#e8e8e8" height="379.0" layoutX="29.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="749.0" />
-                                <Button fx:id="addRoomButton1" layoutX="603.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleAddRoomButtonAction" prefHeight="41.0" prefWidth="129.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Room" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Button>
+                                <!-- Fields for One Time Tab with fx:id -->
                                 <HBox alignment="CENTER_LEFT" layoutX="73.0" layoutY="62.0" spacing="10.0">
-                                    <children>
-                                        <Label minWidth="130.0" text="Room Number:">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <TextField fx:id="roomNumberField1" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
-                                    </children>
+                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label><TextField fx:id="roomNumberField1" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" /></children>
                                 </HBox>
                                 <ComboBox fx:id="roomTypeComboBox1" layoutX="213.0" layoutY="116.0" prefHeight="33.0" prefWidth="151.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
-                                <Label layoutX="73.0" layoutY="119.0" minWidth="130.0" text="Room Type:">
-                                    <font>
-                                        <Font name="Bell MT Bold" size="18.0" />
-                                    </font>
-                                </Label>
-                                <DatePicker layoutX="212.0" layoutY="169.0" prefHeight="36.0" prefWidth="153.0" />
-                                <Label layoutX="73.0" layoutY="174.0" minWidth="130.0" text="Date:">
-                                    <font>
-                                        <Font name="Bell MT Bold" size="18.0" />
-                                    </font>
-                                </Label>
+                                <Label layoutX="73.0" layoutY="119.0" minWidth="130.0" text="Room Type:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                <DatePicker fx:id="oneTimeDatePicker" layoutX="212.0" layoutY="169.0" prefHeight="36.0" prefWidth="153.0" promptText="Select Date"/>
+                                <Label layoutX="73.0" layoutY="174.0" minWidth="130.0" text="Date:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
                                 <HBox alignment="CENTER_LEFT" layoutX="73.0" layoutY="219.0" spacing="8.0">
                                     <children>
-                                        <Label minWidth="130.0" text="Time Schedule:">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Start:">
-                                            <font>
-                                                <Font name="Bell MT" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <ComboBox fx:id="startHourComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" />
-                                        <Label text=":">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <ComboBox fx:id="startMinuteComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Min" style="-fx-background-color: #FFFF;">
-                                            <HBox.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
-                                        <ComboBox fx:id="amPmStartComboBox1" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;" />
+                                        <Label minWidth="130.0" text="Time Schedule:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label><Label text="Start:"><font><Font name="Bell MT" size="16.0" /></font></Label><ComboBox fx:id="startHourComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" /><Label text=":"><font><Font name="Bell MT Bold" size="16.0" /></font></Label><ComboBox fx:id="startMinuteComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Min" style="-fx-background-color: #FFFF;"><HBox.margin><Insets left="5.0" right="5.0" /></HBox.margin></ComboBox><ComboBox fx:id="amPmStartComboBox1" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;" />
                                     </children>
                                 </HBox>
-                                <HBox layoutX="212.0" layoutY="266.0" prefHeight="41.0" prefWidth="516.0">
+                                <HBox layoutX="212.0" layoutY="266.0" prefHeight="41.0" prefWidth="323.0">
                                     <children>
-                                        <Label text="End:">
-                                            <font>
-                                                <Font name="Bell MT" size="16.0" />
-                                            </font>
-                                            <padding>
-                                                <Insets right="17.0" />
-                                            </padding>
-                                        </Label>
-                                        <ComboBox fx:id="endHourComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" />
-                                        <Label text=":">
-                                            <font>
-                                                <Font name="Bell MT Bold" size="16.0" />
-                                            </font>
-                                            <padding>
-                                                <Insets left="10.0" right="10.0" />
-                                            </padding>
-                                        </Label>
-                                        <ComboBox fx:id="endMinuteComboBox1" prefHeight="33.0" prefWidth="69.0" promptText="Min" style="-fx-background-color: #FFFF;" />
-                                        <ComboBox fx:id="amPmEndComboBox1" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;">
-                                            <HBox.margin>
-                                                <Insets left="15.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
+                                        <Label text="End:"><font><Font name="Bell MT" size="16.0" /></font><padding><Insets right="17.0" /></padding></Label><ComboBox fx:id="endHourComboBox1" prefHeight="33.0" prefWidth="70.0" promptText="Hour" style="-fx-background-color: #FFFF;" /><Label text=":"><font><Font name="Bell MT Bold" size="16.0" /></font><padding><Insets left="10.0" right="10.0" /></padding></Label><ComboBox fx:id="endMinuteComboBox1" prefHeight="33.0" prefWidth="69.0" promptText="Min" style="-fx-background-color: #FFFF;" /><ComboBox fx:id="amPmEndComboBox1" prefHeight="33.0" prefWidth="93.0" promptText="AM/PM" style="-fx-background-color: #FFFF;"><HBox.margin><Insets left="15.0" /></HBox.margin></ComboBox>
                                     </children>
                                 </HBox>
+                                <!-- Add Definition Button for One Time Tab (Corrected onAction) -->
+                                <Button fx:id="addRoomButton1" layoutX="603.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleAddOneTimeDefinitionButtonAction" prefHeight="41.0" prefWidth="129.0" style="-fx-background-radius: 1000; -fx-background-color: #596572;" text="Add Definition" textFill="WHITE">
+                                    <font><Font name="System Bold" size="15.0" /></font>
+                                </Button>
                             </children>
                         </AnchorPane>
                     </content>

@@ -14,50 +14,67 @@ import java.util.Objects;
 public class SceneNavigator {
 
     /**
-     * Navigates to a new scene defined by an FXML file.
+     * Navigates to a new scene defined by an FXML file using a provided Stage.
+     * Useful when an ActionEvent is not available (e.g., initial load, programmatic navigation).
      *
-     * @param event           The ActionEvent that triggered the navigation (used to find the stage).
+     * @param stage           The Stage to set the new Scene on.
      * @param fxmlResourcePath The absolute path to the FXML file within the resources folder (e.g., "/com/example/roomutilizationsystem/fxml/Login.fxml").
      * @throws IOException If the FXML file cannot be loaded.
+     * @throws NullPointerException if stage or fxmlResourcePath is null.
      */
-    public static void navigateTo(javafx.event.ActionEvent event, String fxmlResourcePath) throws IOException {
-        Objects.requireNonNull(event, "Event cannot be null");
-        Objects.requireNonNull(fxmlResourcePath, "FXML resource path cannot be null");
+    public static void navigateTo(Stage stage, String fxmlResourcePath) throws IOException {
+        Objects.requireNonNull(stage, "Stage cannot be null for navigation.");
+        Objects.requireNonNull(fxmlResourcePath, "FXML resource path cannot be null.");
 
-        // Use getResourceAsStream for better error checking, then FXMLLoader.load(InputStream)
-        // Or ensure the path is absolute from the classpath root.
+        // Use getClass().getResource() from this class to find the resource URL
         URL fxmlUrl = SceneNavigator.class.getResource(fxmlResourcePath);
 
         if (fxmlUrl == null) {
-            // Try adding a leading slash if missing
-            if (!fxmlResourcePath.startsWith("/")) {
-                fxmlUrl = SceneNavigator.class.getResource("/" + fxmlResourcePath);
-            }
-            if (fxmlUrl == null) {
-                System.err.println("Cannot find FXML resource: " + fxmlResourcePath + " or /" + fxmlResourcePath);
-                throw new IOException("Cannot find FXML resource: " + fxmlResourcePath);
-            }
+            // Provide a more informative error message if the resource is not found
+            String errorMessage = "Cannot find FXML resource: " + fxmlResourcePath;
+            System.err.println(errorMessage);
+            throw new IOException(errorMessage);
         }
         System.out.println("Navigating to: " + fxmlUrl); // Debugging
 
-        Parent root = FXMLLoader.load(fxmlUrl); // Objects.requireNonNull handled by FXMLLoader if URL is valid
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
+        Parent root = FXMLLoader.load(fxmlUrl); // FXMLLoader handles null URL itself if URL is valid
 
+        // Set the new scene on the stage
+        Scene newScene = new Scene(root);
+        // Adjust stage size to the scene size defined in FXML (or preferred size)
+        stage.setScene(newScene);
+        stage.sizeToScene(); // Adjust stage size to the new scene based on FXML
+
+        stage.show();
+    }
+
+    /**
+     * Navigates to a new scene defined by an FXML file using an ActionEvent.
+     * This method is typically used for button clicks or other UI events.
+     *
+     * @param event           The ActionEvent that triggered the navigation (used to find the stage).
+     * @param fxmlResourcePath The absolute path to the FXML file within the resources folder.
+     * @throws IOException If the FXML file cannot be loaded.
+     * @throws NullPointerException if event or fxmlResourcePath is null.
+     * @throws IllegalStateException if the Stage cannot be found from the event source (e.g., node is not in a scene).
+     */
+    public static void navigateTo(javafx.event.ActionEvent event, String fxmlResourcePath) throws IOException {
+        // Ensure event is not null early
+        Objects.requireNonNull(event, "ActionEvent cannot be null for navigation via ActionEvent.");
+
+        Node source = (Node) event.getSource();
+        // Check if the source node is actually in a scene and has a window (Stage)
+        Scene currentScene = source.getScene();
+        if (currentScene == null) {
+            throw new IllegalStateException("Event source node is not attached to a Scene.");
+        }
+        Stage stage = (Stage) currentScene.getWindow();
         if (stage == null) {
             throw new IllegalStateException("Could not find Stage from the event source.");
         }
 
-        // Optional: Preserve window size or set explicitly
-        double currentWidth = stage.getScene().getWidth();
-        double currentHeight = stage.getScene().getHeight();
-        stage.setScene(new Scene(root, currentWidth, currentHeight)); // Use current dimensions
-
-        // Alternatively, use dimensions from the loaded root if preferred:
-        // stage.setScene(new Scene(root));
-        // stage.sizeToScene(); // Adjust stage size to the new scene
-
-        stage.show();
+        // Delegate to the navigateTo method that accepts a Stage
+        navigateTo(stage, fxmlResourcePath);
     }
 
     /**

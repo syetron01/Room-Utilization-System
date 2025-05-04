@@ -4,60 +4,73 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
-
-// Make sure necessary imports for DataStore, User, UserRole, SceneNavigator are included
+// Import SceneNavigator, DataStore, User, UserRole
 
 public class LoginController {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
-    @FXML private Hyperlink signUpLink;
+    @FXML private Hyperlink signUpLink; // Assuming Hyperlink for 'Sign Up'
 
     @FXML
     public void initialize() {
-        // Initialization code if needed
+        // No hardcoded data here
     }
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText(); // Do not trim password
 
         if (username.isEmpty() || password.isEmpty()) {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Login Error", "Username and Password cannot be empty.");
             return;
         }
 
+        // Data comes from DataStore, which loaded from users.txt
         User user = DataStore.authenticateUser(username, password);
 
         if (user != null) {
-            DataStore.setLoggedInUser(user);
             try {
                 String fxmlPath;
-                if (user.getRole() == UserRole.ADMIN) {
-                    // --- FIX: Use full absolute path from classpath root ---
-                    fxmlPath = "/com/example/roomutilizationsystem/fxml/adminHome.fxml"; // <-- Correct path based on image
-                    // NOTE: Your image shows adminHome.fxml, but the error mentioned adminHomePage.fxml.
-                    //       Use the EXACT filename you have. If it's adminHome.fxml use that:
-                    // fxmlPath = "/com/example/roomutilizationsystem/fxml/adminHome.fxml";
-                } else if (user.getRole() == UserRole.FACULTY) {
-                    // --- FIX: Use full absolute path from classpath root ---
-                    fxmlPath = "/com/example/roomutilizationsystem/fxml/StaffViewAvailableRooms.fxml";// <-- Correct path
-                } else {
-                    SceneNavigator.showAlert(Alert.AlertType.ERROR, "Login Error", "Unknown user role.");
-                    return;
+                UserRole role = user.getRole(); // Get the user's role
+
+                // --- Updated Role-Based Navigation ---
+                switch (role) {
+                    case ADMIN:
+                        fxmlPath = "/com/example/roomutilizationsystem/fxml/adminHome.fxml";
+                        System.out.println("Navigating to Admin Home...");
+                        break;
+
+                    case FACULTY:
+                    case TEACHER:
+                    case STAFF:
+                        // All non-admin roles go to the Staff/Faculty view
+                        fxmlPath = "/com/example/roomutilizationsystem/fxml/StaffViewAvailableRooms.fxml";
+                        System.out.println("Navigating to Staff/Faculty View (" + role + ")...");
+                        break;
+
+                    default:
+                        // Should not happen if enum is exhaustive and loading is correct
+                        SceneNavigator.showAlert(Alert.AlertType.ERROR, "Login Error", "Unknown user role detected: " + role);
+                        DataStore.logout(); // Clear session
+                        return;
                 }
+                // --- End of Updated Navigation ---
+
                 SceneNavigator.navigateTo(event, fxmlPath);
 
             } catch (IOException e) {
-                System.err.println("Failed to load FXML: " + e.getMessage() + " (Path: " + (e.getMessage() != null && e.getMessage().contains("Cannot find") ? "Check FXML path!" : "Unknown I/O Error") + ")");
+                System.err.println("Failed to load FXML during navigation: " + e.getMessage());
                 e.printStackTrace();
-                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the next screen. Please check FXML path: \n" + (e.getMessage() != null ? e.getMessage().substring(e.getMessage().indexOf(':')+1).trim() : "Path issue"));
-            } catch (NullPointerException npe) {
-                System.err.println("Navigation error: FXML Path was null.");
-                npe.printStackTrace();
-                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Internal error during navigation.");
+                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the next screen.\nCheck FXML path or file existence.");
+                DataStore.logout();
+            } catch (Exception e) {
+                System.err.println("An unexpected error occurred during navigation after login.");
+                e.printStackTrace();
+                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "An unexpected error occurred: " + e.getMessage());
+                DataStore.logout();
             }
 
         } else {
@@ -68,10 +81,10 @@ public class LoginController {
     @FXML
     private void handleSignUpLinkAction(ActionEvent event) {
         try {
-            // --- FIX: Use full absolute path from classpath root ---
-            SceneNavigator.navigateTo(event, "/com/example/roomutilizationsystem/fxml/SignUp.fxml"); // <-- Correct path
+            // Pass the ActionEvent to navigateTo
+            SceneNavigator.navigateTo(event, "/com/example/roomutilizationsystem/fxml/SignUp.fxml");
         } catch (IOException e) {
-            System.err.println("Failed to load FXML: " + e.getMessage());
+            System.err.println("Failed to load SignUp.fxml: " + e.getMessage());
             e.printStackTrace();
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the sign-up screen.");
         }
