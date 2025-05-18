@@ -55,6 +55,7 @@ public class AdminAddRoomsController extends AdminBaseController {
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button manageScheduleRequestsButton;
     @FXML private Button logoutButton;
 
     // Helper list for checkboxes
@@ -65,6 +66,11 @@ public class AdminAddRoomsController extends AdminBaseController {
 
     @FXML
     public void initialize() {
+
+        if (addRoomsButton != null) {
+            addRoomsButton.setDisable(true);
+            addRoomsButton.setStyle("-fx-background-radius: 25; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
+        }
         // Defend against NullPointerException if FXML injection fails
         try {
             Objects.requireNonNull(roomNumberField, "roomNumberField FXML ID not injected");
@@ -114,7 +120,8 @@ public class AdminAddRoomsController extends AdminBaseController {
         }
 
 
-        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
+
+        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, manageScheduleRequestsButton, logoutButton);
         addRoomsButton.setDisable(true); // Disable button for the current view
 
         // Define shared options for ComboBoxes

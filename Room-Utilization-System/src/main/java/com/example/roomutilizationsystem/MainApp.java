@@ -72,7 +72,6 @@ public class MainApp extends Application {
         System.exit(0); // Exit cleanly
     }
 
-
     public static void main(String[] args) {
         // DataStore static initializer runs when the DataStore class is first
         // loaded by the JVM, which typically happens before launch().

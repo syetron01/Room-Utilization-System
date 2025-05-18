@@ -1,0 +1,58 @@
+/* admin-addRooms.css */
+
+/* ... any existing styles you have in this file ... */
+
+.centered-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent; /* Or your desired background for the header area */
+}
+
+.centered-tab-pane .tab {
+    /*
+       TabPane prefWidth in adminAddRooms.fxml is 806.0.
+       For 2 tabs, ideal width per tab is 806 / 2 = 403.
+       Adjust this value slightly for padding/borders.
+       Start with a value like 395px or 400px and fine-tune.
+    */
+    -fx-pref-width: 397.5px; /* Example starting value, ADJUST THIS! */
+    -fx-min-width: 398px; /* Often good to set min-width too for consistency */
+    -fx-max-width: 398px; /* And max-width to prevent them from growing too much if content is large */
+
+    -fx-padding: 8px 10px 8px 10px; /* Adjust padding as desired */
+    -fx-background-insets: 0, 1, 2; /* Standard for tab look */
+    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0; /* Rounded top corners */
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.centered-tab-pane .tab .tab-label {
+    -fx-alignment: CENTER; /* Center the text within the tab label */
+}
+
+/* Style for the selected tab */
+.centered-tab-pane .tab:selected {
+    -fx-background-color: white; /* Or whatever your tab content area background is */
+    /* You might want a different border or slightly different look for the selected tab header */
+}
+
+/* Optional: Style for unselected tabs on hover */
+.centered-tab-pane .tab:hover {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, derive(-fx-color, -10%);
+}
+
+/* This attempts to center the group of tab headers */
+.centered-tab-pane .headers-region {
+    -fx-alignment: CENTER;
+}
+
+/*
+   If .headers-region -fx-alignment: CENTER; isn't perfect,
+   you might need to adjust padding on the .tab-header-area.
+   Example: to push tabs from the left if they are not centered:
+   .centered-tab-pane .tab-header-area {
+       -fx-padding: 0 0 0 10px;
+   }
+   Or, if you want to ensure no extra space around the tabs within the header area:
+*/
+.centered-tab-pane .tab-header-area {
+     -fx-padding: 0; /* Reset padding, then rely on tab widths and headers-region alignment */
+}

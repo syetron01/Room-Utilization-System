@@ -33,6 +33,7 @@ public class AdminManageBookingsController extends AdminBaseController {
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button manageScheduleRequestsButton;
     @FXML private Button logoutButton;
 
     private ObservableList<Booking> masterBookingList;
@@ -40,6 +41,7 @@ public class AdminManageBookingsController extends AdminBaseController {
 
     @FXML
     public void initialize() {
+
         // Null checks for FXML fields
         try {
             Objects.requireNonNull(searchField, "searchField FXML ID not injected");
@@ -55,6 +57,7 @@ public class AdminManageBookingsController extends AdminBaseController {
             Objects.requireNonNull(addRoomsButton, "addRoomsButton FXML ID not injected");
             Objects.requireNonNull(viewRoomsButton, "viewRoomsButton FXML ID not injected");
             Objects.requireNonNull(manageBookingsButton, "manageBookingsButton FXML ID not injected");
+            Objects.requireNonNull(manageScheduleRequestsButton, "manageScheduleRequestsButton not injected");
             Objects.requireNonNull(logoutButton, "logoutButton FXML ID not injected");
         } catch (NullPointerException e) {
             System.err.println("FATAL: FXML injection failed in AdminManageBookingsController. Check FXML IDs.");
@@ -65,13 +68,12 @@ public class AdminManageBookingsController extends AdminBaseController {
             return;
         }
 
-        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
+        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, manageScheduleRequestsButton, logoutButton);
         if (manageBookingsButton != null) {
             manageBookingsButton.setDisable(true);
-            manageBookingsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572;");
+            manageBookingsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
             manageBookingsButton.setTextFill(javafx.scene.paint.Color.WHITE);
         }
-
         // --- Configure Table Columns using LAMBDAS ---
         userCol.setCellValueFactory(cellData -> {
             Booking booking = cellData.getValue();

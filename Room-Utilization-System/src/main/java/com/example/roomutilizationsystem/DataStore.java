@@ -21,7 +21,11 @@ import java.util.stream.Collectors;
 // --- Enums ---
 enum UserRole { ADMIN, FACULTY, TEACHER, STAFF }
 enum BookingStatus { PENDING, APPROVED, REJECTED, CANCELLED }
-
+enum ScheduleRequestStatus {
+    PENDING_APPROVAL, // Staff has submitted, admin needs to review
+    APPROVED,         // Admin approved, RoomSchedule created
+    REJECTED          // Admin rejected
+}
 // --- Data Classes ---
 class User {
     private String username;
@@ -239,6 +243,30 @@ class Booking {
         this.status = BookingStatus.PENDING;
     }
 
+    // *** NEW CONSTRUCTOR for Staff Custom Booking Requests ***
+    public Booking(User bookerUser, String roomNumber, String roomType, LocalDate date, LocalTime bookedStartTime, LocalTime bookedEndTime) {
+        this.bookingId = "BOK-" + idCounter.incrementAndGet(); // Use the static counter
+        if (bookerUser == null || bookerUser.getRole() == UserRole.ADMIN) {
+            throw new IllegalArgumentException("Invalid user or role for booking.");
+        }
+        if (roomNumber == null || roomNumber.trim().isEmpty() ||
+                roomType == null || roomType.trim().isEmpty() ||
+                date == null || bookedStartTime == null || bookedEndTime == null) {
+            throw new IllegalArgumentException("Room details, date, and times cannot be null or empty for a custom booking.");
+        }
+        if (!bookedEndTime.isAfter(bookedStartTime)) {
+            throw new IllegalArgumentException("Booking end time must be after start time.");
+        }
+        this.facultyUsername = bookerUser.getUsername();
+        this.roomNumber = roomNumber.trim();
+        this.roomType = roomType.trim();
+        this.date = date;
+        this.bookedStartTime = bookedStartTime;
+        this.bookedEndTime = bookedEndTime;
+        this.status = BookingStatus.PENDING; // Custom requests start as PENDING
+    }
+
+
     // Constructor for LOADING Bookings
     public Booking(String bookingId, String facultyUsername, String roomNumber, String roomType, LocalDate date, LocalTime bookedStartTime, LocalTime bookedEndTime, BookingStatus status) {
         this.bookingId = bookingId;
@@ -297,12 +325,14 @@ public class DataStore {
     private static final Path ROOMS_FILE = DATA_DIR.resolve("rooms.txt");
     private static final Path BOOKINGS_FILE = DATA_DIR.resolve("bookings.txt");
     private static final Path USERS_FILE = DATA_DIR.resolve("users.txt");
+    private static final Path SCHEDULE_REQUESTS_FILE = DATA_DIR.resolve("schedule_requests.txt");
 
     // Data Structures
     static final Map<String, User> users = new HashMap<>();
     // Should contain RoomSchedule objects read from RoomSchedule.java
     static final List<RoomSchedule> roomSchedules = new ArrayList<>(); // Holds DEFINITIONS
     static final List<Booking> bookings = new ArrayList<>(); // Holds individual booking instances
+    static final List<ScheduleRequest> scheduleRequests = new ArrayList<>();
 
     // Formatters
     static final DateTimeFormatter TIME_FILE_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
@@ -334,15 +364,17 @@ public class DataStore {
         // Use the static counter from the RoomSchedule class
         RoomSchedule.idCounter.set(maxScheduleId + 1);
 
-        long maxBookingId = bookings.stream()
-                .map(Booking::getBookingId)
-                .map(id -> id.replace("BOK-", ""))
+        long maxScheduleRequestId = scheduleRequests.stream()
+                .map(ScheduleRequest::getRequestId)
+                .map(id -> id.replace("SR-", ""))
                 .mapToLong(numStr -> { try { return Long.parseLong(numStr); } catch (NumberFormatException e) { return 0L; } })
                 .max().orElse(0L);
-        // Use the static counter from the Booking class
-        Booking.idCounter.set(maxBookingId + 1);
+        ScheduleRequest.idCounter.set(maxScheduleRequestId);
 
-        System.out.println("Reset counters: Next Schedule ID = SCH-" + RoomSchedule.idCounter.get() + ", Next Booking ID = BOK-" + Booking.idCounter.get());
+
+        System.out.println("Reset counters: Next Schedule ID = SCH-" + (RoomSchedule.idCounter.get()+1) +
+                ", Next Booking ID = BOK-" + (Booking.idCounter.get()+1) +
+                ", Next Schedule Request ID = SR-" + (ScheduleRequest.idCounter.get()+1) );
     }
 
     // --- File/Data Management ---
@@ -365,6 +397,7 @@ public class DataStore {
         loadUsers();
         loadRoomSchedules(); // Uses updated logic below
         loadBookings();
+        loadScheduleRequests();
         System.out.println("Data loading complete.");
         // Reset counters AFTER loading is complete
         resetIdCounters();
@@ -376,7 +409,14 @@ public class DataStore {
         saveUsers();
         saveRoomSchedules();
         saveBookings();
+        saveScheduleRequests();
         System.out.println("All data saved.");
+    }
+
+    public static synchronized void saveScheduleRequestsOnly() {
+        System.out.println("Saving schedule requests only...");
+        saveScheduleRequests();
+        System.out.println("Schedule requests saved.");
     }
 
     // Save specific data types (useful after bulk operations or specific changes)
@@ -604,6 +644,89 @@ public class DataStore {
         // resetIdCounters(); // Moved to end of loadData
     }
 
+    // --- Schedule Request Persistence ---
+    private static final String SCHEDULE_REQUEST_HEADER = "requestId|requestedByUsername|roomNumber|roomType|startTime|endTime|daysOfWeek|definitionStartDate|definitionEndDate|status";
+
+    private static void loadScheduleRequests() {
+        scheduleRequests.clear();
+        ScheduleRequest.idCounter.set(0); // Reset counter before load
+        if (!Files.exists(SCHEDULE_REQUESTS_FILE)) {
+            System.out.println("Schedule requests file not found: " + SCHEDULE_REQUESTS_FILE.toAbsolutePath() + ". No requests loaded.");
+            return;
+        }
+
+        try (BufferedReader reader = Files.newBufferedReader(SCHEDULE_REQUESTS_FILE)) {
+            String header = reader.readLine();
+            if (header == null || !header.equals(SCHEDULE_REQUEST_HEADER)) {
+                System.err.println("Warning: Invalid schedule requests file header in " + SCHEDULE_REQUESTS_FILE.toAbsolutePath() + ". Skipping load.");
+                return;
+            }
+            String line;
+            int lineNum = 1;
+            while ((line = reader.readLine()) != null) {
+                lineNum++;
+                String[] parts = line.split("\\|", -1);
+                if (parts.length == 10) { // Expect 10 parts
+                    try {
+                        String reqId = parts[0].trim();
+                        String username = parts[1].trim();
+                        String roomNum = parts[2].trim();
+                        String roomType = parts[3].trim();
+                        LocalTime startTime = LocalTime.parse(parts[4].trim(), TIME_FILE_FORMATTER);
+                        LocalTime endTime = LocalTime.parse(parts[5].trim(), TIME_FILE_FORMATTER);
+                        Set<DayOfWeek> days = EnumSet.noneOf(DayOfWeek.class);
+                        String daysStr = parts[6].trim();
+                        if (!daysStr.isEmpty()) {
+                            for (String dayName : daysStr.split(DAYS_OF_WEEK_SEPARATOR)) {
+                                if (!dayName.trim().isEmpty()) days.add(DayOfWeek.valueOf(dayName.trim().toUpperCase()));
+                            }
+                        }
+                        LocalDate defStartDate = LocalDate.parse(parts[7].trim(), DATE_FILE_FORMATTER);
+                        LocalDate defEndDate = LocalDate.parse(parts[8].trim(), DATE_FILE_FORMATTER);
+                        ScheduleRequestStatus status = ScheduleRequestStatus.valueOf(parts[9].trim().toUpperCase());
+
+                        ScheduleRequest request = new ScheduleRequest(reqId, username, roomNum, roomType, startTime, endTime, days, defStartDate, defEndDate, status);
+                        scheduleRequests.add(request);
+                    } catch (Exception e) {
+                        System.err.println("Skipping invalid schedule request line " + lineNum + ": " + line + " - " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("Skipping invalid schedule request line " + lineNum + " (wrong field count, expected 10): " + line);
+                }
+            }
+            System.out.println("Loaded " + scheduleRequests.size() + " schedule requests from " + SCHEDULE_REQUESTS_FILE.toAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Error reading schedule requests file: " + SCHEDULE_REQUESTS_FILE.toAbsolutePath());
+            e.printStackTrace();
+        }
+    }
+
+    private static void saveScheduleRequests() {
+        try (BufferedWriter writer = Files.newBufferedWriter(SCHEDULE_REQUESTS_FILE, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            writer.write(SCHEDULE_REQUEST_HEADER);
+            writer.newLine();
+            for (ScheduleRequest request : scheduleRequests) {
+                String daysOfWeekStr = request.getDaysOfWeek().stream().sorted().map(Enum::name).collect(Collectors.joining(DAYS_OF_WEEK_SEPARATOR));
+                writer.write(
+                        request.getRequestId() + "|" +
+                                request.getRequestedByUsername() + "|" +
+                                request.getRoomNumber() + "|" +
+                                request.getRoomType() + "|" +
+                                request.getStartTime().format(TIME_FILE_FORMATTER) + "|" +
+                                request.getEndTime().format(TIME_FILE_FORMATTER) + "|" +
+                                daysOfWeekStr + "|" +
+                                request.getDefinitionStartDate().format(DATE_FILE_FORMATTER) + "|" +
+                                request.getDefinitionEndDate().format(DATE_FILE_FORMATTER) + "|" +
+                                request.getStatus().name()
+                );
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing schedule requests file: " + SCHEDULE_REQUESTS_FILE.toAbsolutePath());
+            e.printStackTrace();
+        }
+    }
+
     // Changed to package-private as it's called internally by Booking.setStatus or saveBookingsOnly/saveData
     static void saveBookings() {
         try (BufferedWriter writer = Files.newBufferedWriter(BOOKINGS_FILE, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
@@ -776,6 +899,131 @@ public class DataStore {
                 .findFirst(); // Return the first matching definition found
     }
 
+    static class ScheduleRequest {
+        private final String requestId;
+        private String requestedByUsername; // Username of the staff/faculty who made the request
+        private String roomNumber;
+        private String roomType;
+        private LocalTime startTime;
+        private LocalTime endTime;
+        private Set<DayOfWeek> daysOfWeek;
+        private LocalDate definitionStartDate;
+        private LocalDate definitionEndDate;
+        private ScheduleRequestStatus status;
+
+        static final AtomicLong idCounter = new AtomicLong(0); // Separate counter for requests
+        private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+        // Constructor for NEW schedule requests by staff
+        public ScheduleRequest(String requestedByUsername, String roomNumber, String roomType,
+                               LocalTime startTime, LocalTime endTime, Set<DayOfWeek> daysOfWeek,
+                               LocalDate definitionStartDate, LocalDate definitionEndDate) {
+            this.requestId = "SR-" + idCounter.incrementAndGet();
+            this.requestedByUsername = Objects.requireNonNull(requestedByUsername, "Requester username cannot be null");
+            this.roomNumber = Objects.requireNonNull(roomNumber, "Room number cannot be null").trim();
+            this.roomType = Objects.requireNonNull(roomType, "Room type cannot be null");
+            this.startTime = Objects.requireNonNull(startTime, "Start time cannot be null");
+            this.endTime = Objects.requireNonNull(endTime, "End time cannot be null");
+            this.daysOfWeek = (daysOfWeek == null || daysOfWeek.isEmpty())
+                    ? EnumSet.noneOf(DayOfWeek.class)
+                    : EnumSet.copyOf(daysOfWeek);
+            this.definitionStartDate = Objects.requireNonNull(definitionStartDate, "Definition start date cannot be null");
+            this.definitionEndDate = Objects.requireNonNull(definitionEndDate, "Definition end date cannot be null");
+            this.status = ScheduleRequestStatus.PENDING_APPROVAL; // Default status
+
+            if (!this.daysOfWeek.isEmpty() && definitionStartDate.isAfter(definitionEndDate)) {
+                throw new IllegalArgumentException("Definition End Date cannot be before Start Date for schedule request.");
+            }
+            if (startTime.equals(endTime) || startTime.isAfter(endTime)) {
+                throw new IllegalArgumentException("End time must be after start time for schedule request.");
+            }
+        }
+
+        // Constructor for LOADING existing schedule requests
+        public ScheduleRequest(String requestId, String requestedByUsername, String roomNumber, String roomType,
+                               LocalTime startTime, LocalTime endTime, Set<DayOfWeek> daysOfWeek,
+                               LocalDate definitionStartDate, LocalDate definitionEndDate, ScheduleRequestStatus status) {
+            this.requestId = Objects.requireNonNull(requestId, "Request ID cannot be null");
+            this.requestedByUsername = Objects.requireNonNull(requestedByUsername);
+            this.roomNumber = Objects.requireNonNull(roomNumber).trim();
+            this.roomType = Objects.requireNonNull(roomType);
+            this.startTime = Objects.requireNonNull(startTime);
+            this.endTime = Objects.requireNonNull(endTime);
+            this.daysOfWeek = (daysOfWeek == null || daysOfWeek.isEmpty())
+                    ? EnumSet.noneOf(DayOfWeek.class)
+                    : EnumSet.copyOf(daysOfWeek);
+            this.definitionStartDate = Objects.requireNonNull(definitionStartDate);
+            this.definitionEndDate = Objects.requireNonNull(definitionEndDate);
+            this.status = Objects.requireNonNull(status);
+
+            // Update ID counter safely
+            try {
+                String idNumStr = requestId.replace("SR-", "");
+                if (!idNumStr.isEmpty()) {
+                    long idNum = Long.parseLong(idNumStr);
+                    idCounter.updateAndGet(current -> Math.max(current, idNum));
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Could not parse schedule request ID: " + requestId + " for counter update.");
+            }
+        }
+
+        // Getters
+        public String getRequestId() { return requestId; }
+        public String getRequestedByUsername() { return requestedByUsername; }
+        public User getRequesterUser() { return DataStore.getUserByUsername(requestedByUsername); }
+        public String getRoomNumber() { return roomNumber; }
+        public String getRoomType() { return roomType; }
+        public LocalTime getStartTime() { return startTime; }
+        public LocalTime getEndTime() { return endTime; }
+        public Set<DayOfWeek> getDaysOfWeek() { return Collections.unmodifiableSet(daysOfWeek); }
+        public LocalDate getDefinitionStartDate() { return definitionStartDate; }
+        public LocalDate getDefinitionEndDate() { return definitionEndDate; }
+        public ScheduleRequestStatus getStatus() { return status; }
+
+        // Setter for status (primarily for admin actions)
+        public void setStatus(ScheduleRequestStatus status) {
+            this.status = Objects.requireNonNull(status);
+            DataStore.saveScheduleRequestsOnly(); // Save when status changes
+        }
+
+        // Derived Getters for Display
+        public String getTimeRangeString() { return startTime.format(timeFormatter) + " - " + endTime.format(timeFormatter); }
+        public String getDaysOfWeekDisplay() {
+            if (daysOfWeek == null || daysOfWeek.isEmpty()) return "N/A";
+            return daysOfWeek.stream().sorted(Comparator.naturalOrder())
+                    .map(day -> day.toString().substring(0, 1).toUpperCase() + day.toString().substring(1, 3).toLowerCase())
+                    .collect(Collectors.joining(", "));
+        }
+        public String getDefinitionDateRangeDisplay() {
+            return definitionStartDate.format(dateFormatter) + " to " + definitionEndDate.format(dateFormatter);
+        }
+        public String getStatusDisplay() { return status.toString().replace("_", " "); }
+
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ScheduleRequest that = (ScheduleRequest) o;
+            return Objects.equals(requestId, that.requestId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(requestId);
+        }
+
+        @Override
+        public String toString() {
+            return "ScheduleRequest{id='" + requestId + "', user='" + requestedByUsername +
+                    "', room='" + roomNumber + "', days=" + getDaysOfWeekDisplay() +
+                    ", time=" + getTimeRangeString() + ", range=" + getDefinitionDateRangeDisplay() +
+                    ", status=" + status + '}';
+        }
+    }
+
 
     // --- Booking Management Methods ---
 
@@ -823,6 +1071,35 @@ public class DataStore {
         return true;
     }
 
+    // --- Schedule Request Management Methods ---
+    public static synchronized boolean addScheduleRequest(ScheduleRequest requestToAdd) {
+        if (requestToAdd == null) {
+            System.err.println("Cannot add null schedule request.");
+            return false;
+        }
+        // Optional: Add overlap check against other PENDING schedule requests if desired,
+        // but the main overlap check will happen when admin approves and tries to create a RoomSchedule.
+        scheduleRequests.add(requestToAdd);
+        System.out.println("Schedule Request added: " + requestToAdd);
+        saveScheduleRequestsOnly();
+        return true;
+    }
+
+    public static List<ScheduleRequest> getAllScheduleRequests() {
+        return new ArrayList<>(scheduleRequests); // Return a copy
+    }
+
+    public static List<ScheduleRequest> getScheduleRequestsByUser(String username) {
+        if (username == null) return new ArrayList<>();
+        return scheduleRequests.stream()
+                .filter(sr -> username.equals(sr.getRequestedByUsername()))
+                .collect(Collectors.toList());
+    }
+
+    public static ScheduleRequest findScheduleRequestById(String id) {
+        if (id == null) return null;
+        return scheduleRequests.stream().filter(sr -> id.equals(sr.getRequestId())).findFirst().orElse(null);
+    }
 
     // Get all individual booking instances
     public static List<Booking> getAllBookings() {

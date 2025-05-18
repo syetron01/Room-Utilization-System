@@ -27,6 +27,10 @@ public abstract class AdminBaseController {
         try { SceneNavigator.navigateTo(event, "fxml/adminManageBookings.fxml"); } catch (IOException e) { handleNavError(e); }
     }
 
+    protected void navigateToManageScheduleRequests(ActionEvent event) {
+        try { SceneNavigator.navigateTo(event, "fxml/AdminManageScheduleRequests.fxml"); } catch (IOException e) { handleNavError(e); }
+    }
+
     // --- Logout ---
     @FXML // Make sure the logout button in FXML calls this
     protected void handleLogoutAction(ActionEvent event) {
@@ -46,12 +50,12 @@ public abstract class AdminBaseController {
     // --- Utility to link buttons ---
     // In each Admin controller's initialize(), you'd call methods like this
     // e.g., setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
-    protected void setupNavigationButtons(Button home, Button add, Button view, Button manage, Button logout) {
+    protected void setupNavigationButtons(Button home, Button addRooms, Button viewRooms, Button manageBookings, Button manageScheduleRequests, Button logout) {
         if (home != null) home.setOnAction(this::navigateToHome);
-        if (add != null) add.setOnAction(this::navigateToAddRooms);
-        if (view != null) view.setOnAction(this::navigateToViewRooms);
-        if (manage != null) manage.setOnAction(this::navigateToManageBookings);
+        if (addRooms != null) addRooms.setOnAction(this::navigateToAddRooms);
+        if (viewRooms != null) viewRooms.setOnAction(this::navigateToViewRooms);
+        if (manageBookings != null) manageBookings.setOnAction(this::navigateToManageBookings);
+        if (manageScheduleRequests != null) manageScheduleRequests.setOnAction(this::navigateToManageScheduleRequests); // Link new button
         if (logout != null) logout.setOnAction(this::handleLogoutAction);
-        // Add null checks in case a button isn't present on a specific page
     }
 }

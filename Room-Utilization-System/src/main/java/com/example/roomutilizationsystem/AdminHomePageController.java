@@ -1,6 +1,5 @@
 package com.example.roomutilizationsystem;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 // Other necessary imports: User, DataStore, SceneNavigator, AdminBaseController
@@ -9,15 +8,16 @@ public class AdminHomePageController extends AdminBaseController {
 
     @FXML private Label greetingLabel;
     // Ensure these fx:ids match the FXML TextAreas
-    @FXML private TextArea totalRoomsTextArea;
-    @FXML private TextArea labRoomsTextArea;
-    @FXML private TextArea lectureRoomsTextArea;
+    @FXML private Label totalRoomsLabel;
+    @FXML private Label labRoomsLabel;
+    @FXML private Label lectureRoomsLabel;
 
     // Sidebar Buttons - Ensure these fx:ids match the FXML Buttons
     @FXML private Button homeButton;
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button manageScheduleRequestsButton;
 
     // Logout Button - Ensure this fx:id matches the main logout button in FXML
     @FXML private Button logoutButton; // Should correspond to the button near the bottom left
@@ -26,7 +26,7 @@ public class AdminHomePageController extends AdminBaseController {
     public void initialize() {
         // Setup sidebar navigation, including the logout button
         // This line links the handleLogoutAction from AdminBaseController
-        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton); // Pass the correct logoutButton reference
+        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, manageScheduleRequestsButton, logoutButton); // Pass the correct logoutButton reference
 
         // Disable the button for the current page
         if (homeButton != null) { // Add null check for safety
@@ -36,7 +36,11 @@ public class AdminHomePageController extends AdminBaseController {
             homeButton.setTextFill(javafx.scene.paint.Color.WHITE);
         }
 
-
+        if (homeButton != null) {
+            homeButton.setDisable(true); // Or just style it as active without disabling
+            // Apply CSS class or inline style for active state
+            homeButton.setStyle("-fx-background-radius: 25; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
+        }
         // Set greeting
         User loggedInUser = DataStore.getLoggedInUser();
         if (loggedInUser != null && greetingLabel != null) {
@@ -57,27 +61,12 @@ public class AdminHomePageController extends AdminBaseController {
         long labs = DataStore.countSchedulesByType("Laboratory");
         long lectures = DataStore.countSchedulesByType("Lecture");
 
-        // Ensure TextAreas exist and set text
-        if (totalRoomsTextArea != null) totalRoomsTextArea.setText(String.valueOf(total));
-        if (labRoomsTextArea != null) labRoomsTextArea.setText(String.valueOf(labs));
-        if (lectureRoomsTextArea != null) lectureRoomsTextArea.setText(String.valueOf(lectures));
-
-        // Make text areas non-editable and center text (optional styling)
-        configureTextArea(totalRoomsTextArea);
-        configureTextArea(labRoomsTextArea);
-        configureTextArea(lectureRoomsTextArea);
+        if (totalRoomsLabel != null) totalRoomsLabel.setText(String.valueOf(total));
+        if (labRoomsLabel != null) labRoomsLabel.setText(String.valueOf(labs));
+        if (lectureRoomsLabel != null) lectureRoomsLabel.setText(String.valueOf(lectures));
     }
 
-    // Helper for styling text areas
-    private void configureTextArea(TextArea textArea) {
-        if (textArea != null) {
-            textArea.setEditable(false);
-            textArea.setWrapText(true); // Prevent horizontal scrollbars if number is large
-            // Consider adding style class in CSS instead for better separation
-            // textArea.setStyle("-fx-text-alignment: center; -fx-font-size: 36px;"); // Set alignment and size
-            // You might need to adjust padding/font size to ensure numbers fit well.
-        }
-    }
+
 
     // Note: The navigation methods (navigateToHome, navigateToAddRooms, etc.)
     // and handleLogoutAction are inherited from AdminBaseController

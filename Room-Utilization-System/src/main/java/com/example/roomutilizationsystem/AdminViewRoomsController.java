@@ -42,6 +42,7 @@ public class AdminViewRoomsController extends AdminBaseController {
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button manageScheduleRequestsButton;
     @FXML private Button logoutButton;
 
     // Data lists for DEFINITIONS
@@ -50,6 +51,7 @@ public class AdminViewRoomsController extends AdminBaseController {
 
     @FXML
     public void initialize() {
+
         // Defend against NullPointerException if FXML injection fails
         try {
             Objects.requireNonNull(roomsTableView, "roomsTableView FXML ID not injected");
@@ -66,6 +68,7 @@ public class AdminViewRoomsController extends AdminBaseController {
             Objects.requireNonNull(addRoomsButton, "addRoomsButton FXML ID not injected");
             Objects.requireNonNull(viewRoomsButton, "viewRoomsButton FXML ID not injected");
             Objects.requireNonNull(manageBookingsButton, "manageBookingsButton FXML ID not injected");
+            Objects.requireNonNull(manageScheduleRequestsButton, "manageScheduleRequestsButton FXML ID not injected");
             Objects.requireNonNull(logoutButton, "logoutButton FXML ID not injected");
 
         } catch (NullPointerException e) {
@@ -79,9 +82,9 @@ public class AdminViewRoomsController extends AdminBaseController {
         }
 
 
-        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, logoutButton);
+        setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, manageScheduleRequestsButton, logoutButton);
         viewRoomsButton.setDisable(true); // Disable current page button
-        viewRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white;"); // Style disabled button
+        viewRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"); // Style disabled button
 
 
         configureTableColumns(); // Setup columns for RoomSchedule definition properties

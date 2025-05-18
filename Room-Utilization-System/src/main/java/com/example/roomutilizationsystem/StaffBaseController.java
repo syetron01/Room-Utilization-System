@@ -23,6 +23,15 @@ public abstract class StaffBaseController {
         }
     }
 
+    protected void navigateToCustomBookings(ActionEvent event) {
+        try {
+            SceneNavigator.navigateTo(event, "/com/example/roomutilizationsystem/fxml/StaffCustomBookings.fxml");
+        } catch (IOException e) {
+            handleNavError(e);
+        }
+    }
+
+
     // Keep as is - navigation to manage bookings also uses SceneNavigator
     protected void navigateToManageBookings(ActionEvent event) {
         try {
@@ -53,11 +62,10 @@ public abstract class StaffBaseController {
 
     // --- Utility to link buttons ---
     // Called from the initialize method of concrete Staff controllers
-    protected void setupNavigationButtons(Button viewRooms, Button manageBookings, Button logout) {
+    protected void setupNavigationButtons(Button viewRooms, Button manageBookings, Button customBookings, Button logout) {
         if (viewRooms != null) viewRooms.setOnAction(this::navigateToViewAvailable);
         if (manageBookings != null) manageBookings.setOnAction(this::navigateToManageBookings);
+        if (customBookings != null) customBookings.setOnAction(this::navigateToCustomBookings); // Link new button
         if (logout != null) logout.setOnAction(this::handleLogoutAction);
-        // Add null checks in case a button isn't present on a specific page inheriting this base class
-        // (Though typically all navigation buttons would be present on sidebar pages)
     }
 }

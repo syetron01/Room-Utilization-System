@@ -50,6 +50,7 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
     // --- Sidebar Buttons ---
     @FXML private Button viewAvailableRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button customBookingsButton;
     @FXML private Button logoutButton;
 
     // --- Data & Formatters ---
@@ -78,6 +79,7 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             Objects.requireNonNull(availDateRangeCol, "availDateRangeCol FXML ID not injected");
             Objects.requireNonNull(availBookCol, "availBookCol FXML ID not injected");
             Objects.requireNonNull(viewAvailableRoomsButton, "viewAvailableRoomsButton FXML ID not injected");
+            Objects.requireNonNull(customBookingsButton, "customBookingsButton FXML ID not injected");
             Objects.requireNonNull(manageBookingsButton, "manageBookingsButton FXML ID not injected");
             Objects.requireNonNull(logoutButton, "logoutButton FXML ID not injected");
         } catch (NullPointerException e) {
@@ -87,9 +89,11 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             return; // Stop initialization
         }
 
-        setupNavigationButtons(viewAvailableRoomsButton, manageBookingsButton, logoutButton);
-        viewAvailableRoomsButton.setDisable(true);
-        viewAvailableRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white;");
+        setupNavigationButtons(viewAvailableRoomsButton, manageBookingsButton, customBookingsButton, logoutButton);
+        if (viewAvailableRoomsButton != null) { // Check if not null before disabling
+            viewAvailableRoomsButton.setDisable(true);
+            viewAvailableRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white;");
+        }
 
 
         User currentUser = DataStore.getLoggedInUser();

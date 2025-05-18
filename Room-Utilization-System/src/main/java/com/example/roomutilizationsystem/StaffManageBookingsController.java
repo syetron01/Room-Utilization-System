@@ -10,10 +10,8 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class StaffManageBookingsController extends StaffBaseController {
@@ -39,6 +37,7 @@ public class StaffManageBookingsController extends StaffBaseController {
     // --- Sidebar Buttons (Ensure fx:id matches variable name in FXML) ---
     @FXML private Button viewAvailableRoomsButton;
     @FXML private Button manageBookingsButton;
+    @FXML private Button customBookingsButton;
     @FXML private Button logoutButton;
 
     // Holds ALL bookings for the current user (loaded from file via DataStore)
@@ -74,8 +73,8 @@ public class StaffManageBookingsController extends StaffBaseController {
             return;
         }
 
-        setupNavigationButtons(viewAvailableRoomsButton, manageBookingsButton, logoutButton);
-        if (manageBookingsButton != null) {
+        setupNavigationButtons(viewAvailableRoomsButton, manageBookingsButton, customBookingsButton, logoutButton);
+        if (manageBookingsButton != null) { // Check if not null before disabling
             manageBookingsButton.setDisable(true);
             manageBookingsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white;");
         }
