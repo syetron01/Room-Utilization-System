@@ -67,7 +67,7 @@
                 <Button fx:id="manageScheduleRequestsButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="Schedule Requests">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <image><Image url="@../../../../Images/manageAdmin.png" /></image> <!-- Changed to manageAdmin.png as per target FXML -->
+                            <image><Image url="@../../../../Images/CustomBookingIcon.png" /></image> <!-- Changed to manageAdmin.png as per target FXML -->
                         </ImageView>
                     </graphic>
                 </Button>

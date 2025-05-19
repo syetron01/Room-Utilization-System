@@ -11,8 +11,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+
+<!-- Added import -->
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.StaffViewAvailableRoomsController">
    <children>
@@ -24,22 +27,38 @@
          <image><Image url="@../../../../Images/ucLogo.png" /></image>
       </ImageView>
 
-      <!-- Sidebar Buttons -->
-      <Button fx:id="viewAvailableRoomsButton" layoutX="92.0" layoutY="259.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="154.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="View Available Rooms" />
-      <Button fx:id="manageBookingsButton" layoutX="92.0" layoutY="339.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #596572; -fx-background-radius: 100;" text="Manage Bookings" textFill="WHITE" />
-      <Button fx:id="customBookingsButton" layoutX="92.0" layoutY="418.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Custom Bookings" />
-      <Button fx:id="logoutButton" layoutX="99.0" layoutY="630.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="137.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Log Out" />
+      <!-- Staff Sidebar Buttons in a VBox -->
+      <VBox alignment="CENTER" layoutX="35.0" layoutY="245.0" prefHeight="269.0" prefWidth="210.0" spacing="49.0">
+         <children>
+            <!-- viewAvailableRoomsButton will be styled as active by its controller -->
+            <Button fx:id="viewAvailableRoomsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #9aa6b2; -fx-font-size: 13px; -fx-font-weight: bold; -fx-border-color: black; -fx-border-radius: 25; -fx-background-radius: 25;" text="View Available Rooms" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image><Image url="@../../../../Images/staffViewIcon.png" /></image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
 
-      <!-- Sidebar Icons -->
-      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
-         <image><Image url="@../../../../Images/staffViewIcon.png" /></image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
-         <image><Image url="@../../../../Images/staffManageIcon.png" /></image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="52.0" layoutY="634.0" pickOnBounds="true" preserveRatio="true">
-         <image><Image url="@../../../../Images/logOutIcon.png" /></image>
-      </ImageView>
+            <Button fx:id="manageBookingsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #596572; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;" text="Manage Bookings" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image><Image url="@../../../../Images/staffManageIcon.png" /></image>
+                  </ImageView>
+               </graphic>
+            </Button>
+
+            <Button fx:id="customBookingsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #596572; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;" text="Custom Bookings" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image><Image url="@../../../../Images/CustomBookingIcon.png" /></image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
 
       <!-- Main Content Area -->
       <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="158.0" layoutX="290.0" layoutY="43.0" stroke="#d9d9d9" strokeType="INSIDE" width="955.0" />
@@ -57,45 +76,20 @@
       </Label>
 
       <!-- Search Criteria Bar -->
-      <!-- Width increased to accommodate Show All button -->
       <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#d9d9d9" height="51.0" layoutX="302.0" layoutY="266.0" stroke="#d9d9d9" strokeType="INSIDE" width="920.0" />
       <HBox alignment="CENTER_LEFT" layoutX="310.0" layoutY="266.0" prefHeight="51.0" prefWidth="913.0" spacing="8.0">
          <children>
-            <Label text="Date:">
-               <font><Font size="13.0" /></font>
-            </Label>
+            <Label text="Date:"><font><Font size="13.0" /></font></Label>
             <DatePicker fx:id="searchDatePicker" prefHeight="27.0" prefWidth="110.0" promptText="Required" />
-
-            <Label text="Room:">
-               <font><Font size="13.0" /></font>
-               <HBox.margin><Insets left="8.0" /></HBox.margin>
-            </Label>
+            <Label text="Room:"><font><Font size="13.0" /></font><HBox.margin><Insets left="8.0" /></HBox.margin></Label>
             <ComboBox fx:id="searchRoomNumberComboBox" prefHeight="27.0" prefWidth="80.0" promptText="Any" style="-fx-background-color: FFFFFF;" />
-
-            <Label text="Type:">
-               <font><Font size="13.0" /></font>
-               <HBox.margin><Insets left="8.0" /></HBox.margin>
-            </Label>
+            <Label text="Type:"><font><Font size="13.0" /></font><HBox.margin><Insets left="8.0" /></HBox.margin></Label>
             <ComboBox fx:id="searchRoomTypeComboBox" prefHeight="27.0" prefWidth="95.0" promptText="Any" style="-fx-background-color: FFFFFF;" />
-
-            <Label text="Duration:">
-               <font><Font size="13.0" /></font>
-               <HBox.margin><Insets left="8.0" /></HBox.margin>
-            </Label>
+            <Label text="Duration:"><font><Font size="13.0" /></font><HBox.margin><Insets left="8.0" /></HBox.margin></Label>
             <ComboBox fx:id="searchDurationComboBox" prefHeight="27.0" prefWidth="86.0" promptText="Hours" style="-fx-background-color: FFFFFF;" />
-            <Label text="hour(s)">
-               <font><Font size="13.0" /></font>
-            </Label>
-
-            <!-- Search Button -->
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE">
-               <HBox.margin><Insets left="15.0" /></HBox.margin>
-            </Button>
-
-            <!-- Show All Button - Added from first file -->
-            <Button fx:id="showAllButton" mnemonicParsing="false" onAction="#handleShowAllActiveButtonAction" prefHeight="29.0" prefWidth="125.0" style="-fx-background-color: #a9a9a9;" text="Show All Active" textFill="BLACK"> <!-- Updated Text & onAction -->
-               <HBox.margin><Insets left="8.0" /></HBox.margin>
-            </Button>
+            <Label text="hour(s)"><font><Font size="13.0" /></font></Label>
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #596572;" text="Search" textFill="WHITE"><HBox.margin><Insets left="15.0" /></HBox.margin></Button>
+            <Button fx:id="showAllButton" mnemonicParsing="false" onAction="#handleShowAllActiveButtonAction" prefHeight="29.0" prefWidth="125.0" style="-fx-background-color: #a9a9a9;" text="Show All Active" textFill="BLACK"><HBox.margin><Insets left="8.0" /></HBox.margin></Button>
          </children>
       </HBox>
 
@@ -113,9 +107,15 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ImageView fitHeight="51.0" fitWidth="40.0" layoutX="43.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+
+      <Button fx:id="logoutButton" contentDisplay="LEFT" graphicTextGap="10" layoutX="62.0" layoutY="630.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="165.0" style="-fx-background-color: #FFFF; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;" text="Log Out">
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </Button>
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="99.0" layoutY="639.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../target/classes/Images/CustomBookingIcon.png" />
+            <Image url="@../../../../Images/logOutAdmin.png" />
          </image>
       </ImageView>
 

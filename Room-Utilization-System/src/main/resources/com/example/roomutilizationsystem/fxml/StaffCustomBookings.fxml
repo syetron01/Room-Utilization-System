@@ -15,8 +15,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<!-- Removed VBox import as it's not used for main nav buttons -->
+<?import javafx.scene.control.ContentDisplay?> <!-- Keep for logout button -->
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.StaffCustomBookingsController">
+
+<?import javafx.scene.layout.VBox?>
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/staff-custom-bookings.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.StaffCustomBookingsController">
     <children>
         <!-- Staff Sidebar Background -->
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="687.0" layoutX="20.0" layoutY="17.0" stroke="#9aa6b2" strokeType="INSIDE" width="241.0" />
@@ -26,18 +31,60 @@
             <image><Image url="@../../../../Images/ucLogo.png" /></image>
         </ImageView>
 
-        <!-- Staff Sidebar Buttons -->
-        <!-- fx:id names must match StaffCustomBookingsController and StaffBaseController expectations -->
-        <Button fx:id="viewAvailableRoomsButton" layoutX="92.0" layoutY="259.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="154.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="View Available Rooms" />
-        <Button fx:id="manageBookingsButton" layoutX="92.0" layoutY="319.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Manage Bookings" />
-        <Button fx:id="customBookingsButton" layoutX="92.0" layoutY="379.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="152.0" style="-fx-background-color: #596572; -fx-background-radius: 100;" text="Custom Bookings" />
-        <Button fx:id="logoutButton" layoutX="99.0" layoutY="630.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="137.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Log Out" />
+        <!-- Staff Sidebar Buttons - Positioned Individually -->
+        <VBox alignment="CENTER" layoutX="35.0" layoutY="245.0" prefHeight="269.0" prefWidth="210.0" spacing="49.0">
+            <children>
+                <!-- viewAvailableRoomsButton will be styled as active by its controller -->
+                <Button fx:id="viewAvailableRoomsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false"
+                        prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #596572; -fx-font-size: 13px; -fx-font-weight: bold; -fx-border-radius: 25; -fx-background-radius: 25;"
+                        text="View Available Rooms" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                            <image><Image url="@../../../../Images/staffViewIcon.png" /></image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Button>
 
-        <!-- Staff Sidebar Icons -->
-        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffViewIcon.png" /></image></ImageView>
-        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffManageIcon.png" /></image></ImageView>
-        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="46.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/customBookingIcon.png" /></image></ImageView> <!-- Assuming you have a custom booking icon -->
-        <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="52.0" layoutY="634.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/logOutIcon.png" /></image></ImageView>
+                <Button fx:id="manageBookingsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false"
+                        prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #596572; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;"
+                        text="Manage Bookings" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                            <image><Image url="@../../../../Images/staffManageIcon.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="customBookingsButton" contentDisplay="LEFT" graphicTextGap="10" mnemonicParsing="false"
+                        prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #9aa6b2; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;"
+                        text="Custom Bookings" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                            <image><Image url="@../../../../Images/CustomBookingIcon.png" /></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+
+
+        <!-- Logout Button (with icon embedded, as its style is different) -->
+        <Button fx:id="logoutButton" contentDisplay="LEFT" graphicTextGap="10" layoutX="62.0" layoutY="630.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="165.0" style="-fx-background-color: #FFFF; -fx-background-radius: 25; -fx-font-size: 13px; -fx-font-weight: bold;" text="Log Out">
+            <padding>
+                <Insets left="20.0" />
+            </padding>
+        </Button>
+        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="99.0" layoutY="639.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../Images/logOutAdmin.png" />
+            </image>
+        </ImageView>
 
 
         <!-- Main Content Area Header -->
@@ -46,7 +93,7 @@
             <image><Image url="@../../../../Images/P1.png" /></image>
         </ImageView>
         <Label layoutX="335.0" layoutY="72.0" prefHeight="45.0" prefWidth="469.0" text="Custom Booking Requests" textOverrun="CLIP">
-            <font><Font name="Bell MT Bold" size="38.0" /></font> <!-- Adjusted font size -->
+            <font><Font name="Bell MT Bold" size="38.0" /></font>
         </Label>
         <Label layoutX="343.0" layoutY="127.0" prefHeight="35.0" prefWidth="500.0" text="Request specific or recurring room bookings. Subject to admin approval.">
             <font><Font size="16.0" /></font>
@@ -54,7 +101,11 @@
 
 
         <!-- Tab Pane -->
-        <TabPane layoutX="300.0" layoutY="215.0" prefHeight="470.0" prefWidth="930.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="mainTabPane" layoutX="300.0" layoutY="215.0" prefHeight="470.0" prefWidth="930.0"
+                 styleClass="centered-tab-pane" tabClosingPolicy="UNAVAILABLE">
+            <stylesheets>
+                <String fx:value="@../CSS/staff-custom-bookings.css" />
+            </stylesheets>
             <tabs>
                 <!-- Recurring Booking Request Tab -->
                 <Tab text="Recurring Booking Request">
