@@ -19,21 +19,21 @@
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#9aa6b2" height="687.0" layoutX="23.0" layoutY="23.0" stroke="#9aa6b2" strokeType="INSIDE" width="241.0" />
 
         <!-- Sidebar Buttons -->
-        <Button fx:id="viewAvailableRoomsButton" layoutX="94.0" layoutY="253.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="View Available Rooms" />
+        <Button fx:id="viewAvailableRoomsButton" layoutX="94.0" layoutY="261.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="View Available Rooms" />
         <Button fx:id="manageBookingsButton" layoutX="94.0" layoutY="338.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #596572; -fx-background-radius: 100;" text="Manage Bookings" textFill="WHITE" />
         <Button fx:id="customBookingsButton" layoutX="94.0" layoutY="418.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Custom Bookings" />
         <Button fx:id="logoutButton" layoutX="100.0" layoutY="632.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="140.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Log Out" />
 
         <!-- Sidebar Logo and Icons -->
         <ImageView fitHeight="155.0" fitWidth="173.0" layoutX="54.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/ucLogo.png" /></image></ImageView>
-        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffViewIcon.png" /></image></ImageView>
-        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffManageIcon.png" /></image></ImageView>
+        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffViewIcon.png" /></image></ImageView>
+        <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/staffManageIcon.png" /></image></ImageView>
         <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="52.0" layoutY="634.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../../../../Images/logOutIcon.png" /></image></ImageView>
 
         <!-- Main Content Header -->
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="158.0" layoutX="290.0" layoutY="43.0" stroke="#d9d9d9" strokeType="INSIDE" width="955.0" />
-        <ImageView fitHeight="180.0" fitWidth="160.0" layoutX="1060.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-            <image><Image url="@../../../../Images/P1.png" /></image>
+        <ImageView fitHeight="181.0" fitWidth="173.0" layoutX="1028.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../../../../../../../target/classes/Images/P3.png" /></image>
         </ImageView>
         <Label layoutX="335.0" layoutY="72.0" prefHeight="45.0" prefWidth="469.0" text="Manage Bookings" textOverrun="CLIP">
             <font><Font name="Bell MT Bold" size="45.0" /></font>
@@ -85,6 +85,11 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
+      <ImageView fitHeight="51.0" fitWidth="40.0" layoutX="43.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../target/classes/Images/CustomBookingIcon.png" />
+         </image>
+      </ImageView>
     </children>
     <padding>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

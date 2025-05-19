@@ -31,10 +31,10 @@
       <Button fx:id="logoutButton" layoutX="99.0" layoutY="630.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="137.0" style="-fx-background-color: #FFFF; -fx-background-radius: 100;" text="Log Out" />
 
       <!-- Sidebar Icons -->
-      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
          <image><Image url="@../../../../Images/staffViewIcon.png" /></image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="43.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
          <image><Image url="@../../../../Images/staffManageIcon.png" /></image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="52.0" layoutY="634.0" pickOnBounds="true" preserveRatio="true">
@@ -43,8 +43,8 @@
 
       <!-- Main Content Area -->
       <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#d9d9d9" height="158.0" layoutX="290.0" layoutY="43.0" stroke="#d9d9d9" strokeType="INSIDE" width="955.0" />
-      <ImageView fitHeight="180.0" fitWidth="160.0" layoutX="1060.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-         <image><Image url="@../../../../Images/P1.png" /></image>
+      <ImageView fitHeight="188.0" fitWidth="181.0" layoutX="1000.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image><Image url="@../../../../../../../target/classes/Images/P1.png" /></image>
       </ImageView>
       <Label layoutX="335.0" layoutY="72.0" prefHeight="45.0" prefWidth="469.0" text="View Available Rooms" textOverrun="CLIP">
          <font><Font name="Bell MT Bold" size="45.0" /></font>
@@ -58,8 +58,8 @@
 
       <!-- Search Criteria Bar -->
       <!-- Width increased to accommodate Show All button -->
-      <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#d9d9d9" height="51.0" layoutX="302.0" layoutY="266.0" stroke="#d9d9d9" strokeType="INSIDE" width="780.0" />
-      <HBox alignment="CENTER_LEFT" layoutX="310.0" layoutY="266.0" prefHeight="51.0" prefWidth="765.0" spacing="8.0">
+      <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#d9d9d9" height="51.0" layoutX="302.0" layoutY="266.0" stroke="#d9d9d9" strokeType="INSIDE" width="920.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="310.0" layoutY="266.0" prefHeight="51.0" prefWidth="913.0" spacing="8.0">
          <children>
             <Label text="Date:">
                <font><Font size="13.0" /></font>
@@ -82,7 +82,7 @@
                <font><Font size="13.0" /></font>
                <HBox.margin><Insets left="8.0" /></HBox.margin>
             </Label>
-            <ComboBox fx:id="searchDurationComboBox" prefHeight="27.0" prefWidth="70.0" promptText="Hours" style="-fx-background-color: FFFFFF;" />
+            <ComboBox fx:id="searchDurationComboBox" prefHeight="27.0" prefWidth="86.0" promptText="Hours" style="-fx-background-color: FFFFFF;" />
             <Label text="hour(s)">
                <font><Font size="13.0" /></font>
             </Label>
@@ -93,7 +93,7 @@
             </Button>
 
             <!-- Show All Button - Added from first file -->
-            <Button fx:id="showAllButton" mnemonicParsing="false" onAction="#handleShowAllActiveButtonAction" prefHeight="29.0" prefWidth="100.0" style="-fx-background-color: #a9a9a9;" text="Show All Active" textFill="BLACK"> <!-- Updated Text & onAction -->
+            <Button fx:id="showAllButton" mnemonicParsing="false" onAction="#handleShowAllActiveButtonAction" prefHeight="29.0" prefWidth="125.0" style="-fx-background-color: #a9a9a9;" text="Show All Active" textFill="BLACK"> <!-- Updated Text & onAction -->
                <HBox.margin><Insets left="8.0" /></HBox.margin>
             </Button>
          </children>
@@ -113,6 +113,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <ImageView fitHeight="51.0" fitWidth="40.0" layoutX="43.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../target/classes/Images/CustomBookingIcon.png" />
+         </image>
+      </ImageView>
 
    </children>
    <padding>

@@ -1,0 +1,13 @@
+/* For all text areas */
+.transparent-text-area {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Or your preferred text color */
+    -fx-control-inner-background: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Specific to the content area */
+.transparent-text-area .content {
+    -fx-background-color: transparent;
+}
