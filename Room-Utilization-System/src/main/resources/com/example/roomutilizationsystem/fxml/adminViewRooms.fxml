@@ -102,7 +102,7 @@
                 <TableColumn fx:id="startDateCol" prefWidth="100.0" text="Start Date" />
                 <TableColumn fx:id="endDateCol" prefWidth="100.0" text="End Date" />
                 <TableColumn fx:id="definitionTypeCol" prefWidth="80.0" text="Type" />
-                <TableColumn fx:id="removeCol" prefWidth="70.0" sortable="false" text="Remove" />
+                <TableColumn fx:id="statusCol" prefWidth="90.0" sortable="false" text="Status" />
             </columns>
             <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
         </TableView>

@@ -15,6 +15,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.example.roomutilizationsystem.DataStore.addScheduleRequest;
+import static com.example.roomutilizationsystem.DataStore.getLoggedInUser;
+
 public class StaffCustomBookingsController extends StaffBaseController {
 
     // --- FXML Fields for Recurring Booking Request Tab ---
@@ -157,7 +160,7 @@ public class StaffCustomBookingsController extends StaffBaseController {
 
     @FXML
     private void handleSubmitRecurringRequestButtonAction(ActionEvent event) {
-        User currentUser = DataStore.getLoggedInUser();
+        User currentUser = getLoggedInUser();
         if (currentUser == null) {
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Authentication Error", "User not logged in.");
             return;
@@ -199,13 +202,13 @@ public class StaffCustomBookingsController extends StaffBaseController {
         }
 
         // Create ONE ScheduleRequest for the entire recurring pattern
-        DataStore.ScheduleRequest scheduleProposal = new DataStore.ScheduleRequest(
+        ScheduleRequest scheduleProposal = new ScheduleRequest(
                 currentUser.getUsername(), roomNumber, roomType,
                 startTime, endTime, selectedDays,
                 definitionStartDate, definitionEndDate
         );
 
-        if (DataStore.addScheduleRequest(scheduleProposal)) {
+        if (addScheduleRequest(scheduleProposal)) {
             SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Schedule Proposal Submitted",
                     "Your recurring schedule proposal has been submitted successfully.\n" +
                             "It is PENDING admin approval.\nDetails: Room " + roomNumber + ", " +
@@ -220,7 +223,7 @@ public class StaffCustomBookingsController extends StaffBaseController {
 
     @FXML
     private void handleSubmitOneTimeRequestButtonAction(ActionEvent event) {
-        User currentUser = DataStore.getLoggedInUser();
+        User currentUser = getLoggedInUser();
         if (currentUser == null) { /* Handle not logged in */ return; }
 
         String roomNumber = roomNumberField1.getText().trim();
@@ -256,13 +259,13 @@ public class StaffCustomBookingsController extends StaffBaseController {
         // For a one-time schedule proposal, the definition start and end dates are the same (selectedDate)
         // and daysOfWeek will contain only the DayOfWeek of selectedDate.
         Set<DayOfWeek> dayForOneTime = EnumSet.of(selectedDate.getDayOfWeek());
-        DataStore.ScheduleRequest scheduleProposal = new DataStore.ScheduleRequest(
+        ScheduleRequest scheduleProposal = new ScheduleRequest(
                 currentUser.getUsername(), roomNumber, roomType,
                 startTime, endTime, dayForOneTime,
                 selectedDate, selectedDate // Start and End date are the same for one-time
         );
 
-        if (DataStore.addScheduleRequest(scheduleProposal)) {
+        if (addScheduleRequest(scheduleProposal)) {
             SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Schedule Proposal Submitted",
                     "Your one-time schedule proposal for " + selectedDate.format(DATE_FORMATTER_FRIENDLY) +
                             " (" + selectedDate.getDayOfWeek().toString().substring(0,1) + selectedDate.getDayOfWeek().toString().substring(1).toLowerCase() + ")" +

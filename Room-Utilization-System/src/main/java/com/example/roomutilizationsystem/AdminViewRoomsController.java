@@ -1,33 +1,22 @@
-// FILE: com/example/roomutilizationsystem/AdminViewRoomsController.java
 package com.example.roomutilizationsystem;
 
-// Add this import
 import javafx.beans.property.SimpleStringProperty;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-// PropertyValueFactory is no longer needed for these columns
-// import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox; // Keep if using HBox in action columns
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.List; // Added for filterPredicate clarity
-import java.util.stream.Collectors; // Added for filterPredicate clarity
-
 
 public class AdminViewRoomsController extends AdminBaseController {
 
     @FXML private TextField searchField;
     @FXML private TableView<RoomSchedule> roomsTableView;
 
-    // Columns for RoomSchedule Definitions (Ensure fx:id match FXML)
     @FXML private TableColumn<RoomSchedule, String> roomNoCol;
     @FXML private TableColumn<RoomSchedule, String> roomTypeCol;
     @FXML private TableColumn<RoomSchedule, String> daysOfWeekCol;
@@ -35,9 +24,8 @@ public class AdminViewRoomsController extends AdminBaseController {
     @FXML private TableColumn<RoomSchedule, String> startDateCol;
     @FXML private TableColumn<RoomSchedule, String> endDateCol;
     @FXML private TableColumn<RoomSchedule, String> definitionTypeCol;
-    @FXML private TableColumn<RoomSchedule, Void> removeCol;
+    @FXML private TableColumn<RoomSchedule, Void> statusCol;
 
-    // Sidebar Buttons
     @FXML private Button homeButton;
     @FXML private Button addRoomsButton;
     @FXML private Button viewRoomsButton;
@@ -45,14 +33,11 @@ public class AdminViewRoomsController extends AdminBaseController {
     @FXML private Button manageScheduleRequestsButton;
     @FXML private Button logoutButton;
 
-    // Data lists for DEFINITIONS
     private ObservableList<RoomSchedule> masterScheduleList;
     private FilteredList<RoomSchedule> filteredScheduleList;
 
     @FXML
     public void initialize() {
-
-        // Defend against NullPointerException if FXML injection fails
         try {
             Objects.requireNonNull(roomsTableView, "roomsTableView FXML ID not injected");
             Objects.requireNonNull(roomNoCol, "roomNoCol FXML ID not injected");
@@ -62,7 +47,7 @@ public class AdminViewRoomsController extends AdminBaseController {
             Objects.requireNonNull(startDateCol, "startDateCol FXML ID not injected");
             Objects.requireNonNull(endDateCol, "endDateCol FXML ID not injected");
             Objects.requireNonNull(definitionTypeCol, "definitionTypeCol FXML ID not injected");
-            Objects.requireNonNull(removeCol, "removeCol FXML ID not injected");
+            Objects.requireNonNull(statusCol, "statusCol FXML ID not injected");
             Objects.requireNonNull(searchField, "searchField FXML ID not injected");
             Objects.requireNonNull(homeButton, "homeButton FXML ID not injected");
             Objects.requireNonNull(addRoomsButton, "addRoomsButton FXML ID not injected");
@@ -70,189 +55,124 @@ public class AdminViewRoomsController extends AdminBaseController {
             Objects.requireNonNull(manageBookingsButton, "manageBookingsButton FXML ID not injected");
             Objects.requireNonNull(manageScheduleRequestsButton, "manageScheduleRequestsButton FXML ID not injected");
             Objects.requireNonNull(logoutButton, "logoutButton FXML ID not injected");
-
         } catch (NullPointerException e) {
             System.err.println("FATAL: FXML injection failed in AdminViewRoomsController. Check FXML IDs.");
             e.printStackTrace();
-            // Optionally show an alert and disable the screen
-            SceneNavigator.showAlert(Alert.AlertType.ERROR, "Initialization Error", "UI components could not be loaded. Check FXML file and controller bindings.");
+            SceneNavigator.showAlert(Alert.AlertType.ERROR, "Initialization Error", "UI components could not be loaded.");
             if(roomsTableView != null) roomsTableView.setDisable(true);
             if(searchField != null) searchField.setDisable(true);
-            return; // Stop initialization
+            return;
         }
 
-
         setupNavigationButtons(homeButton, addRoomsButton, viewRoomsButton, manageBookingsButton, manageScheduleRequestsButton, logoutButton);
-        viewRoomsButton.setDisable(true); // Disable current page button
-        viewRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"); // Style disabled button
+        viewRoomsButton.setDisable(true);
+        viewRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
 
+        configureTableColumns();
+        loadAndFilterData();
 
-        configureTableColumns(); // Setup columns for RoomSchedule definition properties
-
-        loadAndFilterData(); // Load definitions and set up filtering
-
-        // Add listener to search field
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredScheduleList.setPredicate(schedule -> filterPredicate(schedule, newValue));
         });
     }
 
-    // --- UPDATED configureTableColumns to use Lambdas ---
     private void configureTableColumns() {
-        // Use lambda expressions for CellValueFactory - more robust with modules
-        roomNoCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getRoomNumber() : "")
-        );
-        roomTypeCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getRoomType() : "")
-        );
-        daysOfWeekCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getDaysOfWeekDisplay() : "")
-        );
-        timeCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getTimeColDisplay() : "")
-        );
-        startDateCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getDefinitionStartDateDisplay() : "")
-        );
-        endDateCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getDefinitionEndDateDisplay() : "")
-        );
-        definitionTypeCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getDefinitionTypeDisplay() : "")
-        );
-
-        // Setup Remove Button Column (remains the same)
-        setupRemoveColumn();
+        roomNoCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRoomNumber()));
+        roomTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRoomType()));
+        daysOfWeekCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDaysOfWeekDisplay()));
+        timeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTimeColDisplay()));
+        startDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDefinitionStartDateDisplay()));
+        endDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDefinitionEndDateDisplay()));
+        definitionTypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDefinitionTypeDisplay()));
+        setupStatusColumn();
     }
-    // --- End of UPDATED configureTableColumns ---
 
-
-    private void setupRemoveColumn() {
+    private void setupStatusColumn() {
         Callback<TableColumn<RoomSchedule, Void>, TableCell<RoomSchedule, Void>> cellFactory = param -> {
             final TableCell<RoomSchedule, Void> cell = new TableCell<>() {
-                private final Button removeBtn = new Button("Remove");
+                private final ToggleButton toggleBtn = new ToggleButton();
+                private final HBox pane = new HBox(toggleBtn);
+
                 {
-                    removeBtn.setStyle("-fx-background-color: #f08080; -fx-text-fill: white;"); // Red color
-                    removeBtn.setOnAction((ActionEvent event) -> {
-                        // Defensive check for index validity
+                    pane.setAlignment(Pos.CENTER);
+                    toggleBtn.setMinWidth(80); // Adjusted width
+                    toggleBtn.setOnAction((ActionEvent event) -> {
                         int index = getIndex();
                         if (index >= 0 && index < getTableView().getItems().size()) {
                             RoomSchedule scheduleDef = getTableView().getItems().get(index);
                             if (scheduleDef != null) {
-                                handleRemoveButton(scheduleDef);
-                            } else {
-                                System.err.println("Remove button clicked on null data at index: " + index);
-                                SceneNavigator.showAlert(Alert.AlertType.WARNING, "Error", "Cannot remove null item.");
+                                boolean newStatus = toggleBtn.isSelected();
+                                scheduleDef.setActive(newStatus);
+                                DataStore.saveRoomSchedulesOnly();
+                                updateButtonAppearance(scheduleDef);
+                                // roomsTableView.refresh(); // Not strictly needed if only this cell changes based on its own item's state
+                                System.out.println("Schedule ID " + scheduleDef.getScheduleId() + " status set to " + scheduleDef.getStatusDisplay());
+                                SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Status Updated",
+                                        "Schedule " + scheduleDef.getScheduleId() + " is now " + scheduleDef.getStatusDisplay() + ".");
                             }
-                        } else {
-                            System.err.println("Remove button clicked on invalid row index: " + index);
                         }
                     });
+                }
+
+                private void updateButtonAppearance(RoomSchedule scheduleDef) {
+                    if (scheduleDef.isActive()) {
+                        toggleBtn.setText("Active");
+                        toggleBtn.setSelected(true);
+                        toggleBtn.setStyle("-fx-base: #a0d9a0; -fx-text-fill: black; -fx-font-weight: bold;"); // Lighter green
+                    } else {
+                        toggleBtn.setText("Inactive");
+                        toggleBtn.setSelected(false);
+                        toggleBtn.setStyle("-fx-base: #f0a0a0; -fx-text-fill: black; -fx-font-weight: bold;"); // Lighter red
+                    }
                 }
 
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    // Show button only for non-empty rows within valid index range
-                    if (empty || getIndex() < 0 || getIndex() >= getTableView().getItems().size()) {
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                         setGraphic(null);
                     } else {
-                        setGraphic(removeBtn);
+                        RoomSchedule scheduleDef = getTableRow().getItem();
+                        updateButtonAppearance(scheduleDef);
+                        setGraphic(pane);
                     }
                 }
             };
             return cell;
         };
-        removeCol.setCellFactory(cellFactory);
+        statusCol.setCellFactory(cellFactory);
     }
 
     private void loadAndFilterData() {
-        // Load ALL schedule DEFINITIONS from DataStore
         masterScheduleList = FXCollections.observableArrayList(DataStore.getAllRoomSchedules());
-        System.out.println("AdminViewRooms: Loaded " + masterScheduleList.size() + " schedule definitions."); // Debug
-
-        // Wrap in FilteredList for searching
-        filteredScheduleList = new FilteredList<>(masterScheduleList, p -> true); // Initially show all
-
-        // Bind the filtered list to the TableView
+        filteredScheduleList = new FilteredList<>(masterScheduleList, p -> true);
         roomsTableView.setItems(filteredScheduleList);
         if (masterScheduleList.isEmpty()) {
             roomsTableView.setPlaceholder(new Label("No schedule definitions found. Add availability via 'Add Rooms'."));
         } else {
-            // Clear placeholder if data exists, TableView handles empty filtered list internally
-            roomsTableView.setPlaceholder(null);
+            roomsTableView.setPlaceholder(new Label("No schedule definitions match your search."));
         }
     }
 
-    // Predicate for filtering schedule definitions
     private boolean filterPredicate(RoomSchedule schedule, String searchText) {
         if (searchText == null || searchText.trim().isEmpty()) {
-            return true; // Show all if search text is empty
+            return true;
         }
-        // Ensure schedule is not null before accessing its methods
         if (schedule == null) {
             return false;
         }
         String lowerCaseFilter = searchText.toLowerCase().trim();
 
-        // Check against various fields using safe null checks where needed
-        if (schedule.getRoomNumber() != null && schedule.getRoomNumber().toLowerCase().contains(lowerCaseFilter)) return true;
-        if (schedule.getRoomType() != null && schedule.getRoomType().toLowerCase().contains(lowerCaseFilter)) return true;
-        if (schedule.getDaysOfWeekDisplay() != null && schedule.getDaysOfWeekDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
-        if (schedule.getTimeColDisplay() != null && schedule.getTimeColDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
-        if (schedule.getDefinitionStartDateDisplay() != null && schedule.getDefinitionStartDateDisplay().contains(lowerCaseFilter)) return true;
-        if (schedule.getDefinitionEndDateDisplay() != null && schedule.getDefinitionEndDateDisplay().contains(lowerCaseFilter)) return true;
-        if (schedule.getDefinitionTypeDisplay() != null && schedule.getDefinitionTypeDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
-        if (schedule.getScheduleId() != null && schedule.getScheduleId().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getRoomNumber().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getRoomType().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getDaysOfWeekDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getTimeColDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getDefinitionStartDateDisplay().contains(lowerCaseFilter)) return true;
+        if (schedule.getDefinitionEndDateDisplay().contains(lowerCaseFilter)) return true;
+        if (schedule.getDefinitionTypeDisplay().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getScheduleId().toLowerCase().contains(lowerCaseFilter)) return true;
+        if (schedule.getStatusDisplay().toLowerCase().contains(lowerCaseFilter)) return true; // Search by status text
 
-        return false; // No match found
+        return false;
     }
-
-    // Handles removing the ENTIRE schedule definition
-    private void handleRemoveButton(RoomSchedule scheduleDef) {
-        if (scheduleDef == null) {
-            System.err.println("Attempted to remove a null schedule definition.");
-            return;
-        }
-
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirm Removal");
-        confirmation.setHeaderText("Remove Entire Schedule Definition?");
-        // Use getters for confirmation message content
-        confirmation.setContentText("Are you sure you want to remove the entire availability definition:\n" +
-                "ID: " + scheduleDef.getScheduleId() + "\n" +
-                "Room: " + scheduleDef.getRoomNumber() + " (" + scheduleDef.getRoomType() + ")\n" +
-                "Days: " + scheduleDef.getDaysOfWeekDisplay() + "\n" +
-                "Time: " + scheduleDef.getTimeColDisplay() + "\n" +
-                "Range: " + scheduleDef.getDefinitionStartDateDisplay() + " to " + scheduleDef.getDefinitionEndDateDisplay() + "\n\n" +
-                "Existing bookings for slots within this definition will NOT be cancelled automatically.");
-        confirmation.getDialogPane().setMinHeight(javafx.scene.layout.Region.USE_PREF_SIZE); // Ensure dialog fits text
-
-        Optional<ButtonType> result = confirmation.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            boolean removed = DataStore.removeRoomSchedule(scheduleDef.getScheduleId()); // removeRoomSchedule handles saving
-            if (removed) {
-                // Since removeRoomSchedule modifies the underlying source list
-                // that masterScheduleList is based on (assuming DataStore returns a direct list reference or copy),
-                // removing from masterScheduleList directly reflects the change for the FilteredList.
-                // However, reloading is the absolute safest way if DataStore implementation changes.
-                // Let's stick to removing from the local observable list for efficiency IF DataStore.remove modifies the list used by getAll.
-                // If DataStore.getAll creates a NEW list each time, then reloading is necessary.
-                // Assuming DataStore works on the live list:
-                // masterScheduleList.remove(scheduleDef); // No longer needed if we reload
-
-                // Reloading data to ensure UI matches persistent state
-                loadAndFilterData(); // Reload definitions from DataStore
-
-                SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Success", "Schedule definition removed successfully.");
-            } else {
-                SceneNavigator.showAlert(Alert.AlertType.ERROR, "Error", "Failed to remove schedule definition (ID: " + scheduleDef.getScheduleId() + "). It might have already been removed.");
-                loadAndFilterData(); // Reload to be sure
-            }
-        }
-    }
-
-    // Base controller navigation methods are inherited
 }

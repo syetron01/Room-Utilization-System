@@ -1,4 +1,3 @@
-// FILE: com/example/roomutilizationsystem/StaffViewAvailableRoomsController.java
 package com.example.roomutilizationsystem;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -8,27 +7,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory; // Keep for potential future use if needed
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter; // Needed for ComboBox converter
+import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.DateTimeException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream; // Keep if used elsewhere, not directly here anymore
-
 
 public class StaffViewAvailableRoomsController extends StaffBaseController {
 
-    // --- Search Criteria ---
     @FXML private DatePicker searchDatePicker;
     @FXML private ComboBox<String> searchRoomNumberComboBox;
     @FXML private ComboBox<String> searchRoomTypeComboBox;
@@ -36,10 +33,8 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
     @FXML private Button searchButton;
     @FXML private Button showAllButton;
 
-    // --- Results Table ---
     @FXML private TableView<RoomSchedule> availableDefinitionsTable;
 
-    // --- Table Columns ---
     @FXML private TableColumn<RoomSchedule, String> availRoomNoCol;
     @FXML private TableColumn<RoomSchedule, String> availRoomTypeCol;
     @FXML private TableColumn<RoomSchedule, String> availDaysCol;
@@ -47,13 +42,11 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
     @FXML private TableColumn<RoomSchedule, String> availDateRangeCol;
     @FXML private TableColumn<RoomSchedule, Void> availBookCol;
 
-    // --- Sidebar Buttons ---
     @FXML private Button viewAvailableRoomsButton;
     @FXML private Button manageBookingsButton;
     @FXML private Button customBookingsButton;
     @FXML private Button logoutButton;
 
-    // --- Data & Formatters ---
     private ObservableList<RoomSchedule> displayedDefinitionsList = FXCollections.observableArrayList();
     private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
     private static final DateTimeFormatter friendlyDateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -63,7 +56,6 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
     public void initialize() {
         System.out.println("StaffViewAvailableRoomsController initialize() called.");
 
-        // Null checks for FXML injection
         try {
             Objects.requireNonNull(searchDatePicker, "searchDatePicker FXML ID not injected");
             Objects.requireNonNull(searchRoomNumberComboBox, "searchRoomNumberComboBox FXML ID not injected");
@@ -86,15 +78,14 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             System.err.println("FATAL: FXML injection failed in StaffViewAvailableRoomsController. Check FXML IDs.");
             e.printStackTrace();
             handleInitializationError("UI components could not be loaded.");
-            return; // Stop initialization
+            return;
         }
 
         setupNavigationButtons(viewAvailableRoomsButton, manageBookingsButton, customBookingsButton, logoutButton);
-        if (viewAvailableRoomsButton != null) { // Check if not null before disabling
+        if (viewAvailableRoomsButton != null) {
             viewAvailableRoomsButton.setDisable(true);
             viewAvailableRoomsButton.setStyle("-fx-background-radius: 100; -fx-background-color: #596572; -fx-text-fill: white;");
         }
-
 
         User currentUser = DataStore.getLoggedInUser();
         if (currentUser == null || currentUser.getRole() == UserRole.ADMIN) {
@@ -111,14 +102,10 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             handleInitializationError("Results table could not be configured.");
             return;
         }
-
-        // Initial State: Show all active definitions
-        handleShowAllActiveButtonAction(null); // Load initial data
-
+        handleShowAllActiveButtonAction(null);
         System.out.println("StaffViewAvailableRoomsController initialize() finished successfully.");
     }
 
-    // --- Helper Methods ---
     private void handleAuthenticationFailure() {
         System.err.println("Authentication Failure: Invalid user role or not logged in.");
         SceneNavigator.showAlert(Alert.AlertType.ERROR, "Access Denied", "You do not have permission to access this page or your session expired. Returning to login screen.");
@@ -149,32 +136,25 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
         if(searchDurationComboBox != null) searchDurationComboBox.setDisable(true);
     }
 
-
     private boolean setupSearchControls() {
         try {
-            // Date Picker - Default to today, but not strictly required for "Show All"
             searchDatePicker.setValue(LocalDate.now());
             searchDatePicker.setDayCellFactory(picker -> new DateCell() { @Override public void updateItem(LocalDate date, boolean empty) { super.updateItem(date, empty); setDisable(empty || date.isBefore(LocalDate.now())); if (isDisabled()) setTooltip(new Tooltip("Cannot select past dates.")); } });
 
-            // Room Number/Type ComboBoxes
             populateComboBox(searchRoomNumberComboBox, DataStore.getDistinctRoomNumbers(), "Any");
             populateComboBox(searchRoomTypeComboBox, DataStore.getDistinctRoomTypes(), "Any");
 
-            // Duration ComboBox Setup
             ObservableList<Integer> durationOptions = FXCollections.observableArrayList();
-            durationOptions.add(null); // Represent "Any" duration
+            durationOptions.add(null);
             durationOptions.addAll(List.of(1, 2, 3));
             searchDurationComboBox.setItems(durationOptions);
-            searchDurationComboBox.setConverter(new StringConverter<Integer>() {
+            searchDurationComboBox.setConverter(new StringConverter<>() {
                 @Override public String toString(Integer hours) { return (hours == null) ? "Any" : hours.toString(); }
                 @Override public Integer fromString(String string) { if ("Any".equalsIgnoreCase(string) || string == null || string.trim().isEmpty()) return null; try { return Integer.parseInt(string.trim()); } catch (NumberFormatException e) { return null; } }
             });
-            searchDurationComboBox.setValue(null); // Default to "Any"
+            searchDurationComboBox.setValue(null);
 
-            // Search Button
             searchButton.setOnAction(this::handleSearchButtonAction);
-
-            // Assign action to Show All Button
             showAllButton.setOnAction(this::handleShowAllActiveButtonAction);
 
         } catch (Exception e) {
@@ -201,7 +181,6 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             configureAvailableDefinitionsTableColumns();
             setupBookActionColumn(availBookCol);
             availableDefinitionsTable.setItems(displayedDefinitionsList);
-            // Initial placeholder set in initialize after this call
         } catch (NullPointerException npe) {
             System.err.println("Initialization Error: A required TableView or Column FXML ID is missing. " + npe.getMessage());
             return false;
@@ -247,19 +226,17 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
                 @Override
                 public void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (empty || getIndex() < 0 || getIndex() >= getTableView().getItems().size()) {
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                         setGraphic(null);
                     } else {
-                        // Enable book button ONLY if a valid future date is selected in the DatePicker
                         LocalDate selectedDate = searchDatePicker.getValue();
                         boolean isDateValid = selectedDate != null && !selectedDate.isBefore(LocalDate.now());
                         btn.setDisable(!isDateValid);
                         setGraphic(btn);
-                        // Add tooltip if button is disabled
                         if (!isDateValid) {
                             btn.setTooltip(new Tooltip("Please select a valid future date to enable booking."));
                         } else {
-                            btn.setTooltip(null); // Remove tooltip if enabled
+                            btn.setTooltip(null);
                         }
                     }
                 }
@@ -267,7 +244,6 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             return cell;
         };
         column.setCellFactory(cellFactory);
-        // Add listener to date picker to refresh table cells (re-evaluates button disable state)
         searchDatePicker.valueProperty().addListener((obs, oldDate, newDate) -> {
             if (availableDefinitionsTable != null) {
                 availableDefinitionsTable.refresh();
@@ -275,15 +251,13 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
         });
     }
 
-
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
         LocalDate searchDate = searchDatePicker.getValue();
         String roomNumberFilter = getComboBoxValue(searchRoomNumberComboBox, "Any");
         String roomTypeFilter = getComboBoxValue(searchRoomTypeComboBox, "Any");
-        Integer selectedDurationHours = searchDurationComboBox.getValue(); // null means "Any"
+        Integer selectedDurationHours = searchDurationComboBox.getValue();
 
-        // Date is REQUIRED for a specific search
         if (searchDate == null) {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Input Error", "Please select a date to search for specific availability.");
             return;
@@ -292,24 +266,18 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Input Error", "Cannot search for past dates.");
             return;
         }
-
-        // Perform search for the specific date
-        findAndDisplayMatchingDefinitions(searchDate, roomNumberFilter, roomTypeFilter, selectedDurationHours, false); // false = NOT show all active
+        findAndDisplayMatchingDefinitions(searchDate, roomNumberFilter, roomTypeFilter, selectedDurationHours, false);
     }
 
     @FXML
     private void handleShowAllActiveButtonAction(ActionEvent event) {
-        // Reset filters visually (optional but good UX)
-        searchDatePicker.setValue(LocalDate.now()); // Reset date picker to today
+        searchDatePicker.setValue(LocalDate.now());
         searchRoomNumberComboBox.setValue("Any");
         searchRoomTypeComboBox.setValue("Any");
-        searchDurationComboBox.setValue(null); // Set back to "Any"
-
-        // Fetch and display all active definitions
+        searchDurationComboBox.setValue(null);
         System.out.println("Showing all active schedule definitions...");
-        findAndDisplayMatchingDefinitions(null, null, null, null, true); // true = show all active
+        findAndDisplayMatchingDefinitions(null, null, null, null, true);
     }
-
 
     private String getComboBoxValue(ComboBox<String> comboBox, String defaultValue) {
         if (comboBox == null) return null;
@@ -318,27 +286,25 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
     }
 
     private void findAndDisplayMatchingDefinitions(LocalDate searchDate, String roomNumberFilter, String roomTypeFilter, Integer selectedDurationHours, boolean showAllActive) {
-
-        String logSearchType = showAllActive ? "all active" : "filtered for date " + searchDate;
+        String logSearchType = showAllActive ? "all active" : "filtered for date " + (searchDate != null ? searchDate.format(friendlyDateFormatter) : "N/A");
         System.out.println("Searching (" + logSearchType + ") definitions. Room: " + roomNumberFilter + ", Type: " + roomTypeFilter + ", Duration (hrs): " + selectedDurationHours);
         displayedDefinitionsList.clear();
         LocalDate today = LocalDate.now();
 
         List<RoomSchedule> matchingDefs = DataStore.getAllRoomSchedules().stream()
+                .filter(RoomSchedule::isActive) // FILTER FOR ACTIVE SCHEDULES
                 .filter(def -> {
                     if (showAllActive) {
-                        // Show All Active: definition's end date must be today or later
                         return !def.getDefinitionEndDate().isBefore(today);
                     } else {
-                        // Specific Date Search: must apply on the given searchDate
-                        if (searchDate == null) return false; // Should not happen if called from search handler
+                        if (searchDate == null) return false;
                         return def.appliesOnDate(searchDate);
                     }
                 })
                 .filter(def -> roomNumberFilter == null || def.getRoomNumber().equalsIgnoreCase(roomNumberFilter))
                 .filter(def -> roomTypeFilter == null || def.getRoomType().equalsIgnoreCase(roomTypeFilter))
-                .filter(def -> { // Duration Filter
-                    if (selectedDurationHours == null) return true; // "Any" duration
+                .filter(def -> {
+                    if (selectedDurationHours == null) return true;
                     try {
                         Duration definitionDuration = Duration.between(def.getStartTime(), def.getEndTime());
                         return !definitionDuration.isNegative() && definitionDuration.toHours() >= selectedDurationHours;
@@ -356,7 +322,7 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
                 message = displayedDefinitionsList.isEmpty()
                         ? "No active schedule definitions found in the system."
                         : "Showing all active definitions. Select a date above before clicking 'Book This Slot'.";
-            } else { // Specific date search
+            } else {
                 message = displayedDefinitionsList.isEmpty()
                         ? "No available schedules found matching your criteria for " + (searchDate != null ? searchDate.format(friendlyDateFormatter) : "the selected date") + "."
                         : "Select a row and click 'Book This Slot' to proceed.";
@@ -364,8 +330,6 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             availableDefinitionsTable.setPlaceholder(new Label(message));
         }
     }
-
-    // --- Booking Logic ---
 
     private static class PotentialBookingSlot {
         final LocalDate date; final LocalTime startTime; final LocalTime endTime;
@@ -377,7 +341,6 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
         User currentUser = DataStore.getLoggedInUser();
         if (currentUser == null) { handleAuthenticationFailure(); return; }
 
-        // Booking requires a specific date from the DatePicker
         LocalDate bookingDate = searchDatePicker.getValue();
         if (bookingDate == null || bookingDate.isBefore(LocalDate.now())) {
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Booking Error", "Please select a valid future date in the Date picker before booking.");
@@ -387,38 +350,27 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
         LocalTime bookingStartTime = selectedDefinition.getStartTime();
         LocalTime bookingEndTime = selectedDefinition.getEndTime();
 
-        // Re-verify the selected definition applies on the chosen booking date
-        if (!selectedDefinition.appliesOnDate(bookingDate)) {
+        if (!selectedDefinition.appliesOnDate(bookingDate)) { // appliesOnDate now checks isActive
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Booking Error",
                     "The selected schedule pattern (" + selectedDefinition.getDaysOfWeekDisplay() + ") is not available on the chosen date: "
-                            + bookingDate.format(friendlyDateFormatter) + " (" + bookingDate.getDayOfWeek() +").\nPlease select a different date or schedule.");
+                            + bookingDate.format(friendlyDateFormatter) + " (" + bookingDate.getDayOfWeek() +").\nPlease select a different date or schedule, or this schedule may be inactive.");
             return;
         }
 
-        List<PotentialBookingSlot> slotsToCheck = List.of(new PotentialBookingSlot(bookingDate, bookingStartTime, bookingEndTime));
-        List<String> conflicts = new ArrayList<>();
-        PotentialBookingSlot slot = slotsToCheck.get(0);
+        PotentialBookingSlot slot = new PotentialBookingSlot(bookingDate, bookingStartTime, bookingEndTime);
 
-        // Check availability using DataStore
         if (!DataStore.isTimeSlotAvailable(selectedDefinition.getRoomNumber(), slot.date, slot.startTime, slot.endTime)) {
-            conflicts.add(slot.toString());
-        }
-
-        if (!conflicts.isEmpty()) {
             SceneNavigator.showAlert(Alert.AlertType.ERROR, "Booking Conflict",
-                    "This time slot on " + bookingDate.format(friendlyDateFormatter) + " is already booked and unavailable:\n\n"
-                            + String.join("\n", conflicts));
+                    "This time slot on " + bookingDate.format(friendlyDateFormatter) + " is already booked and unavailable:\n\n" + slot.toString());
         } else {
-            // Slot is available - Proceed to Confirmation and Booking
-            confirmAndCreateBookings(currentUser, selectedDefinition, slotsToCheck);
+            confirmAndCreateBookings(currentUser, selectedDefinition, List.of(slot));
         }
     }
 
     private void confirmAndCreateBookings(User currentUser, RoomSchedule definition, List<PotentialBookingSlot> slotsToBook) {
-        String summary;
         if (slotsToBook.isEmpty()){ System.err.println("ConfirmAndCreateBookings called with empty slot list."); return; }
-        PotentialBookingSlot slot = slotsToBook.get(0); // Will always be one slot in this flow
-        summary = "Date: " + slot.date.format(friendlyDateFormatter) + "\n" +
+        PotentialBookingSlot slot = slotsToBook.get(0);
+        String summary = "Date: " + slot.date.format(friendlyDateFormatter) + "\n" +
                 "Time: " + slot.startTime.format(timeFormatter) + " - " + slot.endTime.format(timeFormatter);
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
@@ -437,14 +389,21 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             int bookingsFailed = 0;
             List<String> failureMessages = new ArrayList<>();
 
-            // Loop runs once for the single slot
             for (PotentialBookingSlot currentSlot : slotsToBook) {
-                if (!DataStore.isTimeSlotAvailable(definition.getRoomNumber(), currentSlot.date, currentSlot.startTime, currentSlot.endTime)) {
-                    bookingsFailed++; failureMessages.add("Slot unavailable: " + currentSlot.toString());
-                    System.err.println("Race condition detected or slot became unavailable for: " + currentSlot.toString()); continue;
+                // Re-check DataStore.findCoveringScheduleDefinition which considers isActive
+                Optional<RoomSchedule> coveringDef = DataStore.findCoveringScheduleDefinition(definition.getRoomNumber(), currentSlot.date, currentSlot.startTime);
+                if (coveringDef.isEmpty() || !currentSlot.endTime.isAfter(currentSlot.startTime) || currentSlot.endTime.isAfter(coveringDef.get().getEndTime())) {
+                    bookingsFailed++; failureMessages.add("Slot no longer available or schedule inactive: " + currentSlot.toString());
+                    System.err.println("Slot became unavailable or schedule inactive for: " + currentSlot.toString()); continue;
                 }
+
+                if (!DataStore.isTimeSlotAvailable(definition.getRoomNumber(), currentSlot.date, currentSlot.startTime, currentSlot.endTime)) {
+                    bookingsFailed++; failureMessages.add("Slot unavailable (booked by another): " + currentSlot.toString());
+                    System.err.println("Race condition or slot became booked for: " + currentSlot.toString()); continue;
+                }
+
                 Booking newBooking = new Booking(currentUser, definition, currentSlot.date, currentSlot.startTime, currentSlot.endTime);
-                boolean success = DataStore.addBooking(newBooking); // Assumes addBooking saves
+                boolean success = DataStore.addBooking(newBooking);
                 if (success) { bookingsCreated++; }
                 else { bookingsFailed++; failureMessages.add("Failed to save: " + currentSlot.toString()); System.err.println("DataStore.addBooking failed for slot: " + currentSlot.toString()); }
             }
@@ -456,10 +415,7 @@ public class StaffViewAvailableRoomsController extends StaffBaseController {
             else { alertType = Alert.AlertType.INFORMATION; resultTitle = "No Action"; resultMessage = "No booking requests were processed."; }
             SceneNavigator.showAlert(alertType, resultTitle, resultMessage);
 
-            // Refresh the view by showing all active again
             handleShowAllActiveButtonAction(null);
-
         } else { System.out.println("User cancelled booking confirmation."); }
     }
-
-} // End of StaffViewAvailableRoomsController class
+}

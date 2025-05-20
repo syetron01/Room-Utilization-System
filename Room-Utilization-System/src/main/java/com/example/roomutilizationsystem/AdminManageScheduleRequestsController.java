@@ -14,21 +14,24 @@ import javafx.util.Callback;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.example.roomutilizationsystem.DataStore.addRoomScheduleDefinition;
+import static com.example.roomutilizationsystem.DataStore.getAllScheduleRequests;
+
 public class AdminManageScheduleRequestsController extends AdminBaseController {
 
     @FXML private TextField searchField;
-    @FXML private TableView<DataStore.ScheduleRequest> scheduleRequestsTableView;
+    @FXML private TableView<ScheduleRequest> scheduleRequestsTableView;
 
     // Table Columns
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> requestIdCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> requestedByCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> roomNoCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> roomTypeCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> daysCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> timeCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> dateRangeCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, String> statusCol;
-    @FXML private TableColumn<DataStore.ScheduleRequest, Void> actionCol;
+    @FXML private TableColumn<ScheduleRequest, String> requestIdCol;
+    @FXML private TableColumn<ScheduleRequest, String> requestedByCol;
+    @FXML private TableColumn<ScheduleRequest, String> roomNoCol;
+    @FXML private TableColumn<ScheduleRequest, String> roomTypeCol;
+    @FXML private TableColumn<ScheduleRequest, String> daysCol;
+    @FXML private TableColumn<ScheduleRequest, String> timeCol;
+    @FXML private TableColumn<ScheduleRequest, String> dateRangeCol;
+    @FXML private TableColumn<ScheduleRequest, String> statusCol;
+    @FXML private TableColumn<ScheduleRequest, Void> actionCol;
 
     // Sidebar Buttons
     @FXML private Button homeButton;
@@ -38,8 +41,8 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
     @FXML private Button manageScheduleRequestsButton; // This page's button
     @FXML private Button logoutButton;
 
-    private ObservableList<DataStore.ScheduleRequest> masterRequestList;
-    private FilteredList<DataStore.ScheduleRequest> filteredRequestList;
+    private ObservableList<ScheduleRequest> masterRequestList;
+    private FilteredList<ScheduleRequest> filteredRequestList;
 
     @FXML
     public void initialize() {
@@ -95,16 +98,17 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
         dateRangeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDefinitionDateRangeDisplay()));
 
         statusCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatusDisplay()));
-        statusCol.setCellFactory(column -> new TableCell<DataStore.ScheduleRequest, String>() {
+        statusCol.setCellFactory(column -> new TableCell<ScheduleRequest, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item == null || empty) {
+                if (item == null || empty || getTableRow() == null || getTableRow().getItem() == null) { // Added checks for getTableRow and getItem
                     setText(null);
                     setStyle("");
                 } else {
                     setText(item);
-                    DataStore.ScheduleRequest sr = getTableView().getItems().get(getIndex());
+                    ScheduleRequest sr = getTableRow().getItem(); // Use getTableRow().getItem()
+                    // ScheduleRequest sr = getTableView().getItems().get(getIndex()); // getIndex() can be unreliable with filtered lists
                     if (sr != null) {
                         switch (sr.getStatus()) {
                             case APPROVED:
@@ -137,26 +141,30 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
                 pane.setAlignment(Pos.CENTER);
 
                 approveBtn.setOnAction(event -> {
-                    DataStore.ScheduleRequest request = getTableView().getItems().get(getIndex());
-                    handleApproveRequest(request);
+                    if (getTableRow() != null && getTableRow().getItem() != null) {
+                        ScheduleRequest request = getTableRow().getItem();
+                        handleApproveRequest(request);
+                    }
                 });
                 rejectBtn.setOnAction(event -> {
-                    DataStore.ScheduleRequest request = getTableView().getItems().get(getIndex());
-                    handleRejectRequest(request);
+                    if (getTableRow() != null && getTableRow().getItem() != null) {
+                        ScheduleRequest request = getTableRow().getItem();
+                        handleRejectRequest(request);
+                    }
                 });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || getIndex() < 0 || getIndex() >= getTableView().getItems().size()) {
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
                 } else {
-                    DataStore.ScheduleRequest request = getTableView().getItems().get(getIndex());
-                    if (request != null && request.getStatus() == ScheduleRequestStatus.PENDING_APPROVAL) {
+                    ScheduleRequest request = getTableRow().getItem();
+                    if (request.getStatus() == ScheduleRequestStatus.PENDING_APPROVAL) {
                         setGraphic(pane);
                     } else {
-                        setGraphic(null); // No actions for already processed requests
+                        setGraphic(null);
                     }
                 }
             }
@@ -164,13 +172,13 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
     }
 
     private void loadAndFilterData() {
-        masterRequestList = FXCollections.observableArrayList(DataStore.getAllScheduleRequests());
+        masterRequestList = FXCollections.observableArrayList(getAllScheduleRequests());
         filteredRequestList = new FilteredList<>(masterRequestList, p -> true);
         scheduleRequestsTableView.setItems(filteredRequestList);
         scheduleRequestsTableView.setPlaceholder(new Label("No schedule requests found."));
     }
 
-    private boolean filterPredicate(DataStore.ScheduleRequest request, String searchText) {
+    private boolean filterPredicate(ScheduleRequest request, String searchText) {
         if (searchText == null || searchText.trim().isEmpty()) return true;
         if (request == null) return false;
         String lowerCaseFilter = searchText.toLowerCase().trim();
@@ -186,7 +194,7 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
         return false;
     }
 
-    private void handleApproveRequest(DataStore.ScheduleRequest request) {
+    private void handleApproveRequest(ScheduleRequest request) {
         if (request == null || request.getStatus() != ScheduleRequestStatus.PENDING_APPROVAL) {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Action Invalid", "This request is not pending approval.");
             return;
@@ -204,8 +212,7 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
 
         Optional<ButtonType> result = confirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Create a RoomSchedule from the request
-            RoomSchedule newSchedule = new RoomSchedule(
+            RoomSchedule newSchedule = new RoomSchedule( // RoomSchedule is an inner class of DataStore
                     request.getRoomNumber(),
                     request.getRoomType(),
                     request.getStartTime(),
@@ -215,24 +222,21 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
                     request.getDefinitionEndDate()
             );
 
-            // Attempt to add this new RoomSchedule definition
-            if (DataStore.addRoomScheduleDefinition(newSchedule)) {
-                request.setStatus(ScheduleRequestStatus.APPROVED); // This also saves scheduleRequests
+            if (addRoomScheduleDefinition(newSchedule)) {
+                request.setStatus(ScheduleRequestStatus.APPROVED);
                 SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Approval Successful",
                         "Schedule request " + request.getRequestId() + " approved. Room schedule definition created with ID: " + newSchedule.getScheduleId());
             } else {
-                // addRoomScheduleDefinition returned false, meaning there was an overlap
                 SceneNavigator.showAlert(Alert.AlertType.ERROR, "Approval Failed - Conflict",
                         "Could not approve schedule request " + request.getRequestId() +
                                 ". The proposed schedule conflicts with an existing approved room schedule definition for Room " +
                                 request.getRoomNumber() + ".\nPlease review existing schedules in 'View Rooms'. The request remains pending.");
-                // Request status remains PENDING_APPROVAL for admin to re-evaluate or reject
             }
-            scheduleRequestsTableView.refresh(); // Refresh to show status change or button removal
+            scheduleRequestsTableView.refresh();
         }
     }
 
-    private void handleRejectRequest(DataStore.ScheduleRequest request) {
+    private void handleRejectRequest(ScheduleRequest request) {
         if (request == null || request.getStatus() != ScheduleRequestStatus.PENDING_APPROVAL) {
             SceneNavigator.showAlert(Alert.AlertType.WARNING, "Action Invalid", "This request is not pending approval.");
             return;
@@ -245,7 +249,7 @@ public class AdminManageScheduleRequestsController extends AdminBaseController {
 
         Optional<ButtonType> result = confirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            request.setStatus(ScheduleRequestStatus.REJECTED); // This also saves scheduleRequests
+            request.setStatus(ScheduleRequestStatus.REJECTED);
             SceneNavigator.showAlert(Alert.AlertType.INFORMATION, "Rejection Successful", "Schedule request " + request.getRequestId() + " has been rejected.");
             scheduleRequestsTableView.refresh();
         }

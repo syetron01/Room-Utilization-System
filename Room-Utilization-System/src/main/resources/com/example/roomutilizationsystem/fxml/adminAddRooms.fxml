@@ -17,9 +17,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<!-- Added import -->
-<!-- Ensure the controller class path is correct -->
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/admin-addRooms.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.roomutilizationsystem.AdminAddRoomsController">
     <children>
         <!-- Background and Sidebar Structure -->
@@ -27,8 +24,6 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="720.0" layoutX="980.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
         <Rectangle arcHeight="100.0" arcWidth="100.0" fill="WHITE" height="716.0" layoutX="927.0" stroke="WHITE" strokeType="INSIDE" width="96.0" />
 
-        <!-- Sidebar Navigation Buttons VBox -->
-        <!-- Matched layoutX, layoutY, prefWidth, spacing, and alignment from your target design -->
         <VBox alignment="CENTER" layoutX="953.0" layoutY="155.0" prefHeight="546.0" prefWidth="312.0" spacing="50.0">
             <children>
                 <Button fx:id="homeButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="Home">
@@ -38,8 +33,6 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
-                <!-- addRoomsButton will be styled as active by its controller -->
                 <Button fx:id="addRoomsButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="Add Rooms">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -47,7 +40,6 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
                 <Button fx:id="viewRoomsButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="View Rooms">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -55,7 +47,6 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
                 <Button fx:id="manageBookingsButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="Manage Bookings">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -63,20 +54,16 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
                 <Button fx:id="manageScheduleRequestsButton" contentDisplay="LEFT" graphicTextGap="15" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="290.0" style="-fx-background-radius: 25; -fx-font-size: 14px; -fx-font-weight: bold;" text="Schedule Requests">
                     <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <image><Image url="@../../../../Images/CustomBookingIcon.png" /></image> <!-- Changed to manageAdmin.png as per target FXML -->
+                            <image><Image url="@../../../../Images/CustomBookingIcon.png" /></image>
                         </ImageView>
                     </graphic>
                 </Button>
             </children>
         </VBox>
 
-        <!-- REMOVED the separate VBox for icons that was in your original adminAddRooms.fxml -->
-
-        <!-- Logout Button (with icon inside, styled like target) -->
         <Button fx:id="logoutButton" contentDisplay="LEFT" graphicTextGap="10" layoutX="46.0" layoutY="640.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="136.0" style="-fx-background-radius: 25; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #8395a7;" text="Log out">
             <graphic>
                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -87,25 +74,23 @@
                 <Insets left="15.0" />
             </padding>
         </Button>
-        <!-- REMOVED the separate ImageView for logout icon from your original adminAddRooms.fxml -->
 
-
-        <!-- Header Labels (styled like target) -->
         <Label alignment="CENTER" layoutX="926.0" layoutY="42.0" prefHeight="63.0" prefWidth="354.0" style="-fx-background-color: #6c7279;" text="Room" textFill="WHITE"><font><Font name="Lucida Bright" size="35.0" /></font></Label>
-        <Label alignment="CENTER" layoutX="926.0" layoutY="94.0" prefHeight="60.0" prefWidth="354.0" style="-fx-background-color: #6c7279;" text="Utilization" textFill="WHITE"><font><Font name="Lucida Bright" size="35.0" /></font></Label> <!-- Used Lucida Bright for consistency with above -->
+        <Label alignment="CENTER" layoutX="926.0" layoutY="94.0" prefHeight="60.0" prefWidth="354.0" style="-fx-background-color: #6c7279;" text="Utilization" textFill="WHITE"><font><Font name="Lucida Bright" size="35.0" /></font></Label>
         <Label layoutX="58.0" layoutY="13.0" prefHeight="61.0" prefWidth="246.0" text="Add Rooms" textFill="WHITE"><font><Font name="Bell MT Bold" size="40.0" /></font></Label>
 
-        <!-- Tab Pane (Content remains the same as your original adminAddRooms.fxml) -->
         <TabPane fx:id="mainTabPane" layoutX="58.0" layoutY="81.0" prefHeight="499.0" prefWidth="806.0" styleClass="centered-tab-pane" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <!-- Recurring Booking Tab -->
                 <Tab text="Recurring Booking">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="771.0" style="-fx-background-color: #ffff;">
                             <children>
                                 <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#e8e8e8" height="416.0" layoutX="27.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" width="749.0" />
                                 <HBox alignment="CENTER_LEFT" layoutX="71.0" layoutY="57.0" spacing="10.0">
-                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label><TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" /></children>
+                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                        <!-- THIS IS THE ELEMENT CAUSING THE ERROR IF fx:id IS MISSING/MISMATCHED -->
+                                        <TextField fx:id="roomNumberField" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
+                                    </children>
                                 </HBox>
                                 <Label layoutX="71.0" layoutY="105.0" minWidth="130.0" text="Room Type:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
                                 <ComboBox fx:id="roomTypeComboBox" layoutX="211.0" layoutY="102.0" prefHeight="33.0" prefWidth="149.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
@@ -147,14 +132,15 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <!-- One Time Booking Tab -->
                 <Tab text="One Time Booking">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="768.0" style="-fx-background-color: #ffff;">
                             <children>
                                 <Rectangle arcHeight="100.0" arcWidth="100.0" fill="#e8e8e8" height="379.0" layoutX="29.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="749.0" />
                                 <HBox alignment="CENTER_LEFT" layoutX="73.0" layoutY="62.0" spacing="10.0">
-                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label><TextField fx:id="roomNumberField1" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" /></children>
+                                    <children><Label minWidth="130.0" text="Room Number:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
+                                        <TextField fx:id="roomNumberField1" prefHeight="33.0" prefWidth="150.0" promptText="Enter Room No" />
+                                    </children>
                                 </HBox>
                                 <ComboBox fx:id="roomTypeComboBox1" layoutX="213.0" layoutY="116.0" prefHeight="33.0" prefWidth="151.0" promptText="Select Type" style="-fx-background-color: #FFFF;" />
                                 <Label layoutX="73.0" layoutY="119.0" minWidth="130.0" text="Room Type:"><font><Font name="Bell MT Bold" size="18.0" /></font></Label>
